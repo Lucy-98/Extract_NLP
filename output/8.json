@@ -1,0 +1,107 @@
+[
+  {
+    "text": "nốt tuyến giáp thùy trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      108,
+      132
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  },
+  {
+    "text": "nốt tuyến giáp thùy trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      190,
+      214
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  },
+  {
+    "text": "khó nuốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      568,
+      576
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      578,
+      585
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khàn tiếng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      591,
+      601
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "nốt tuyến giáp trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      683,
+      702
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  },
+  {
+    "text": "nốt tuyến giáp trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      787,
+      806
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  },
+  {
+    "text": "nốt tuyến giáp trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      875,
+      894
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  },
+  {
+    "text": "Nốt tuyến giáp thùy trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      916,
+      940
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  }
+]

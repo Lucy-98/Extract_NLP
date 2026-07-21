@@ -1,0 +1,185 @@
+[
+  {
+    "text": "Ung thư phổi không tế bào nhỏ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      79,
+      108
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C34.9"
+    ]
+  },
+  {
+    "text": "Tắc mạch",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      167,
+      175
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I74.9"
+    ]
+  },
+  {
+    "text": "huyết khối",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      176,
+      186
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I82.9"
+    ]
+  },
+  {
+    "text": "Tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      251,
+      264
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "vicodin",
+    "type": "THUỐC",
+    "position": [
+      382,
+      389
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "214182"
+    ]
+  },
+  {
+    "text": "đau bẹn trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      464,
+      476
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bắt đầu 3 ngày",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      552,
+      570
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngày càng nặng hơn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      595,
+      617
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau cản trở việc đi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      650,
+      669
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bẹn trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      708,
+      720
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau dữ dội",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      837,
+      847
+    ],
+    "assertions": []
+  },
+  {
+    "text": "vicodin",
+    "type": "THUỐC",
+    "position": [
+      906,
+      913
+    ],
+    "assertions": [],
+    "candidates": [
+      "214182"
+    ]
+  },
+  {
+    "text": "tê",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      982,
+      984
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "cảm giác châm chích",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      986,
+      1005
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "yếu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1007,
+      1010
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "vicodin",
+    "type": "THUỐC",
+    "position": [
+      1081,
+      1088
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "214182"
+    ]
+  }
+]

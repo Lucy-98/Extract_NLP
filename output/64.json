@@ -1,0 +1,310 @@
+[
+  {
+    "text": "viêm túi mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      109,
+      121
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K81.9"
+    ]
+  },
+  {
+    "text": "cipro",
+    "type": "THUỐC",
+    "position": [
+      161,
+      166
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "203563"
+    ]
+  },
+  {
+    "text": "flagyl",
+    "type": "THUỐC",
+    "position": [
+      166,
+      172
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "202866"
+    ]
+  },
+  {
+    "text": "percocet",
+    "type": "THUỐC",
+    "position": [
+      273,
+      281
+    ],
+    "assertions": [],
+    "candidates": [
+      "42844"
+    ]
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      303,
+      323
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm túi mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      359,
+      371
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K81.9"
+    ]
+  },
+  {
+    "text": "bệnh túi thừa",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      436,
+      449
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K57.9"
+    ]
+  },
+  {
+    "text": "áp xe",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      496,
+      501
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "L02.9"
+    ]
+  },
+  {
+    "text": "táo bón",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      508,
+      515
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "percocet",
+    "type": "THUỐC",
+    "position": [
+      582,
+      590
+    ],
+    "assertions": [],
+    "candidates": [
+      "42844"
+    ]
+  },
+  {
+    "text": "đau vùng hạ vị",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      662,
+      676
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      741,
+      749
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau vùng hạ vị",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      830,
+      844
+    ],
+    "assertions": []
+  },
+  {
+    "text": "táo bón",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      878,
+      885
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đổ mồ hôi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      919,
+      928
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      958,
+      961
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      974,
+      983
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đổ mồ hôi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1206,
+      1215
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cipro",
+    "type": "THUỐC",
+    "position": [
+      1262,
+      1267
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "203563"
+    ]
+  },
+  {
+    "text": "flagyl",
+    "type": "THUỐC",
+    "position": [
+      1267,
+      1273
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "202866"
+    ]
+  },
+  {
+    "text": "percocet",
+    "type": "THUỐC",
+    "position": [
+      1400,
+      1408
+    ],
+    "assertions": [],
+    "candidates": [
+      "42844"
+    ]
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1430,
+      1433
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1446,
+      1455
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đổ mồ hôi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1572,
+      1581
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1611,
+      1614
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1662,
+      1682
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm túi mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1718,
+      1730
+    ],
+    "assertions": [],
+    "candidates": [
+      "K81.9"
+    ]
+  }
+]

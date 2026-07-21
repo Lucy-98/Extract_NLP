@@ -1,0 +1,13 @@
+# Pinned for scripts/run_pipeline.py (local inference only). scripts/prepare_ner_dataset.py,
+# augment_ner_dataset.py, build_terminology_index.py, check_submission.py, fetch_icd.py, run_all.py
+# are stdlib-only by design and need nothing from this file.
+#
+# The Kaggle training kernel uses its own preinstalled versions instead (see
+# notebooks/train_ner_assertion_model.ipynb cell 1's printed versions each run) -- that's fine for
+# inference-only compatibility across a version drift: verified 2026-07-20 that a model trained
+# under torch==2.10.0+cu128 / transformers==5.0.0 on Kaggle loaded and ran correctly here under the
+# versions pinned below. If you deliberately upgrade, re-verify with
+# `python scripts/run_pipeline.py && python scripts/check_submission.py --pred output_model --input input`
+# before trusting the output.
+torch==2.13.0
+transformers==5.14.1

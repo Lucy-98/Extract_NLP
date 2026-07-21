@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.venv/
+
+# Secrets / local env config
+.env
+
+# Local agent/workspace state
+.agents/
+.agent_runs/
+.codex/
+.claude/
+
+# Local Kaggle/runtime artifacts
+.kaggle_download/
+kaggle_upload/kernel/run_output/
+
+# Prediction/submission artifacts
+input_turn*/
+output_model*/
+output_turn*.zip
+output.zip
+source_bundle.zip
+
+# Large model artifacts; keep these outside GitHub or share via release/LFS.
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.zip
+
+# Raw RxNorm release dumps are huge. Commit only derived data/terminology/*.csv.
+rrf/
+prescribe/rrf/
+prescribe/scripts/
+
+# Upstream release readmes/dumps that are local-only.
+/Readme_Full*.txt
+prescribe/Readme_Full*.txt

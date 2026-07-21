@@ -1,0 +1,348 @@
+[
+  {
+    "text": "Bệnh tim mạch do xơ vữa động mạch",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      21,
+      54
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I25.1"
+    ]
+  },
+  {
+    "text": "Rối loạn lipid máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      69,
+      87
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E78.5"
+    ]
+  },
+  {
+    "text": "Đái tháo đường",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      89,
+      103
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.9"
+    ]
+  },
+  {
+    "text": "rối loạn ý thức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      136,
+      151
+    ],
+    "assertions": []
+  },
+  {
+    "text": "co giật",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      177,
+      184
+    ],
+    "assertions": []
+  },
+  {
+    "text": "xuất huyết dưới nhện",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      253,
+      273
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I60.9"
+    ]
+  },
+  {
+    "text": "Chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      275,
+      295
+    ],
+    "assertions": []
+  },
+  {
+    "text": "xuất huyết dưới nhện vùng trán phải",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      317,
+      352
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I60.9"
+    ]
+  },
+  {
+    "text": "nang màng nhện",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      484,
+      498
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "G93.0"
+    ]
+  },
+  {
+    "text": "tụ dịch/tụ máu dưới màng cứng mạn tính",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      504,
+      542
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I62.0"
+    ]
+  },
+  {
+    "text": "CT",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      558,
+      560
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      711,
+      718
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tụ máu ngoài màng cứng phải cấp tính",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      752,
+      788
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "S06.4X9A"
+    ]
+  },
+  {
+    "text": "CT",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      867,
+      869
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1001,
+      1008
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tê",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1056,
+      1058
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mất định hướng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1376,
+      1390
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1421,
+      1425
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiểu tiện không tự chủ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1947,
+      1969
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "Đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2008,
+      2015
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Tê",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2077,
+      2079
+    ],
+    "assertions": []
+  },
+  {
+    "text": "rối loạn ý thức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2132,
+      2147
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Mất định hướng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2159,
+      2173
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2194,
+      2198
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mất định hướng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2360,
+      2374
+    ],
+    "assertions": []
+  },
+  {
+    "text": "co giật",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2511,
+      2518
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "tiểu tiện không tự chủ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2543,
+      2565
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "CT",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2581,
+      2583
+    ],
+    "assertions": []
+  },
+  {
+    "text": "xuất huyết dưới nhện vùng trán phải",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2609,
+      2644
+    ],
+    "assertions": [],
+    "candidates": [
+      "I60.9"
+    ]
+  },
+  {
+    "text": "nang màng nhện",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2760,
+      2774
+    ],
+    "assertions": [],
+    "candidates": [
+      "G93.0"
+    ]
+  },
+  {
+    "text": "tụ máu dưới màng cứng mạn tính",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2780,
+      2810
+    ],
+    "assertions": [],
+    "candidates": [
+      "S06.5X9S"
+    ]
+  },
+  {
+    "text": "Tụ máu ngoài màng cứng phải cấp tính",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2811,
+      2847
+    ],
+    "assertions": [],
+    "candidates": [
+      "S06.4X9A"
+    ]
+  }
+]

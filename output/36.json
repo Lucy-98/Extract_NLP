@@ -1,0 +1,473 @@
+[
+  {
+    "text": "Bệnh thận đa nang",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      41,
+      58
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "Q61.3"
+    ]
+  },
+  {
+    "text": "Bệnh thận đa nang",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      68,
+      85
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "Q61.3"
+    ]
+  },
+  {
+    "text": "azathioprine",
+    "type": "THUỐC",
+    "position": [
+      208,
+      220
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "1256"
+    ]
+  },
+  {
+    "text": "prograf (dose decreased from 5mg bid to 1mg bid)",
+    "type": "THUỐC",
+    "position": [
+      233,
+      281
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "198377"
+    ]
+  },
+  {
+    "text": "cellcept",
+    "type": "THUỐC",
+    "position": [
+      294,
+      302
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "225542"
+    ]
+  },
+  {
+    "text": "cellcept",
+    "type": "THUỐC",
+    "position": [
+      324,
+      332
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "225542"
+    ]
+  },
+  {
+    "text": "Suy thận ngày càng nặng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      386,
+      409
+    ],
+    "assertions": [],
+    "candidates": [
+      "N19"
+    ]
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      457,
+      467
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng cao",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      469,
+      477
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      514,
+      524
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      573,
+      583
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      592,
+      596
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      626,
+      635
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cellcept",
+    "type": "THUỐC",
+    "position": [
+      653,
+      661
+    ],
+    "assertions": [],
+    "candidates": [
+      "225542"
+    ]
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      692,
+      702
+    ],
+    "assertions": []
+  },
+  {
+    "text": "prograf",
+    "type": "THUỐC",
+    "position": [
+      893,
+      900
+    ],
+    "assertions": [],
+    "candidates": [
+      "203969"
+    ]
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      953,
+      963
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      973,
+      977
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1024,
+      1031
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bình thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1063,
+      1074
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1088,
+      1098
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1179,
+      1189
+    ],
+    "assertions": []
+  },
+  {
+    "text": "5.1",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1193,
+      1196
+    ],
+    "assertions": []
+  },
+  {
+    "text": "k",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1218,
+      1219
+    ],
+    "assertions": []
+  },
+  {
+    "text": "5.8",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1223,
+      1226
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Suy thận ngày càng nặng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1271,
+      1294
+    ],
+    "assertions": [],
+    "candidates": [
+      "N19"
+    ]
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1358,
+      1367
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cellcept",
+    "type": "THUỐC",
+    "position": [
+      1385,
+      1393
+    ],
+    "assertions": [],
+    "candidates": [
+      "225542"
+    ]
+  },
+  {
+    "text": "prograf",
+    "type": "THUỐC",
+    "position": [
+      1469,
+      1476
+    ],
+    "assertions": [],
+    "candidates": [
+      "203969"
+    ]
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1529,
+      1536
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bình thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1568,
+      1579
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1593,
+      1603
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1736,
+      1746
+    ],
+    "assertions": []
+  },
+  {
+    "text": "5.1",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1747,
+      1750
+    ],
+    "assertions": []
+  },
+  {
+    "text": "k",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1752,
+      1753
+    ],
+    "assertions": []
+  },
+  {
+    "text": "5.8",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1754,
+      1757
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1834,
+      1844
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1936,
+      1946
+    ],
+    "assertions": []
+  },
+  {
+    "text": "5.1",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1947,
+      1950
+    ],
+    "assertions": []
+  },
+  {
+    "text": "k",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1963,
+      1964
+    ],
+    "assertions": []
+  },
+  {
+    "text": "5.8",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1965,
+      1968
+    ],
+    "assertions": []
+  },
+  {
+    "text": "dương tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1985,
+      1995
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2045,
+      2052
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bình thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2084,
+      2095
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2139,
+      2149
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2191,
+      2201
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2409,
+      2419
+    ],
+    "assertions": []
+  }
+]

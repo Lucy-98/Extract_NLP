@@ -1,0 +1,467 @@
+[
+  {
+    "text": "trào ngược dạ dày",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      45,
+      62
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K21.9"
+    ]
+  },
+  {
+    "text": "viêm thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      83,
+      97
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "K20"
+    ]
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      135,
+      138
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau cơ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      142,
+      148
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      302,
+      305
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      307,
+      314
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau cơ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      316,
+      322
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Sốt cao",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      325,
+      332
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      367,
+      374
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "advil",
+    "type": "THUỐC",
+    "position": [
+      378,
+      383
+    ],
+    "assertions": [],
+    "candidates": [
+      "153010"
+    ]
+  },
+  {
+    "text": "đau cổ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      394,
+      400
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sưng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      422,
+      426
+    ],
+    "assertions": []
+  },
+  {
+    "text": "áp xe",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      562,
+      567
+    ],
+    "assertions": [],
+    "candidates": [
+      "L02.9"
+    ]
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      585,
+      588
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau cổ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      592,
+      598
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      622,
+      625
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau cơ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      628,
+      634
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau cổ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      637,
+      643
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau vai",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      646,
+      653
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sưng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      661,
+      665
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      686,
+      693
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      696,
+      698
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      706,
+      713
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sợ ánh sáng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      716,
+      727
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      882,
+      889
+    ],
+    "assertions": []
+  },
+  {
+    "text": "áp xe",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      923,
+      928
+    ],
+    "assertions": [],
+    "candidates": [
+      "L02.9"
+    ]
+  },
+  {
+    "text": "viêm khớp nhiễm trùng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      929,
+      950
+    ],
+    "assertions": [],
+    "candidates": [
+      "M00.9"
+    ]
+  },
+  {
+    "text": "x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      968,
+      975
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mri",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      984,
+      987
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mri",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1065,
+      1068
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau khi sờ nắn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1152,
+      1166
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau khi vận động",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1175,
+      1191
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "viêm mô tế bào",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1221,
+      1235
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "L03.9"
+    ]
+  },
+  {
+    "text": "bạch cầu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1377,
+      1385
+    ],
+    "assertions": []
+  },
+  {
+    "text": "13.9",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1386,
+      1390
+    ],
+    "assertions": []
+  },
+  {
+    "text": "neutrophil",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1396,
+      1406
+    ],
+    "assertions": []
+  },
+  {
+    "text": "lymphocyte",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1412,
+      1422
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bình thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1425,
+      1436
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ck",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1446,
+      1448
+    ],
+    "assertions": []
+  },
+  {
+    "text": "58",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1449,
+      1451
+    ],
+    "assertions": []
+  },
+  {
+    "text": "alt",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1454,
+      1457
+    ],
+    "assertions": []
+  },
+  {
+    "text": "92",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1458,
+      1460
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hiv vl",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1463,
+      1469
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1504,
+      1511
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1541,
+      1548
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ổ tụ dịch chia làm hai thùy, giới hạn và bờ không rõ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1570,
+      1622
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sung huyết ngoại vi nhẹ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1822,
+      1845
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1909,
+      1916
+    ],
+    "assertions": []
+  }
+]

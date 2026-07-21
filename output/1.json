@@ -1,0 +1,547 @@
+[
+  {
+    "text": "metoprolol 25mg po bid",
+    "type": "THUỐC",
+    "position": [
+      53,
+      75
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "866924"
+    ]
+  },
+  {
+    "text": "doxycycline",
+    "type": "THUỐC",
+    "position": [
+      82,
+      93
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "3640"
+    ]
+  },
+  {
+    "text": "viêm tuyến mồ hôi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      98,
+      115
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "L73.2"
+    ]
+  },
+  {
+    "text": "atenolol",
+    "type": "THUỐC",
+    "position": [
+      122,
+      130
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "1202"
+    ]
+  },
+  {
+    "text": "Căng thẳng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      226,
+      236
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      497,
+      512
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      615,
+      630
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      666,
+      681
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Khó thở nhẹ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      688,
+      699
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      700,
+      707
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cảm giác thắt chặt ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      714,
+      737
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      787,
+      802
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      832,
+      839
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      878,
+      885
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      935,
+      942
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1053,
+      1068
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1084,
+      1099
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1121,
+      1128
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1149,
+      1164
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1180,
+      1187
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cảm giác thắt chặt ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1217,
+      1240
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó chịu vùng ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1301,
+      1319
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1339,
+      1346
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1362,
+      1377
+    ],
+    "assertions": []
+  },
+  {
+    "text": "giảm dung nạp gắng sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1423,
+      1445
+    ],
+    "assertions": []
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1461,
+      1469
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1475,
+      1478
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đổ mồ hôi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1480,
+      1489
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "holter",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1639,
+      1645
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Nhịp xoang",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1655,
+      1665
+    ],
+    "assertions": [],
+    "candidates": [
+      "I49.8"
+    ]
+  },
+  {
+    "text": "ngoại tâm thu nhĩ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1689,
+      1706
+    ],
+    "assertions": [],
+    "candidates": [
+      "I49.1"
+    ]
+  },
+  {
+    "text": "ngoại tâm thu thất",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1710,
+      1728
+    ],
+    "assertions": [],
+    "candidates": [
+      "I49.3"
+    ]
+  },
+  {
+    "text": "metoprolol 25mg po bid",
+    "type": "THUỐC",
+    "position": [
+      1772,
+      1794
+    ],
+    "assertions": [],
+    "candidates": [
+      "866924"
+    ]
+  },
+  {
+    "text": "atenolol",
+    "type": "THUỐC",
+    "position": [
+      1849,
+      1857
+    ],
+    "assertions": [],
+    "candidates": [
+      "1202"
+    ]
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1929,
+      1936
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cảm giác thắt chặt ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2050,
+      2073
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2095,
+      2110
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2115,
+      2122
+    ],
+    "assertions": []
+  },
+  {
+    "text": "aspirin 325mg x 1",
+    "type": "THUỐC",
+    "position": [
+      2199,
+      2216
+    ],
+    "assertions": [],
+    "candidates": [
+      "212033"
+    ]
+  },
+  {
+    "text": "chụp x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2223,
+      2235
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bất thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2259,
+      2269
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phân tích nước tiểu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2276,
+      2295
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bất thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2314,
+      2324
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ecg",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2331,
+      2334
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bình thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2335,
+      2346
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2406,
+      2421
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "phân tích nước tiểu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2618,
+      2637
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2693,
+      2705
+    ],
+    "assertions": []
+  },
+  {
+    "text": "điện tâm đồ",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2771,
+      2782
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bất thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2804,
+      2814
+    ],
+    "assertions": []
+  },
+  {
+    "text": "holter",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2829,
+      2835
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Nhịp xoang",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2845,
+      2855
+    ],
+    "assertions": [],
+    "candidates": [
+      "I49.8"
+    ]
+  },
+  {
+    "text": "ngoại tâm thu nhĩ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2879,
+      2896
+    ],
+    "assertions": [],
+    "candidates": [
+      "I49.1"
+    ]
+  },
+  {
+    "text": "ngoại tâm thu thất",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2900,
+      2918
+    ],
+    "assertions": [],
+    "candidates": [
+      "I49.3"
+    ]
+  }
+]

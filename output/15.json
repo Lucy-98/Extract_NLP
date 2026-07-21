@@ -1,0 +1,38 @@
+[
+  {
+    "text": "xuất huyết nội sọ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      37,
+      54
+    ],
+    "assertions": [],
+    "candidates": [
+      "I62.9"
+    ]
+  },
+  {
+    "text": "yếu tố IX đậm đặc",
+    "type": "THUỐC",
+    "position": [
+      156,
+      173
+    ],
+    "assertions": [],
+    "candidates": [
+      "1424945"
+    ]
+  },
+  {
+    "text": "xuất huyết nội sọ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      205,
+      222
+    ],
+    "assertions": [],
+    "candidates": [
+      "I62.9"
+    ]
+  }
+]

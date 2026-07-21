@@ -1,0 +1,46 @@
+[
+  {
+    "text": "Nghẽn tắc và hẹp động mạch cảnh",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      50,
+      81
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I65.2"
+    ]
+  },
+  {
+    "text": "siêu âm Doppler",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      235,
+      250
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nghẽn tắc và hẹp động mạch cảnh",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      264,
+      295
+    ],
+    "assertions": [],
+    "candidates": [
+      "I65.2"
+    ]
+  },
+  {
+    "text": "siêu âm doppler",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      320,
+      335
+    ],
+    "assertions": []
+  }
+]

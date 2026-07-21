@@ -1,0 +1,396 @@
+[
+  {
+    "text": "tăng lipid máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      66,
+      80
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E78.5"
+    ]
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      150,
+      157
+    ],
+    "assertions": []
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      495,
+      502
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      697,
+      699
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      715,
+      722
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chọc dò dịch não tủy",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      753,
+      773
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhịp tim chậm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      792,
+      805
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hạ huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      814,
+      825
+    ],
+    "assertions": [],
+    "candidates": [
+      "I95.9"
+    ]
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      922,
+      924
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      941,
+      948
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tai biến mạch máu não",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1022,
+      1043
+    ],
+    "assertions": [],
+    "candidates": [
+      "I64"
+    ]
+  },
+  {
+    "text": "nhiễm trùng nhiễm trùng răng miệng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1216,
+      1250
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K04.7"
+    ]
+  },
+  {
+    "text": "tai biến mạch máu não",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1306,
+      1327
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "I64"
+    ]
+  },
+  {
+    "text": "co giật",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1333,
+      1340
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1378,
+      1385
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1466,
+      1473
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "yếu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1513,
+      1516
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1772,
+      1779
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1875,
+      1882
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1918,
+      1920
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1936,
+      1943
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chọc dò dịch não tủy",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1961,
+      1981
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhịp tim chậm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1992,
+      2005
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "hạ huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2014,
+      2025
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I95.9"
+    ]
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2119,
+      2121
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2138,
+      2145
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhiễm trùng nhiễm trùng răng miệng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2176,
+      2210
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K04.7"
+    ]
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2315,
+      2322
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "yếu nửa người",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2479,
+      2492
+    ],
+    "assertions": []
+  },
+  {
+    "text": "suy giảm tri giác",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2508,
+      2525
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhịp tim chậm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2552,
+      2565
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hạ huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2572,
+      2583
+    ],
+    "assertions": [],
+    "candidates": [
+      "I95.9"
+    ]
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2767,
+      2769
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2778,
+      2785
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2806,
+      2808
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2817,
+      2824
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2867,
+      2869
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chọc dò dịch não tủy",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2883,
+      2903
+    ],
+    "assertions": []
+  }
+]

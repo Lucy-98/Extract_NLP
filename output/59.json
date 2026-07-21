@@ -1,0 +1,276 @@
+[
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      110,
+      130
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      132,
+      134
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      165,
+      172
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      263,
+      270
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "phù gai thị",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      353,
+      364
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "não úng thuỷ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      388,
+      400
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "G91.9"
+    ]
+  },
+  {
+    "text": "tăng nhãn áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      504,
+      516
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "H40.9"
+    ]
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      703,
+      710
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mờ mắt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      728,
+      734
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhìn mờ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      772,
+      779
+    ],
+    "assertions": []
+  },
+  {
+    "text": "não úng tuỷ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      846,
+      857
+    ],
+    "assertions": [],
+    "candidates": [
+      "G91.9"
+    ]
+  },
+  {
+    "text": "não úng thủy",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      968,
+      980
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "G91.9"
+    ]
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1000,
+      1007
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1109,
+      1116
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "phù gai thị",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1192,
+      1203
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "mờ mắt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1237,
+      1243
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1361,
+      1368
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1411,
+      1418
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhìn mờ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1433,
+      1440
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1494,
+      1501
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhìn mờ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1543,
+      1550
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1614,
+      1621
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phù gai thị",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1782,
+      1793
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Phù gai thị",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1872,
+      1883
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2007,
+      2027
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2029,
+      2031
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Phù gai thị",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2078,
+      2089
+    ],
+    "assertions": []
+  }
+]

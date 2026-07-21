@@ -1,0 +1,112 @@
+[
+  {
+    "text": "ý định tự tử",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      34,
+      46
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "trầm cảm",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      108,
+      116
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "F32.9"
+    ]
+  },
+  {
+    "text": "rối loạn lo âu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      121,
+      135
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "F41.9"
+    ]
+  },
+  {
+    "text": "tự tử không thành",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      202,
+      219
+    ],
+    "assertions": []
+  },
+  {
+    "text": "trầm cảm",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      555,
+      563
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "F32.9"
+    ]
+  },
+  {
+    "text": "ý định tự tử",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      595,
+      607
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "thuyên tắc phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      768,
+      783
+    ],
+    "assertions": [],
+    "candidates": [
+      "I26.9"
+    ]
+  },
+  {
+    "text": "nhiễm trùng chi dưới bên phải",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      795,
+      824
+    ],
+    "assertions": [],
+    "candidates": [
+      "L08.9"
+    ]
+  },
+  {
+    "text": "vancomycin",
+    "type": "THUỐC",
+    "position": [
+      847,
+      857
+    ],
+    "assertions": [],
+    "candidates": [
+      "11124"
+    ]
+  }
+]

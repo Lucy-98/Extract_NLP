@@ -1,0 +1,534 @@
+[
+  {
+    "text": "acetaminophen 500mg",
+    "type": "THUỐC",
+    "position": [
+      171,
+      190
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "198440"
+    ]
+  },
+  {
+    "text": "đau dữ dội",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      226,
+      236
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      376,
+      384
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      449,
+      457
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      491,
+      499
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      542,
+      550
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      590,
+      598
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      775,
+      783
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      801,
+      809
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      821,
+      828
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      841,
+      848
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      851,
+      858
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ngứa",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      874,
+      878
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "tiểu ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      899,
+      910
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Đau vùng gan phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      952,
+      969
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1016,
+      1024
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1036,
+      1039
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "acetaminophen 500mg",
+    "type": "THUỐC",
+    "position": [
+      1183,
+      1202
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "198440"
+    ]
+  },
+  {
+    "text": "bilirubin",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1334,
+      1343
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ast",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1349,
+      1352
+    ],
+    "assertions": []
+  },
+  {
+    "text": "421",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1353,
+      1356
+    ],
+    "assertions": []
+  },
+  {
+    "text": "alt",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1358,
+      1361
+    ],
+    "assertions": []
+  },
+  {
+    "text": "336",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1362,
+      1365
+    ],
+    "assertions": []
+  },
+  {
+    "text": "alp",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1367,
+      1370
+    ],
+    "assertions": []
+  },
+  {
+    "text": "185",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1371,
+      1374
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bilirubin toàn phần",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1376,
+      1395
+    ],
+    "assertions": []
+  },
+  {
+    "text": "0.9",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1396,
+      1399
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1402,
+      1409
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1410,
+      1417
+    ],
+    "assertions": []
+  },
+  {
+    "text": "doppler",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1426,
+      1433
+    ],
+    "assertions": []
+  },
+  {
+    "text": "acetaminophen",
+    "type": "THUỐC",
+    "position": [
+      1485,
+      1498
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "161"
+    ]
+  },
+  {
+    "text": "sỏi mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1694,
+      1701
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K80.8"
+    ]
+  },
+  {
+    "text": "bilirubin",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1744,
+      1753
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1761,
+      1765
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ast",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1830,
+      1833
+    ],
+    "assertions": []
+  },
+  {
+    "text": "421",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1834,
+      1837
+    ],
+    "assertions": []
+  },
+  {
+    "text": "alt",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1840,
+      1843
+    ],
+    "assertions": []
+  },
+  {
+    "text": "336",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1844,
+      1847
+    ],
+    "assertions": []
+  },
+  {
+    "text": "alp",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1850,
+      1853
+    ],
+    "assertions": []
+  },
+  {
+    "text": "185",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1854,
+      1857
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bilirubin toàn phần",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1860,
+      1879
+    ],
+    "assertions": []
+  },
+  {
+    "text": "0.9",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1880,
+      1883
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1905,
+      1909
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm gan",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1945,
+      1953
+    ],
+    "assertions": [],
+    "candidates": [
+      "K75.9"
+    ]
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1963,
+      1970
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bình thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1985,
+      1996
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2106,
+      2113
+    ],
+    "assertions": []
+  },
+  {
+    "text": "doppler",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2122,
+      2129
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2130,
+      2137
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2138,
+      2145
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2148,
+      2155
+    ],
+    "assertions": []
+  },
+  {
+    "text": "giải phẫu bệnh",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2250,
+      2264
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bilirubin",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2347,
+      2356
+    ],
+    "assertions": []
+  }
+]

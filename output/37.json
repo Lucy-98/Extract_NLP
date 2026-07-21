@@ -1,0 +1,545 @@
+[
+  {
+    "text": "Tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      39,
+      52
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "Đái tháo đường, có biến chứng bệnh lý thần kinh ngoại biên",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      54,
+      112
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.4"
+    ]
+  },
+  {
+    "text": "Suy tim",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      114,
+      121
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I50.9"
+    ]
+  },
+  {
+    "text": "thiếu máu cơ tim",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      131,
+      147
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "I25.9"
+    ]
+  },
+  {
+    "text": "Bệnh thận mạn tính",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      176,
+      194
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "N18.9"
+    ]
+  },
+  {
+    "text": "Torsemide",
+    "type": "THUỐC",
+    "position": [
+      224,
+      233
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "38413"
+    ]
+  },
+  {
+    "text": "Insulin glargine",
+    "type": "THUỐC",
+    "position": [
+      274,
+      290
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "274783"
+    ]
+  },
+  {
+    "text": "Isosorbide",
+    "type": "THUỐC",
+    "position": [
+      349,
+      359
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "6057"
+    ]
+  },
+  {
+    "text": "Rosuvastatin (Crestor)",
+    "type": "THUỐC",
+    "position": [
+      405,
+      427
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "301542"
+    ]
+  },
+  {
+    "text": "Carvedilol",
+    "type": "THUỐC",
+    "position": [
+      473,
+      483
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "20352"
+    ]
+  },
+  {
+    "text": "tăng kali máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      590,
+      603
+    ],
+    "assertions": [],
+    "candidates": [
+      "E87.5"
+    ]
+  },
+  {
+    "text": "Creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      607,
+      617
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      618,
+      622
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Torsemide",
+    "type": "THUỐC",
+    "position": [
+      741,
+      750
+    ],
+    "assertions": [],
+    "candidates": [
+      "38413"
+    ]
+  },
+  {
+    "text": "torsemide",
+    "type": "THUỐC",
+    "position": [
+      805,
+      814
+    ],
+    "assertions": [],
+    "candidates": [
+      "38413"
+    ]
+  },
+  {
+    "text": "glucose",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      911,
+      918
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thấp",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      922,
+      926
+    ],
+    "assertions": []
+  },
+  {
+    "text": "isosorbide",
+    "type": "THUỐC",
+    "position": [
+      1040,
+      1050
+    ],
+    "assertions": [],
+    "candidates": [
+      "6057"
+    ]
+  },
+  {
+    "text": "crestor",
+    "type": "THUỐC",
+    "position": [
+      1052,
+      1059
+    ],
+    "assertions": [],
+    "candidates": [
+      "320864"
+    ]
+  },
+  {
+    "text": "carvedilol",
+    "type": "THUỐC",
+    "position": [
+      1061,
+      1071
+    ],
+    "assertions": [],
+    "candidates": [
+      "20352"
+    ]
+  },
+  {
+    "text": "isosorbide",
+    "type": "THUỐC",
+    "position": [
+      1102,
+      1112
+    ],
+    "assertions": [],
+    "candidates": [
+      "6057"
+    ]
+  },
+  {
+    "text": "crestor",
+    "type": "THUỐC",
+    "position": [
+      1114,
+      1121
+    ],
+    "assertions": [],
+    "candidates": [
+      "320864"
+    ]
+  },
+  {
+    "text": "carvedilol",
+    "type": "THUỐC",
+    "position": [
+      1123,
+      1133
+    ],
+    "assertions": [],
+    "candidates": [
+      "20352"
+    ]
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1205,
+      1209
+    ],
+    "assertions": []
+  },
+  {
+    "text": "6.3",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1213,
+      1216
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1356,
+      1360
+    ],
+    "assertions": []
+  },
+  {
+    "text": "6.3",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1361,
+      1364
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1386,
+      1390
+    ],
+    "assertions": []
+  },
+  {
+    "text": "k",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1392,
+      1393
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ure",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1399,
+      1402
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bun",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1404,
+      1407
+    ],
+    "assertions": []
+  },
+  {
+    "text": "83",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1409,
+      1411
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1414,
+      1424
+    ],
+    "assertions": []
+  },
+  {
+    "text": "5.7",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1425,
+      1428
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hemoglobin",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1431,
+      1441
+    ],
+    "assertions": []
+  },
+  {
+    "text": "7.8",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1442,
+      1445
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hba1c",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1448,
+      1453
+    ],
+    "assertions": []
+  },
+  {
+    "text": "6.5",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1454,
+      1457
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bnp",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1460,
+      1463
+    ],
+    "assertions": []
+  },
+  {
+    "text": "21,000",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1464,
+      1470
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phân tích nước tiểu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1478,
+      1497
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bình thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1498,
+      1509
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1516,
+      1523
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1552,
+      1564
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1571,
+      1575
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tràn dịch màng phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1601,
+      1620
+    ],
+    "assertions": [],
+    "candidates": [
+      "J91"
+    ]
+  },
+  {
+    "text": "insulin",
+    "type": "THUỐC",
+    "position": [
+      1680,
+      1687
+    ],
+    "assertions": [],
+    "candidates": [
+      "253182"
+    ]
+  },
+  {
+    "text": "dextrose",
+    "type": "THUỐC",
+    "position": [
+      1691,
+      1699
+    ],
+    "assertions": [],
+    "candidates": [
+      "4850"
+    ]
+  },
+  {
+    "text": "tăng kali máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1704,
+      1717
+    ],
+    "assertions": [],
+    "candidates": [
+      "E87.5"
+    ]
+  },
+  {
+    "text": "lasix 40 mg once",
+    "type": "THUỐC",
+    "position": [
+      1723,
+      1739
+    ],
+    "assertions": [],
+    "candidates": [
+      "313988"
+    ]
+  }
+]

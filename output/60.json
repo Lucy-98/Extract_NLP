@@ -1,0 +1,49 @@
+[
+  {
+    "text": "Trào ngược dạ dày thực quản ngày càng tăng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      149,
+      191
+    ],
+    "assertions": [],
+    "candidates": [
+      "K21.9"
+    ]
+  },
+  {
+    "text": "triệu chứng trào ngược",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      528,
+      550
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thoát vị hoành",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      638,
+      652
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "K44.9"
+    ]
+  },
+  {
+    "text": "thoát vị cạnh thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      694,
+      717
+    ],
+    "assertions": [],
+    "candidates": [
+      "K44.9"
+    ]
+  }
+]

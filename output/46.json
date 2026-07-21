@@ -1,0 +1,111 @@
+[
+  {
+    "text": "tiền sử lâu dài của tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      39,
+      72
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "hạ huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      213,
+      224
+    ],
+    "assertions": [],
+    "candidates": [
+      "I95.9"
+    ]
+  },
+  {
+    "text": "khó kiểm soát huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      247,
+      269
+    ],
+    "assertions": [],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      343,
+      363
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      365,
+      367
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tắc hẹp 80% động mạch thận trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      393,
+      424
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I70.1"
+    ]
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      487,
+      507
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      509,
+      511
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tắc hẹp 80% động mạch thận trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      522,
+      553
+    ],
+    "assertions": [],
+    "candidates": [
+      "I70.1"
+    ]
+  },
+  {
+    "text": "chụp mạch",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      586,
+      595
+    ],
+    "assertions": []
+  }
+]

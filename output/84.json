@@ -1,0 +1,384 @@
+[
+  {
+    "text": "hen suyễn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      54,
+      63
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "J45.9"
+    ]
+  },
+  {
+    "text": "rối loạn lo âu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      70,
+      84
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "F41.9"
+    ]
+  },
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      91,
+      104
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      106,
+      119
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "Táo bón",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      127,
+      134
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "thở nhanh",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      216,
+      225
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thiếu oxy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      229,
+      238
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      311,
+      318
+    ],
+    "assertions": [
+      "isFamily",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      320,
+      322
+    ],
+    "assertions": [
+      "isFamily",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "nhiễm trùng đường hô hấp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      459,
+      483
+    ],
+    "assertions": [
+      "isFamily",
+      "isHistorical"
+    ],
+    "candidates": [
+      "J22"
+    ]
+  },
+  {
+    "text": "SPO2",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      555,
+      559
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thở nhanh",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      597,
+      606
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      734,
+      741
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      748,
+      750
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thở nhanh",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      782,
+      791
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Thiếu oxy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      798,
+      807
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bạch cầu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      847,
+      855
+    ],
+    "assertions": []
+  },
+  {
+    "text": "26.7",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      856,
+      860
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bnp",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      867,
+      870
+    ],
+    "assertions": []
+  },
+  {
+    "text": "4227",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      871,
+      875
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      882,
+      886
+    ],
+    "assertions": []
+  },
+  {
+    "text": "3.2",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      887,
+      890
+    ],
+    "assertions": []
+  },
+  {
+    "text": "troponin",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      897,
+      905
+    ],
+    "assertions": []
+  },
+  {
+    "text": "0.01",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      906,
+      910
+    ],
+    "assertions": []
+  },
+  {
+    "text": "lactate",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      917,
+      924
+    ],
+    "assertions": []
+  },
+  {
+    "text": "1.8",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      925,
+      928
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phân tích nước tiểu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      940,
+      959
+    ],
+    "assertions": []
+  },
+  {
+    "text": "dương tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      971,
+      981
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nitrite",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1023,
+      1030
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1157,
+      1169
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1187,
+      1196
+    ],
+    "assertions": [],
+    "candidates": [
+      "J18.9"
+    ]
+  },
+  {
+    "text": "Albuterol",
+    "type": "THUỐC",
+    "position": [
+      1254,
+      1263
+    ],
+    "assertions": [],
+    "candidates": [
+      "435"
+    ]
+  },
+  {
+    "text": "Ipratropium 1 lần",
+    "type": "THUỐC",
+    "position": [
+      1267,
+      1284
+    ],
+    "assertions": [],
+    "candidates": [
+      "7213"
+    ]
+  },
+  {
+    "text": "Ceftriaxone 1 gram",
+    "type": "THUỐC",
+    "position": [
+      1291,
+      1309
+    ],
+    "assertions": [],
+    "candidates": [
+      "2193"
+    ]
+  },
+  {
+    "text": "Tylenol 1 gram",
+    "type": "THUỐC",
+    "position": [
+      1333,
+      1347
+    ],
+    "assertions": [],
+    "candidates": [
+      "430837"
+    ]
+  },
+  {
+    "text": "cấy máu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1372,
+      1379
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cấy nước tiểu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1389,
+      1402
+    ],
+    "assertions": []
+  }
+]

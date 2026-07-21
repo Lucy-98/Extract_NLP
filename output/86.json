@@ -1,0 +1,129 @@
+[
+  {
+    "text": "bệnh động mạch vành",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      34,
+      53
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I25.1"
+    ]
+  },
+  {
+    "text": "bệnh lý thần kinh ngoại biên",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      55,
+      83
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "G62.9"
+    ]
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      160,
+      167
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      199,
+      206
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      248,
+      255
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      258,
+      265
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Đau hai bàn chân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      341,
+      357
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bệnh lý thần kinh ngoại biên",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      361,
+      389
+    ],
+    "assertions": [],
+    "candidates": [
+      "G62.9"
+    ]
+  },
+  {
+    "text": "rối loạn chức năng thất trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      589,
+      617
+    ],
+    "assertions": [],
+    "candidates": [
+      "I51.9"
+    ]
+  },
+  {
+    "text": "Chụp động mạch vành",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      621,
+      640
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bệnh ba thân động mạch vành",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      650,
+      677
+    ],
+    "assertions": [],
+    "candidates": [
+      "I25.1"
+    ]
+  },
+  {
+    "text": "Chụp động mạch vành",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      721,
+      740
+    ],
+    "assertions": []
+  }
+]

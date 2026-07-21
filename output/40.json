@@ -1,0 +1,481 @@
+[
+  {
+    "text": "đái tháo đường",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      54,
+      68
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.9"
+    ]
+  },
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      75,
+      88
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "béo phì",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      95,
+      102
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E66.9"
+    ]
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      176,
+      183
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "mucinex d",
+    "type": "THUỐC",
+    "position": [
+      190,
+      199
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "352051"
+    ]
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      219,
+      228
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      298,
+      300
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thiếu oxy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      302,
+      311
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      407,
+      409
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở nhẹ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      433,
+      444
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      449,
+      456
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      476,
+      483
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      490,
+      497
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      504,
+      507
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      539,
+      548
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiểu nhiều",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      579,
+      589
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau buốt khi đi tiểu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      616,
+      636
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      668,
+      675
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      706,
+      713
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      743,
+      745
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      813,
+      816
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      826,
+      829
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      848,
+      857
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      906,
+      914
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      930,
+      938
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      939,
+      942
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đổ mồ hôi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      958,
+      967
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      987,
+      994
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1018,
+      1025
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "dyspnea",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1065,
+      1072
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "giãn phế quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1175,
+      1188
+    ],
+    "assertions": [
+      "isFamily"
+    ],
+    "candidates": [
+      "J47.9"
+    ]
+  },
+  {
+    "text": "azithromycin",
+    "type": "THUỐC",
+    "position": [
+      1207,
+      1219
+    ],
+    "assertions": [
+      "isFamily"
+    ],
+    "candidates": [
+      "18631"
+    ]
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      1243,
+      1250
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "mucinex d",
+    "type": "THUỐC",
+    "position": [
+      1254,
+      1263
+    ],
+    "assertions": [],
+    "candidates": [
+      "352051"
+    ]
+  },
+  {
+    "text": "spo2",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1361,
+      1365
+    ],
+    "assertions": []
+  },
+  {
+    "text": "90-92",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1369,
+      1374
+    ],
+    "assertions": []
+  },
+  {
+    "text": "spo2",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1376,
+      1380
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bạch cầu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1541,
+      1549
+    ],
+    "assertions": []
+  },
+  {
+    "text": "12.5",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1553,
+      1557
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phân tích nước tiểu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1569,
+      1588
+    ],
+    "assertions": []
+  },
+  {
+    "text": "protein niệu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1614,
+      1626
+    ],
+    "assertions": []
+  },
+  {
+    "text": "troponin",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1636,
+      1644
+    ],
+    "assertions": []
+  },
+  {
+    "text": "âm tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1645,
+      1652
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1688,
+      1700
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm phổi thùy dưới phải",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1718,
+      1742
+    ],
+    "assertions": [],
+    "candidates": [
+      "J18.1"
+    ]
+  },
+  {
+    "text": "RLL PNA",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1744,
+      1751
+    ],
+    "assertions": [],
+    "candidates": [
+      "J18.1"
+    ]
+  }
+]

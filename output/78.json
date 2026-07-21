@@ -1,0 +1,154 @@
+[
+  {
+    "text": "ung thư vú",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      47,
+      57
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C50.9"
+    ]
+  },
+  {
+    "text": "ung thư phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      64,
+      76
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C34.9"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      81,
+      83
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      84,
+      91
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "suy nhược toàn thân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      197,
+      216
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      260,
+      267
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hồi hộp",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      319,
+      326
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      328,
+      343
+    ],
+    "assertions": []
+  },
+  {
+    "text": "suy nhược toàn thân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      380,
+      399
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      406,
+      413
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      446,
+      448
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hồi hộp",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      455,
+      462
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      464,
+      479
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      562,
+      569
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chèn ép tim",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      575,
+      586
+    ],
+    "assertions": [],
+    "candidates": [
+      "I31.4"
+    ]
+  }
+]

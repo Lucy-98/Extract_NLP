@@ -1,0 +1,249 @@
+[
+  {
+    "text": "tăng calci máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      61,
+      75
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E83.5"
+    ]
+  },
+  {
+    "text": "U ác của đại tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      123,
+      141
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C18.9"
+    ]
+  },
+  {
+    "text": "Xơ vữa động mạch",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      181,
+      197
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I70.9"
+    ]
+  },
+  {
+    "text": "đau thắt ngực",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      208,
+      221
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I20.9"
+    ]
+  },
+  {
+    "text": "tăng calci máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      275,
+      289
+    ],
+    "assertions": [],
+    "candidates": [
+      "E83.5"
+    ]
+  },
+  {
+    "text": "tăng calci máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      316,
+      330
+    ],
+    "assertions": [],
+    "candidates": [
+      "E83.5"
+    ]
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      504,
+      512
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      673,
+      681
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      683,
+      690
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      692,
+      701
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "động kinh",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      741,
+      750
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "G40.9"
+    ]
+  },
+  {
+    "text": "MRI",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      769,
+      772
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhồi máu cũ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      796,
+      807
+    ],
+    "assertions": [],
+    "candidates": [
+      "I63.9"
+    ]
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      895,
+      903
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau kéo dài khoảng 5 phút",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      933,
+      958
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nitroglycerin đặt dưới lưỡi",
+    "type": "THUỐC",
+    "position": [
+      996,
+      1023
+    ],
+    "assertions": [],
+    "candidates": [
+      "4917"
+    ]
+  },
+  {
+    "text": "đau ở sau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1053,
+      1066
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1260,
+      1270
+    ],
+    "assertions": []
+  },
+  {
+    "text": "1.2",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1272,
+      1275
+    ],
+    "assertions": []
+  },
+  {
+    "text": "MRI",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1308,
+      1311
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhồi máu cũ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1341,
+      1352
+    ],
+    "assertions": [],
+    "candidates": [
+      "I63.9"
+    ]
+  },
+  {
+    "text": "Laxis 20mg",
+    "type": "THUỐC",
+    "position": [
+      1441,
+      1451
+    ],
+    "assertions": [],
+    "candidates": [
+      "202991"
+    ]
+  }
+]

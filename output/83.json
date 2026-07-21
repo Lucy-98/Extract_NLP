@@ -1,0 +1,66 @@
+[
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      59,
+      66
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      190,
+      197
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      247,
+      254
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hở van hai lá",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      268,
+      281
+    ],
+    "assertions": [],
+    "candidates": [
+      "I34.0"
+    ]
+  },
+  {
+    "text": "Chụp động mạch vành",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      289,
+      308
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bệnh động mạch vành",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      327,
+      346
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "I25.1"
+    ]
+  }
+]

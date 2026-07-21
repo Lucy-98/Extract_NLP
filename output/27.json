@@ -1,0 +1,291 @@
+[
+  {
+    "text": "Tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      87,
+      100
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "Ung thư đại tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      146,
+      163
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C18.9"
+    ]
+  },
+  {
+    "text": "Thuyên tắc phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      178,
+      193
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I26.9"
+    ]
+  },
+  {
+    "text": "coumadin",
+    "type": "THUỐC",
+    "position": [
+      204,
+      212
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "202421"
+    ]
+  },
+  {
+    "text": "Thuyên tắc phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      222,
+      237
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I26.9"
+    ]
+  },
+  {
+    "text": "coumadin",
+    "type": "THUỐC",
+    "position": [
+      248,
+      256
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "202421"
+    ]
+  },
+  {
+    "text": "coumadin",
+    "type": "THUỐC",
+    "position": [
+      355,
+      363
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "202421"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      412,
+      419
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      455,
+      462
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      511,
+      513
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      532,
+      535
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "ớn lạnh",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      548,
+      555
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      568,
+      576
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      590,
+      597
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đau khi thay đổi tư thế",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      633,
+      656
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      669,
+      676
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      702,
+      717
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      730,
+      737
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "nhịp nhanh",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      766,
+      776
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "R00.0"
+    ]
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      789,
+      797
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó nuốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      945,
+      953
+    ],
+    "assertions": []
+  },
+  {
+    "text": "metoprolol 5mg iv x2",
+    "type": "THUỐC",
+    "position": [
+      1053,
+      1073
+    ],
+    "assertions": [],
+    "candidates": [
+      "1807635"
+    ]
+  },
+  {
+    "text": "spo2",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1170,
+      1174
+    ],
+    "assertions": []
+  },
+  {
+    "text": "100",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1175,
+      1178
+    ],
+    "assertions": []
+  },
+  {
+    "text": "metoprolol",
+    "type": "THUỐC",
+    "position": [
+      1298,
+      1308
+    ],
+    "assertions": [],
+    "candidates": [
+      "6918"
+    ]
+  }
+]

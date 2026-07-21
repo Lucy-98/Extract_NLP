@@ -1,0 +1,223 @@
+[
+  {
+    "text": "ung thư vú trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      58,
+      73
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C50.9"
+    ]
+  },
+  {
+    "text": "ung thư vú trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      84,
+      99
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C50.9"
+    ]
+  },
+  {
+    "text": "ban đỏ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      278,
+      284
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau khi sờ nắn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      288,
+      302
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sưng nề",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      433,
+      440
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau khi sờ nắn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      441,
+      455
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ban đỏ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      478,
+      484
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau khi sờ nắn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      525,
+      539
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ban đỏ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      562,
+      568
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sưng nề",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      613,
+      620
+    ],
+    "assertions": []
+  },
+  {
+    "text": "levafloxacin",
+    "type": "THUỐC",
+    "position": [
+      698,
+      710
+    ],
+    "assertions": [],
+    "candidates": [
+      "82122"
+    ]
+  },
+  {
+    "text": "cephalexin",
+    "type": "THUỐC",
+    "position": [
+      714,
+      724
+    ],
+    "assertions": [],
+    "candidates": [
+      "2231"
+    ]
+  },
+  {
+    "text": "ban đỏ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      767,
+      773
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      792,
+      801
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ban đỏ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      938,
+      944
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau khi sờ nắn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      987,
+      1001
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1016,
+      1025
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1038,
+      1041
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "ban đỏ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1154,
+      1160
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ấn vùng mổ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1187,
+      1201
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1214,
+      1217
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "vancomycin",
+    "type": "THUỐC",
+    "position": [
+      1351,
+      1361
+    ],
+    "assertions": [],
+    "candidates": [
+      "11124"
+    ]
+  }
+]

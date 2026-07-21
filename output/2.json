@@ -1,0 +1,82 @@
+[
+  {
+    "text": "nghi ngờ xơ gan do rượu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      52,
+      75
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K70.3"
+    ]
+  },
+  {
+    "text": "hội chứng não gan",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      191,
+      208
+    ],
+    "assertions": [],
+    "candidates": [
+      "K72.9"
+    ]
+  },
+  {
+    "text": "hội chứng não gan",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      270,
+      287
+    ],
+    "assertions": [],
+    "candidates": [
+      "K72.9"
+    ]
+  },
+  {
+    "text": "hội chứng não gan",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      338,
+      355
+    ],
+    "assertions": [],
+    "candidates": [
+      "K72.9"
+    ]
+  },
+  {
+    "text": "ý thức suy giảm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      368,
+      383
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hội chứng não gan",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      432,
+      449
+    ],
+    "assertions": [],
+    "candidates": [
+      "K72.9"
+    ]
+  },
+  {
+    "text": "không thể tự chăm sóc bản thân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      456,
+      486
+    ],
+    "assertions": []
+  }
+]

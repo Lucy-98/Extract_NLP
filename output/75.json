@@ -1,0 +1,284 @@
+[
+  {
+    "text": "bệnh động mạch vành",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      48,
+      67
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I25.1"
+    ]
+  },
+  {
+    "text": "chụp mạch",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      110,
+      119
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      145,
+      153
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau ngực trái dữ dội lan xuống cánh tay trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      640,
+      684
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nitroglycerin dưới lưỡi",
+    "type": "THUỐC",
+    "position": [
+      786,
+      809
+    ],
+    "assertions": [],
+    "candidates": [
+      "4917"
+    ]
+  },
+  {
+    "text": "đau dữ dội",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      863,
+      873
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      885,
+      892
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nitroglycerin",
+    "type": "THUỐC",
+    "position": [
+      909,
+      922
+    ],
+    "assertions": [],
+    "candidates": [
+      "4917"
+    ]
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      945,
+      953
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau ngực trái dữ dội lan xuống cánh tay trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1032,
+      1076
+    ],
+    "assertions": []
+  },
+  {
+    "text": "vã mồ hôi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1083,
+      1092
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1099,
+      1106
+    ],
+    "assertions": []
+  },
+  {
+    "text": "aspirin",
+    "type": "THUỐC",
+    "position": [
+      1226,
+      1233
+    ],
+    "assertions": [],
+    "candidates": [
+      "1191"
+    ]
+  },
+  {
+    "text": "nitroglycerin",
+    "type": "THUỐC",
+    "position": [
+      1256,
+      1269
+    ],
+    "assertions": [],
+    "candidates": [
+      "4917"
+    ]
+  },
+  {
+    "text": "nitroglycerin",
+    "type": "THUỐC",
+    "position": [
+      1283,
+      1296
+    ],
+    "assertions": [],
+    "candidates": [
+      "4917"
+    ]
+  },
+  {
+    "text": "nitroglycerin",
+    "type": "THUỐC",
+    "position": [
+      1321,
+      1334
+    ],
+    "assertions": [],
+    "candidates": [
+      "4917"
+    ]
+  },
+  {
+    "text": "ativan",
+    "type": "THUỐC",
+    "position": [
+      1342,
+      1348
+    ],
+    "assertions": [],
+    "candidates": [
+      "202479"
+    ]
+  },
+  {
+    "text": "Lorazepam",
+    "type": "THUỐC",
+    "position": [
+      1351,
+      1360
+    ],
+    "assertions": [],
+    "candidates": [
+      "6470"
+    ]
+  },
+  {
+    "text": "lovenox",
+    "type": "THUỐC",
+    "position": [
+      1368,
+      1375
+    ],
+    "assertions": [],
+    "candidates": [
+      "225036"
+    ]
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1400,
+      1408
+    ],
+    "assertions": []
+  },
+  {
+    "text": "vã mồ hôi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1569,
+      1578
+    ],
+    "assertions": []
+  },
+  {
+    "text": "troponin",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1603,
+      1611
+    ],
+    "assertions": []
+  },
+  {
+    "text": "0.10",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1615,
+      1619
+    ],
+    "assertions": []
+  },
+  {
+    "text": "điện tâm đồ",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1657,
+      1668
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhịp xoang",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1678,
+      1688
+    ],
+    "assertions": [],
+    "candidates": [
+      "I49.8"
+    ]
+  },
+  {
+    "text": "điện tâm đồ",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1725,
+      1736
+    ],
+    "assertions": []
+  },
+  {
+    "text": "EKG",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1812,
+      1815
+    ],
+    "assertions": []
+  }
+]

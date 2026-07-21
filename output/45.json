@@ -1,0 +1,88 @@
+[
+  {
+    "text": "đái tháo đường",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      48,
+      62
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.9"
+    ]
+  },
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      69,
+      82
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "đái tháo đường",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      209,
+      223
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.9"
+    ]
+  },
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      230,
+      243
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "tai biến mạch máu não",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      364,
+      385
+    ],
+    "assertions": [],
+    "candidates": [
+      "I64"
+    ]
+  },
+  {
+    "text": "chụp mạch",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      545,
+      554
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp mạch",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      875,
+      884
+    ],
+    "assertions": []
+  }
+]

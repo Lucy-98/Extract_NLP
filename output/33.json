@@ -1,0 +1,324 @@
+[
+  {
+    "text": "béo phì",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      48,
+      55
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E66.9"
+    ]
+  },
+  {
+    "text": "đái tháo đường",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      62,
+      76
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.9"
+    ]
+  },
+  {
+    "text": "suy tim, không đặc hiệu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      154,
+      177
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I50.9"
+    ]
+  },
+  {
+    "text": "Dị ứng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      182,
+      188
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Dị ứng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      190,
+      196
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "furosemide",
+    "type": "THUỐC",
+    "position": [
+      197,
+      207
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "4603"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      256,
+      263
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      362,
+      369
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      441,
+      448
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khó nằm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      455,
+      462
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "căng cứng vai trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      495,
+      513
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ho có đờm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      582,
+      591
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      613,
+      616
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "phù chi dưới",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      623,
+      635
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "căng cứng vai trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      685,
+      703
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "căng cứng vai trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      737,
+      755
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "căng cứng vai trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      798,
+      816
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khó nằm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      847,
+      854
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      877,
+      884
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ho có đờm",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      886,
+      895
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      912,
+      915
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "phù chi dưới",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      917,
+      929
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "thiếu oxy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1083,
+      1092
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "thiếu oxy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1279,
+      1288
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "vancomycin 1 gram",
+    "type": "THUỐC",
+    "position": [
+      1434,
+      1451
+    ],
+    "assertions": [],
+    "candidates": [
+      "11124"
+    ]
+  },
+  {
+    "text": "levofloxacin 750mg iv",
+    "type": "THUỐC",
+    "position": [
+      1467,
+      1488
+    ],
+    "assertions": [],
+    "candidates": [
+      "311296"
+    ]
+  },
+  {
+    "text": "aspirin 325mg",
+    "type": "THUỐC",
+    "position": [
+      1504,
+      1517
+    ],
+    "assertions": [],
+    "candidates": [
+      "212033"
+    ]
+  },
+  {
+    "text": "methylprednisolone 125mg iv",
+    "type": "THUỐC",
+    "position": [
+      1579,
+      1606
+    ],
+    "assertions": [],
+    "candidates": [
+      "311659"
+    ]
+  }
+]

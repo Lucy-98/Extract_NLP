@@ -1,0 +1,86 @@
+[
+  {
+    "text": "gãy xương sườn trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      146,
+      165
+    ],
+    "assertions": [],
+    "candidates": [
+      "S22.3"
+    ]
+  },
+  {
+    "text": "gãy xương sườn trái",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      316,
+      335
+    ],
+    "assertions": [],
+    "candidates": [
+      "S22.3"
+    ]
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      359,
+      379
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      381,
+      383
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      425,
+      445
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      447,
+      449
+    ],
+    "assertions": []
+  },
+  {
+    "text": "gãy 3 xương sườn 9, 10 và 11",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      470,
+      498
+    ],
+    "assertions": [],
+    "candidates": [
+      "S22.4"
+    ]
+  },
+  {
+    "text": "đụng dập một vùng nhu mô phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      533,
+      562
+    ],
+    "assertions": [],
+    "candidates": [
+      "S27.3"
+    ]
+  }
+]
