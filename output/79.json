@@ -1,0 +1,48 @@
+[
+  {
+    "text": "bàn chân vẹo bẩm sinh",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      39,
+      60
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "Q66.9"
+    ]
+  },
+  {
+    "text": "bàn chân vẹo bẩm sinh",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      153,
+      174
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "Q66.9"
+    ]
+  },
+  {
+    "text": "chảy dịch",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      218,
+      227
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chảy dịch",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      294,
+      303
+    ],
+    "assertions": []
+  }
+]

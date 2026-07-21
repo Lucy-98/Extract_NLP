@@ -1,0 +1,160 @@
+text,candidate,source
+acetaminophen,161,output_curated
+acetaminophen 500 mg,198440,output_curated
+acetylcysteine,197,rxnorm_alias
+advil,153010,output_curated
+albuterol,435,output_curated
+albuterol 2 lần,435,output_curated
+albuterol nebs q 4 h tại nhà,435,output_curated
+allopurinol,519,output_curated
+alverin,17627,rxnorm_alias
+alverin citrate,17627,rxnorm_alias
+alverin citrate 40 mg,17627,rxnorm_alias
+alverine,17627,rxnorm_alias
+amiodarone,703,output_curated
+amlodipine,308135,legacy_name_level
+amoxicillin,723,output_curated
+amoxicillin / clavulanate,19711,rxnorm_alias
+amoxicillin clavulanate,19711,rxnorm_alias
+aspirin,1191,output_curated
+aspirin 325 mg,212033,output_curated
+aspirin 325 mg x 1,212033,output_curated
+aspirin 81 mg (asa 81),243670,output_curated
+atenolol,1202,output_curated
+ativan,202479,output_curated
+atorvastatin,83367,legacy_name_level
+atorvastatin 80 mg daily,259255,output_curated
+augmentin,19711,rxnorm_alias
+augmentin đường uống,151392,output_curated
+azathioprine,1256,output_curated
+azithromycin,18631,output_curated
+bacillus clausii,2600050,rxnorm_alias
+bactrim,151399,output_curated
+berlthyrox,10582,rxnorm_alias
+biogermin,2600050,rxnorm_alias
+carvedilol,20352,output_curated
+cefepim,20481,output_curated
+cefepime,20481,legacy_name_level
+ceftazidime,2191,output_curated
+ceftriaxone,2193,legacy_name_level
+ceftriaxone 1 gram,2193,output_curated
+cellcept,225542,output_curated
+cephalexin,2231,output_curated
+cipro,203563,output_curated
+clonazepam,197527,legacy_name_level
+clonidine,2599,output_curated
+clopidogrel,32968,output_curated
+combivent nebs x 3 every 20 minutes,214199,output_curated
+corticoid,8640,rxnorm_alias
+corticosteroid,8640,rxnorm_alias
+cotrimoxazol,151399,output_curated
+coumadin,202421,output_curated
+coumadin 3.0 mg,855318,output_curated
+crestor,320864,output_curated
+desmopressin,3247,output_curated
+dextrose,4850,output_curated
+dilaudid,224913,output_curated
+dilaudid 3 mg,897692,output_curated
+diltiazem,3443,output_curated
+dobutamine,3616,output_curated
+docusate sodium,1099279,legacy_name_level
+doxycycline,3640,output_curated
+eliquis,1364430,output_curated
+enterogermina,2600050,rxnorm_alias
+ertapenem,325642,output_curated
+flagyl,202866,output_curated
+furosemid,4603,rxnorm_alias
+furosemid 40 mg,315971,rxnorm_alias
+furosemide,4603,output_curated
+furosemide 40 mg đường uống,313988,output_curated
+gabapentin,25480,legacy_name_level
+glargine,274783,rxnorm_alias
+gleevec,282388,output_curated
+guaifenesin,5032,output_curated
+heparin,5224,output_curated
+hydrochlorothiazide,5487,legacy_name_level
+ibuprofen,5640,legacy_name_level
+insulin,253182,output_curated
+insulin glargine,274783,output_curated
+ipratropium,7213,legacy_name_level
+ipratropium 1 lần,7213,output_curated
+iron,90176,output_curated
+isosorbide,6057,output_curated
+ketorolac,35827,legacy_name_level
+klonopin,202585,output_curated
+lasix,202991,output_curated
+lasix 40 mg daily,313988,output_curated
+lasix 40 mg once,313988,output_curated
+lasix iv,202991,output_curated
+laxis 20 mg,202991,output_curated
+levafloxacin,82122,output_curated
+levofloxacin,82122,output_curated
+levofloxacin 750 mg iv,311296,output_curated
+levophed,203457,output_curated
+levothyroxine,10582,legacy_name_level
+lisinopril,29046,legacy_name_level
+lisinopril 2.5 mg daily,311353,output_curated
+lorazepam,6470,output_curated
+losartan,52175,legacy_name_level
+lovenox,225036,output_curated
+metformin,6809,legacy_name_level
+methadone,6813,output_curated
+methylprednisolone 125 mg iv,311659,output_curated
+metoclopramide,6915,rxnorm_alias
+metoprolol,6918,output_curated
+metoprolol (reduced from 50 mg to 25 mg daily),866924,output_curated
+metoprolol 25 mg po bid,866924,output_curated
+metoprolol 5 mg iv x 2,1807635,output_curated
+metoprolol succinate 100 mg daily,866412,output_curated
+morphine,7052,output_curated
+motrin,5640,legacy_name_level
+mucinex d,352051,output_curated
+nac,197,rxnorm_alias
+nitralmyl,4917,rxnorm_alias
+nitramyl,4917,rxnorm_alias
+nitro,4917,output_curated
+nitroglycerin,4917,output_curated
+nitroglycerin dưới lưỡi,4917,output_curated
+nitroglycerin đặt dưới lưỡi,4917,output_curated
+nystatin,7597,legacy_name_level
+omeprazole,7646,output_curated
+omez,7646,rxnorm_alias
+omez 20 mg,316408,rxnorm_alias
+pantoprazole,40790,legacy_name_level
+percocet,42844,output_curated
+pimperan,6915,rxnorm_alias
+plavix,174742,output_curated
+pravastatin,42463,legacy_name_level
+prednisone,8640,output_curated
+prednisone 40 mg,312615,output_curated
+prograf,203969,output_curated
+prograf (dose decreased from 5 mg bid to 1 mg bid),198377,output_curated
+propofol,8782,output_curated
+ranexa 500 mg daily,860738,output_curated
+rosuvastatin,301542,rxnorm_alias
+rosuvastatin (crestor),301542,output_curated
+senna,312935,legacy_name_level
+seroquel,83553,output_curated
+simenic,9796,rxnorm_alias
+simethicon,9796,rxnorm_alias
+simethicon 100 mg,9796,rxnorm_alias
+simethicone,9796,rxnorm_alias
+simvastatin,36567,legacy_name_level
+suboxone,352990,output_curated
+toradol,35827,output_curated
+torsemide,38413,output_curated
+trimetazidin,10826,rxnorm_alias
+trimetazidine,10826,rxnorm_alias
+tylenol,202433,output_curated
+tylenol 1 gram,430837,output_curated
+vanco,11124,output_curated
+vancomycin,11124,output_curated
+vancomycin 1 gram,11124,output_curated
+vastarel,10826,rxnorm_alias
+vicodin,214182,output_curated
+vitamin b 12,476630,rxnorm_alias
+warfarin,11289,legacy_name_level
+yếu tố ix,1424945,legacy_name_level
+yếu tố ix đậm đặc,1424945,output_curated
+z-pack,210166,output_curated
+zosyn,203167,output_curated

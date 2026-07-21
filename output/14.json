@@ -1,0 +1,161 @@
+[
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      69,
+      77
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      92,
+      99
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      123,
+      136
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      139,
+      146
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      149,
+      158
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực trái",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      182,
+      195
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      239,
+      246
+    ],
+    "assertions": []
+  },
+  {
+    "text": "dị ứng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      293,
+      299
+    ],
+    "assertions": []
+  },
+  {
+    "text": "dị ứng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      312,
+      318
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      330,
+      339
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thiếu máu cơ tim",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      513,
+      529
+    ],
+    "assertions": [],
+    "candidates": [
+      "I25.9"
+    ]
+  },
+  {
+    "text": "Chụp động mạch vành",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      553,
+      572
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hẹp 60% đoạn gần động mạch",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      574,
+      600
+    ],
+    "assertions": [],
+    "candidates": [
+      "I25.1"
+    ]
+  },
+  {
+    "text": "Bệnh động mạch vành mạn tính",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      699,
+      727
+    ],
+    "assertions": [],
+    "candidates": [
+      "I25.1"
+    ]
+  },
+  {
+    "text": "thiếu máu cơ tim",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      731,
+      747
+    ],
+    "assertions": [],
+    "candidates": [
+      "I25.9"
+    ]
+  },
+  {
+    "text": "hẹp 60% đoạn gần động mạch",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      749,
+      775
+    ],
+    "assertions": [],
+    "candidates": [
+      "I25.1"
+    ]
+  }
+]

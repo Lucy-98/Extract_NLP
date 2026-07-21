@@ -1,0 +1,269 @@
+[
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      133,
+      135
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      156,
+      165
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      230,
+      232
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      247,
+      256
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      321,
+      323
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      327,
+      334
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      372,
+      374
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đờm có màu hồng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      415,
+      430
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      461,
+      464
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      506,
+      515
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      562,
+      564
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      571,
+      578
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ho ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      585,
+      594
+    ],
+    "assertions": []
+  },
+  {
+    "text": "fever",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      646,
+      651
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      663,
+      666
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      685,
+      693
+    ],
+    "assertions": []
+  },
+  {
+    "text": "levofloxacin",
+    "type": "THUỐC",
+    "position": [
+      876,
+      888
+    ],
+    "assertions": [],
+    "candidates": [
+      "82122"
+    ]
+  },
+  {
+    "text": "viêm phế quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      901,
+      914
+    ],
+    "assertions": [],
+    "candidates": [
+      "J40"
+    ]
+  },
+  {
+    "text": "viêm phổi mắc phải cộng đồng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      918,
+      946
+    ],
+    "assertions": [],
+    "candidates": [
+      "J18.9"
+    ]
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      975,
+      982
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "công thức máu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1035,
+      1048
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cao",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1060,
+      1063
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1105,
+      1117
+    ],
+    "assertions": []
+  },
+  {
+    "text": "không phát hiện",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1123,
+      1138
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1139,
+      1148
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "J18.9"
+    ]
+  },
+  {
+    "text": "phù phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1154,
+      1162
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "J81"
+    ]
+  },
+  {
+    "text": "cấy máu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1203,
+      1210
+    ],
+    "assertions": []
+  }
+]

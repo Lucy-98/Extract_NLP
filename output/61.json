@@ -1,0 +1,67 @@
+[
+  {
+    "text": "đau vùng xương bánh chè",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      73,
+      96
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau đầu gối phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      202,
+      218
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Đau bánh chè đùi phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      434,
+      455
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau dữ dội",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      499,
+      509
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau đầu gối phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      609,
+      625
+    ],
+    "assertions": []
+  },
+  {
+    "text": "x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1043,
+      1050
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1148,
+      1168
+    ],
+    "assertions": []
+  }
+]

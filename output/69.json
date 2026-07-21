@@ -1,0 +1,190 @@
+[
+  {
+    "text": "ung thư biểu mô tế bào thận",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      87,
+      114
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C64.9"
+    ]
+  },
+  {
+    "text": "ung thư biểu mô tuyến giật nhú",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      147,
+      177
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C73"
+    ]
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      238,
+      245
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thiếu máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      247,
+      256
+    ],
+    "assertions": [],
+    "candidates": [
+      "D64.9"
+    ]
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      322,
+      329
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thiếu máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      336,
+      345
+    ],
+    "assertions": [],
+    "candidates": [
+      "D64.9"
+    ]
+  },
+  {
+    "text": "Nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      421,
+      428
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      491,
+      501
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ung thư biểu mô tuyến",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      517,
+      538
+    ],
+    "assertions": [],
+    "candidates": [
+      "C18.3"
+    ]
+  },
+  {
+    "text": "thiếu máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      597,
+      606
+    ],
+    "assertions": [],
+    "candidates": [
+      "D64.9"
+    ]
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      639,
+      659
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      749,
+      756
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      773,
+      783
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ung thư biểu mô tuyến",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      849,
+      870
+    ],
+    "assertions": [],
+    "candidates": [
+      "C18.3"
+    ]
+  },
+  {
+    "text": "sinh thiết",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      876,
+      886
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ung thư biểu mô tế bào thận",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      919,
+      946
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C64.9"
+    ]
+  },
+  {
+    "text": "ung thư biểu mô tuyến giật nhú",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      953,
+      983
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C73"
+    ]
+  }
+]

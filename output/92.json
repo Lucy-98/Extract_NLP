@@ -1,0 +1,112 @@
+[
+  {
+    "text": "Nhiễm trùng đường tiết niệu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      45,
+      72
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "N39.0"
+    ]
+  },
+  {
+    "text": "đại tràng giãn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      138,
+      152
+    ],
+    "assertions": [],
+    "candidates": [
+      "K59.3"
+    ]
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      243,
+      247
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bạch cầu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      248,
+      256
+    ],
+    "assertions": []
+  },
+  {
+    "text": "CT",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      300,
+      302
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bất thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      332,
+      342
+    ],
+    "assertions": []
+  },
+  {
+    "text": "lơ mơ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      415,
+      420
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Bạch cầu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      472,
+      480
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      481,
+      485
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bất thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      540,
+      550
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đại tràng giãn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      598,
+      612
+    ],
+    "assertions": [],
+    "candidates": [
+      "K59.3"
+    ]
+  }
+]

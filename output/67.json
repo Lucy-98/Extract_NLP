@@ -1,0 +1,86 @@
+[
+  {
+    "text": "nốt sần tuyến giáp phải",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      86,
+      109
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  },
+  {
+    "text": "đau vùng hạ sườn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      156,
+      172
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      220,
+      227
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sỏi mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      237,
+      244
+    ],
+    "assertions": [],
+    "candidates": [
+      "K80.8"
+    ]
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      271,
+      278
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      389,
+      396
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sỏi mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      406,
+      413
+    ],
+    "assertions": [],
+    "candidates": [
+      "K80.8"
+    ]
+  },
+  {
+    "text": "nốt sần tuyến giáp phải",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      460,
+      483
+    ],
+    "assertions": [],
+    "candidates": [
+      "E04.1"
+    ]
+  }
+]

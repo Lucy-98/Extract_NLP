@@ -1,0 +1,53 @@
+[
+  {
+    "text": "cơn co tử cung",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      101,
+      115
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thai máy tốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      118,
+      130
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ra huyết âm đạo",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      146,
+      161
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "vỡ ối",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      175,
+      180
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "rỉ ối",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      181,
+      186
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  }
+]

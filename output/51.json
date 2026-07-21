@@ -1,0 +1,277 @@
+[
+  {
+    "text": "Đái tháo đường type 2",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      57,
+      78
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.9"
+    ]
+  },
+  {
+    "text": "Tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      85,
+      98
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "đau đầu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      261,
+      268
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      284,
+      291
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      298,
+      307
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      339,
+      348
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      359,
+      368
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      418,
+      427
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phân đen",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      441,
+      449
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "máu đỏ tươi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      457,
+      468
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      583,
+      587
+    ],
+    "assertions": []
+  },
+  {
+    "text": "2.4",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      591,
+      594
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      614,
+      618
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      718,
+      722
+    ],
+    "assertions": []
+  },
+  {
+    "text": "giảm",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      727,
+      731
+    ],
+    "assertions": []
+  },
+  {
+    "text": "azithromycin",
+    "type": "THUỐC",
+    "position": [
+      795,
+      807
+    ],
+    "assertions": [],
+    "candidates": [
+      "18631"
+    ]
+  },
+  {
+    "text": "spo2",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      952,
+      956
+    ],
+    "assertions": []
+  },
+  {
+    "text": "96",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      957,
+      959
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1032,
+      1036
+    ],
+    "assertions": []
+  },
+  {
+    "text": "2.4",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1040,
+      1043
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1050,
+      1054
+    ],
+    "assertions": []
+  },
+  {
+    "text": "giảm",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1059,
+      1063
+    ],
+    "assertions": []
+  },
+  {
+    "text": "kali",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1080,
+      1084
+    ],
+    "assertions": []
+  },
+  {
+    "text": "k",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1145,
+      1146
+    ],
+    "assertions": []
+  },
+  {
+    "text": "k",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1167,
+      1168
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hạ kali máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1203,
+      1214
+    ],
+    "assertions": [],
+    "candidates": [
+      "E87.6"
+    ]
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1237,
+      1246
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nhiễm trùng đường hô hấp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1262,
+      1286
+    ],
+    "assertions": [],
+    "candidates": [
+      "J22"
+    ]
+  }
+]

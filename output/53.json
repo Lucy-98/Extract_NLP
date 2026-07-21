@@ -1,0 +1,118 @@
+[
+  {
+    "text": "bệnh tim mạch do xơ vữa động mạch",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      131,
+      164
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I25.1"
+    ]
+  },
+  {
+    "text": "bệnh thận mạn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      233,
+      246
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "N18.9"
+    ]
+  },
+  {
+    "text": "Suy giảm nhận thức",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      269,
+      287
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "G31.84"
+    ]
+  },
+  {
+    "text": "suy giảm nhận thức",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      292,
+      310
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "G31.84"
+    ]
+  },
+  {
+    "text": "Cảm giác thắt chặt ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      451,
+      474
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Cảm giác thắt chặt ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      622,
+      645
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      679,
+      686
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      952,
+      959
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau thắt ngực",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1052,
+      1065
+    ],
+    "assertions": [],
+    "candidates": [
+      "I20.9"
+    ]
+  },
+  {
+    "text": "đau thắt ngực",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1178,
+      1191
+    ],
+    "assertions": [],
+    "candidates": [
+      "I20.9"
+    ]
+  }
+]

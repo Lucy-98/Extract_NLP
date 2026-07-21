@@ -1,0 +1,97 @@
+[
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      53,
+      66
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      165,
+      167
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau lưng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      174,
+      182
+    ],
+    "assertions": []
+  },
+  {
+    "text": "CT",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      237,
+      239
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đa u tuỷ xương",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      291,
+      305
+    ],
+    "assertions": [],
+    "candidates": [
+      "C90.0"
+    ]
+  },
+  {
+    "text": "tăng",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      340,
+      344
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cao",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      345,
+      348
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đa u tuỷ xương",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      360,
+      374
+    ],
+    "assertions": [],
+    "candidates": [
+      "C90.0"
+    ]
+  },
+  {
+    "text": "Đa u tủy xương",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      485,
+      499
+    ],
+    "assertions": [],
+    "candidates": [
+      "C90.0"
+    ]
+  }
+]

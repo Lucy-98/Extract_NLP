@@ -1,0 +1,249 @@
+[
+  {
+    "text": "Viêm nội tâm mạc",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      48,
+      64
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I33.0"
+    ]
+  },
+  {
+    "text": "rối loạn chức năng tâm thất",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      68,
+      95
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I51.9"
+    ]
+  },
+  {
+    "text": "rung nhĩ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      102,
+      110
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I48"
+    ]
+  },
+  {
+    "text": "Suy thận mạn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      159,
+      171
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "N18.9"
+    ]
+  },
+  {
+    "text": "coumadin 3.0 mg",
+    "type": "THUỐC",
+    "position": [
+      401,
+      416
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "855318"
+    ]
+  },
+  {
+    "text": "INR",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      462,
+      465
+    ],
+    "assertions": []
+  },
+  {
+    "text": "dưới ngưỡng điều trị",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      466,
+      486
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chảy máu mũi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      529,
+      541
+    ],
+    "assertions": []
+  },
+  {
+    "text": "dưới ngưỡng điều trị",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      638,
+      658
+    ],
+    "assertions": []
+  },
+  {
+    "text": "INR",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      672,
+      675
+    ],
+    "assertions": []
+  },
+  {
+    "text": "1.7",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      676,
+      679
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bất thường",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      701,
+      711
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chảy máu mũi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      752,
+      764
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      774,
+      782
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      792,
+      799
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      809,
+      817
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      828,
+      836
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      844,
+      847
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "SPO2",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1039,
+      1043
+    ],
+    "assertions": []
+  },
+  {
+    "text": "92",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1046,
+      1048
+    ],
+    "assertions": []
+  },
+  {
+    "text": "INR",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1075,
+      1078
+    ],
+    "assertions": []
+  },
+  {
+    "text": "dưới ngưỡng điều trị",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1079,
+      1099
+    ],
+    "assertions": []
+  },
+  {
+    "text": "heparin",
+    "type": "THUỐC",
+    "position": [
+      1130,
+      1137
+    ],
+    "assertions": [],
+    "candidates": [
+      "5224"
+    ]
+  }
+]

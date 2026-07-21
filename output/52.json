@@ -1,0 +1,97 @@
+[
+  {
+    "text": "ung thư đường mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      183,
+      200
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C24.0"
+    ]
+  },
+  {
+    "text": "run rẩy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      401,
+      408
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      413,
+      416
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      426,
+      429
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      493,
+      496
+    ],
+    "assertions": []
+  },
+  {
+    "text": "áp xe",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      536,
+      541
+    ],
+    "assertions": [],
+    "candidates": [
+      "L02.9"
+    ]
+  },
+  {
+    "text": "Augmentin đường uống",
+    "type": "THUỐC",
+    "position": [
+      630,
+      650
+    ],
+    "assertions": [],
+    "candidates": [
+      "151392"
+    ]
+  },
+  {
+    "text": "chụp cộng hưởng từ",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      804,
+      822
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nang tụy",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      847,
+      855
+    ],
+    "assertions": [],
+    "candidates": [
+      "K86.2"
+    ]
+  }
+]

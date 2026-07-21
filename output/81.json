@@ -1,0 +1,65 @@
+[
+  {
+    "text": "vết thương thấu bụng giữa bên phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      37,
+      71
+    ],
+    "assertions": []
+  },
+  {
+    "text": "vết thương thấu bụng giữa bên phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      95,
+      129
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      257,
+      277
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      279,
+      281
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chụp cắt lớp vi tính",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      379,
+      399
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      401,
+      403
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      438,
+      445
+    ],
+    "assertions": []
+  }
+]

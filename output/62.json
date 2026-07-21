@@ -1,0 +1,77 @@
+[
+  {
+    "text": "loét mới ở ngón chân út bên phải",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      204,
+      236
+    ],
+    "assertions": [],
+    "candidates": [
+      "L97.5"
+    ]
+  },
+  {
+    "text": "loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      268,
+      272
+    ],
+    "assertions": [],
+    "candidates": [
+      "L97.5"
+    ]
+  },
+  {
+    "text": "đau",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      273,
+      276
+    ],
+    "assertions": []
+  },
+  {
+    "text": "loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      283,
+      287
+    ],
+    "assertions": [],
+    "candidates": [
+      "L97.5"
+    ]
+  },
+  {
+    "text": "đỏ",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      288,
+      290
+    ],
+    "assertions": []
+  },
+  {
+    "text": "loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      297,
+      301
+    ],
+    "assertions": [],
+    "candidates": [
+      "L97.5"
+    ]
+  },
+  {
+    "text": "sưng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      302,
+      306
+    ],
+    "assertions": []
+  }
+]

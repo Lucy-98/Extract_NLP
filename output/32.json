@@ -1,0 +1,448 @@
+[
+  {
+    "text": "Tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      80,
+      93
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "Đái tháo đường típ 2",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      96,
+      116
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E11.9"
+    ]
+  },
+  {
+    "text": "Rung nhĩ kèm đáp ứng thất nhanh",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      122,
+      153
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I48"
+    ]
+  },
+  {
+    "text": "bệnh thận mạn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      156,
+      169
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "N18.9"
+    ]
+  },
+  {
+    "text": "Khó thở tăng dần",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      222,
+      238
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      358,
+      361
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      414,
+      417
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "khó thở tăng dần",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      504,
+      520
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phù ngoại vi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      548,
+      560
+    ],
+    "assertions": []
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      640,
+      643
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau vai",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      647,
+      654
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "suy hô hấp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      700,
+      710
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "J96.9"
+    ]
+  },
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      715,
+      728
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "nhiễm khuẩn huyết",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      991,
+      1008
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "A41.9"
+    ]
+  },
+  {
+    "text": "Siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1116,
+      1123
+    ],
+    "assertions": []
+  },
+  {
+    "text": "huyết khối",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1157,
+      1167
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "I82.9"
+    ]
+  },
+  {
+    "text": "thấp",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1221,
+      1225
+    ],
+    "assertions": []
+  },
+  {
+    "text": "thuyên tắc phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1226,
+      1241
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "I26.9"
+    ]
+  },
+  {
+    "text": "khò khè",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1382,
+      1389
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1393,
+      1395
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "albuterol 2 lần",
+    "type": "THUỐC",
+    "position": [
+      1465,
+      1480
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "435"
+    ]
+  },
+  {
+    "text": "guaifenesin",
+    "type": "THUỐC",
+    "position": [
+      1487,
+      1498
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "5032"
+    ]
+  },
+  {
+    "text": "furosemide 40 mg đường uống",
+    "type": "THUỐC",
+    "position": [
+      1502,
+      1529
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "313988"
+    ]
+  },
+  {
+    "text": "Khó thở tăng dần",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1651,
+      1667
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1711,
+      1713
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Khò khè",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1714,
+      1721
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Phù ngoại vi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1722,
+      1734
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "sốt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1775,
+      1778
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1869,
+      1871
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khò khè",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1875,
+      1882
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2048,
+      2055
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2060,
+      2068
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "ho",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2074,
+      2076
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Nhiễm khuẩn huyết",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2114,
+      2131
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "A41.9"
+    ]
+  },
+  {
+    "text": "Siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2199,
+      2206
+    ],
+    "assertions": []
+  },
+  {
+    "text": "huyết khối",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2240,
+      2250
+    ],
+    "assertions": [
+      "isNegated",
+      "isHistorical"
+    ],
+    "candidates": [
+      "I82.9"
+    ]
+  },
+  {
+    "text": "thuyên tắc phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2309,
+      2324
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I26.9"
+    ]
+  }
+]

@@ -1,0 +1,322 @@
+text,candidate,source
+amyloidosis,E85.9,icd10_alias
+amyloidosis di truyền,E85.2,icd10_alias
+amyloidosis gia đình,E85.2,icd10_alias
+amyloidosis tự miễn dịch,E85.9,icd10_alias
+biến chứng mạch vành,I25.9,icd10_alias
+biến chứng động mạch vành,I25.9,icd10_alias
+bàn chân bẹt,M21.4,icd10_alias
+bàn chân vẹo bẩm sinh,Q66.9,output_curated
+bàng quang thần kinh,N31.9,output_curated
+béo phì,E66.9,output_curated
+béo phì do có nhiều nếp gấp da,E66.9,icd10_alias
+bóc tách động mạch chủ,I71.0,output_curated
+bóc tách động mạch chủ loại b,I71.0,output_curated
+bệnh amyloidosis,E85.9,icd10_alias
+bệnh ba thân động mạch vành,I25.1,output_curated
+bệnh bàn chân bẹt,M21.4,icd10_alias
+bệnh bạch cầu dòng tủy mãn tính,C92.1,output_curated
+bệnh dạ dày,K31.9,icd10_alias
+bệnh dại,A82.9,icd10_alias
+bệnh gan do rượu,K70.9,output_curated
+bệnh kawasaki,M30.3,icd10_alias
+bệnh lý chất trắng,I67.8,output_curated
+bệnh lý thần kinh ngoại biên,G62.9,output_curated
+bệnh mạch máu,I73.89,output_curated
+bệnh mạch máu ngoại biên,I73.9,output_curated
+bệnh mạch vành,I25.9,icd10_alias
+bệnh phổi tắc nghẽn mạn tính,J44.9,output_curated
+"bệnh phổi tắc nghẽn mạn tính, không xác định",J44.9,output_curated
+bệnh rễ thần kinh tuỷ sống ở ngón tay cái,M54.1,output_curated
+bệnh thoái hóa tinh bột,E85.9,icd10_alias
+bệnh thận mạn,N18.9,output_curated
+bệnh thận mạn tính,N18.9,output_curated
+bệnh thận đa nang,Q61.3,output_curated
+bệnh thủy đậu/zona,B01.9,output_curated
+bệnh thủy đậu/zona,B02.9,output_curated
+bệnh tim mạch,Z13.6,output_curated
+bệnh tim mạch do xơ vữa động mạch,I25.1,output_curated
+bệnh túi thừa,K57.9,output_curated
+bệnh túi thừa ở cả ruột non và đại tràng,K57.9,output_curated
+bệnh đa xơ cứng,G35,output_curated
+bệnh động mạch vành,I25.1,output_curated
+bệnh động mạch vành mạn tính,I25.1,output_curated
+chèn ép tim,I31.4,output_curated
+cổ trướng,R18,output_curated
+dvt,I80.2,output_curated
+dại,A82.9,icd10_alias
+dị tật thiểu sản vành tai,Q17.2,icd10_alias
+giai đoạn giống hưng cảm,F30.9,output_curated
+giãn phế quản,J47.9,output_curated
+giãn thừng tinh,I86.1,icd10_alias
+glucose-6-phosphate dehydrogenase,D55.0,icd10_alias
+gout,M10.9,output_curated
+gout mạn tính,M10.9,icd10_alias
+"gãy 3 xương sườn 9, 10 và 11",S22.4,output_curated
+gãy cổ xương đùi,S72.0,output_curated
+gãy cổ xương đùi di lệch,S72.0,output_curated
+gãy xương,T14.2,output_curated
+gãy xương sườn trái,S22.3,output_curated
+gút,M10.9,icd10_alias
+hen suyễn,J45.9,output_curated
+hoại tử,R02,output_curated
+huyết khối,I82.9,output_curated
+huyết khối tĩnh mạch sâu,I80.2,output_curated
+hạ huyết áp,I95.9,output_curated
+hạ kali máu,E87.6,output_curated
+hẹp 60% đoạn gần động mạch,I25.1,output_curated
+hẹp gây hạn chế dòng chảy,I25.1,output_curated
+hẹp lỗ liên hợp,M99.7,output_curated
+hẹp tắc mạch vành,I25.9,icd10_alias
+hẹp van động mạch chủ,I35.0,output_curated
+hẹp ống sống,M48.0,output_curated
+hội chứng mạch vành cấp,I24.9,output_curated
+hội chứng não gan,K72.9,output_curated
+hội chứng ruột kích thích,K58.9,output_curated
+hội chứng thận hư,N04,icd10_alias
+hở van ba lá,I36.1,output_curated
+hở van hai lá,I34.0,output_curated
+kawasaki,M30.3,icd10_alias
+khó kiểm soát huyết áp,I10,output_curated
+khối máu tụ dưới màng cứng,I62.0,output_curated
+liệt hai chi dưới,G82.2,legacy_phrase_level
+loãng xương,M81.9,icd10_alias
+loét,K27.9,output_curated
+loét bàn chân nhiễm trùng,L97.9,output_curated
+loét mới ở ngón chân út bên phải,L97.5,output_curated
+loét thực quản,K22.1,output_curated
+loét tá tràng,K26.9,output_curated
+loét tì đè giai đoạn iv,L89.94,output_curated
+lyssavirus,A82.9,icd10_alias
+mày đay,L50.9,icd10_alias
+mày đay vô,L50.1,icd10_alias
+mày đay vô căn,L50.1,icd10_alias
+mụn,L70.9,icd10_alias
+mụn cám,L70.0,icd10_alias
+mụn trứng cá,L70.0,icd10_alias
+mụn đầu trắng,L70.0,icd10_alias
+nang màng nhện,G93.0,output_curated
+nang tụy,K86.2,output_curated
+nghi ngờ xơ gan do rượu,K70.3,output_curated
+nghẽn tắc và hẹp động mạch cảnh,I65.2,output_curated
+ngoại tâm thu nhĩ,I49.1,output_curated
+ngoại tâm thu thất,I49.3,output_curated
+nguy cơ tiền sản giật cao,O14.9,icd10_alias
+ngưng thở khi ngủ do tắc nghẽn,G47.3,output_curated
+nhiễm clostridioides difficile,A04.7,output_curated
+nhiễm khuẩn,A49.9,icd10_alias
+nhiễm khuẩn huyết,A41.9,output_curated
+nhiễm khuẩn đường tiết niệu,N39.0,output_curated
+"nhiễm khuẩn, nhiễm virus",B34.9,icd10_alias
+nhiễm nấm da,B35.9,icd10_alias
+nhiễm trùng chi dưới bên phải,L08.9,output_curated
+nhiễm trùng huyết,A41.9,output_curated
+nhiễm trùng máu,A41.9,icd10_alias
+nhiễm trùng nhiễm trùng răng miệng,K04.7,output_curated
+nhiễm trùng tụ cầu,A49.0,output_curated
+nhiễm trùng vết mổổ,T81.4,output_curated
+nhiễm trùng đường hô hấp,J22,output_curated
+nhiễm trùng đường tiết niệu,N39.0,output_curated
+nhiễm vi khuẩn,A49.9,icd10_alias
+nhiễm virus,B34.9,icd10_alias
+nhiễm virus herpes simplex,B00.9,output_curated
+nhịp chậm,R00.1,output_curated
+nhịp nhanh,R00.0,output_curated
+nhịp nhanh trên thất,I47.1,output_curated
+nhịp xoang,I49.8,output_curated
+nhồi máu,I21.9,icd10_alias
+nhồi máu cũ,I63.9,output_curated
+nhồi máu cơ tim,I21.9,output_curated
+não úng thuỷ,G91.9,output_curated
+não úng thủy,G91.9,output_curated
+não úng tuỷ,G91.9,output_curated
+nấm bẹn,B35.6,icd10_alias
+nốt sần tuyến giáp phải,E04.1,output_curated
+nốt tuyến giáp thùy trái,E04.1,output_curated
+nốt tuyến giáp trái,E04.1,output_curated
+phình động mạch chủ,I71.9,output_curated
+phù phổi,J81,output_curated
+phù phổi cấp,J81,icd10_alias
+rll pna,J18.1,output_curated
+rung nhĩ,I48,output_curated
+rung nhĩ kèm đáp ứng thất nhanh,I48,output_curated
+rung nhĩ điển hình,I48,output_curated
+rò động - tĩnh mạch đùi phải,I77.0,output_curated
+rò ống tuỵ mật,K86.8,output_curated
+rối loạn chuyển hóa tinh bột,E85.9,icd10_alias
+rối loạn chức năng thất trái,I51.9,output_curated
+rối loạn chức năng tâm thất,I51.9,output_curated
+rối loạn cân bằng kiềm toan,E87.2,output_curated
+rối loạn cảm xúc,F34.9,output_curated
+rối loạn dáng đi,G24.8,output_curated
+rối loạn lipid máu,E78.5,output_curated
+rối loạn lo âu,F41.9,output_curated
+rối loạn lưỡng cực,F31.9,output_curated
+rối loạn đông máu,D68.9,output_curated
+suy các cơ quan,R65,icd10_alias
+suy giảm huyết động,I99.8,output_curated
+suy giảm miễn dịch,D84.9,output_curated
+suy giảm nhận thức,G31.84,output_curated
+suy hô hấp,J96.9,output_curated
+suy kiệt,R64,output_curated
+suy thận cấp,N17.9,output_curated
+suy thận mạn,N18.9,output_curated
+suy thận ngày càng nặng,N19,output_curated
+suy tim,I50.9,output_curated
+suy tim sung huyết cấp,I50.9,output_curated
+"suy tim, không đặc hiệu",I50.9,output_curated
+sâu răng,K02.9,icd10_alias
+sỏi mật,K80.8,output_curated
+sỏi thận,N20.0,output_curated
+tai biến mạch máu não,I64,output_curated
+tan huyết,D59.9,icd10_alias
+thiếu hụt g 6 pd,D55.0,icd10_alias
+thiếu men,D55.0,icd10_alias
+thiếu men g 6 pd,D55.0,icd10_alias
+thiếu máu,D64.9,output_curated
+thiếu máu cơ tim,I25.9,output_curated
+thiếu máu do tan huyết,D55.0,icd10_alias
+thiếu máu tan huyết,D59.9,icd10_alias
+thoát vị cạnh thực quản,K44.9,output_curated
+thoát vị hoành,K44.9,output_curated
+thrombophilia,D68.5,icd10_alias
+thuyên tắc mạch phổi,I26.9,output_curated
+thuyên tắc phổi,I26.9,output_curated
+thuyên tắc phổi hai bên,I26.9,icd10_alias
+thuyên tắc tĩnh mạch sâu,I80.2,output_curated
+tiền sản giật,O14.9,icd10_alias
+tiền sử lâu dài của tăng huyết áp,I10,output_curated
+tiền sử đái tháo đường,E11.9,output_curated
+tiểu đường,E14,icd10_alias
+tiểu đường loại 1,E10.9,output_curated
+tràn dịch màng ngoài tim,I31.3,output_curated
+tràn dịch màng phổi,J91,output_curated
+tràn dịch màng tim,I31.3,output_curated
+trào ngược dạ dày,K21.9,output_curated
+trào ngược dạ dày thực quản,K21.9,icd10_alias
+trào ngược dạ dày thực quản ngày càng tăng,K21.9,output_curated
+trầm cảm,F32.9,output_curated
+trứng cá,L70.0,icd10_alias
+tách thành động mạch chủ,I71.0,output_curated
+tâm thần phân liệt,F20.9,output_curated
+tăng bilirubin máu,E80.6,icd10_alias
+tăng calci máu,E83.5,output_curated
+tăng cholesterol máu,E78.0,output_curated
+tăng huyết áp,I10,output_curated
+tăng huyết áp phổi,I27.2,output_curated
+tăng kali máu,E87.5,output_curated
+tăng lipid máu,E78.5,output_curated
+tăng men gan,R74.0,icd10_alias
+tăng nhãn áp,H40.9,output_curated
+tăng sản tuyến tiền liệt,N40.0,output_curated
+tăng áp lực tĩnh mạch cửa,K76.6,output_curated
+tăng áp lực động mạch phổi,I27.2,icd10_alias
+tăng áp động mạch phổi mức độ trung bình,I27.2,output_curated
+tắc hẹp 80% động mạch thận trái,I70.1,output_curated
+tắc mạch,I74.9,output_curated
+tắc mạch phổi,I26.9,output_curated
+tổn thương dây thanh quản,J38.3,output_curated
+tụ dịch/tụ máu dưới màng cứng mạn tính,I62.0,output_curated
+tụ máu dưới màng cứng mạn tính,S06.5X9S,output_curated
+tụ máu ngoài màng cứng phải cấp tính,S06.4X9A,output_curated
+tụt huyết áp,I95.9,output_curated
+u cơ trơn,D25.9,output_curated
+u cơ trơn tử cung,D25.9,output_curated
+u lympho không hodgkin tế bàob lớn lan toả,C83.3,output_curated
+u nang tuyến vú,N60.0,icd10_alias
+u nội tiết,C75.9,output_curated
+u xơ tuyến vú,N60.2,icd10_alias
+u xơ tử cung,D25.9,output_curated
+u ác của tuyến tiền liệt,C61,output_curated
+u ác của đại tràng,C18.9,output_curated
+u ác của đầu tuỵ,C25.0,output_curated
+u ác trực tràng,C20,output_curated
+ung thư,C80.9,icd10_alias
+ung thư biểu mô tuyến,C24.0,output_curated
+ung thư biểu mô tuyến giật nhú,C73,output_curated
+ung thư biểu mô tuyến đại tràng,C18.9,output_curated
+ung thư biểu mô tế bào mật,C24.0,output_curated
+ung thư biểu mô tế bào thận,C64.9,output_curated
+ung thư biểu mô tế bào vảy,C44.9,output_curated
+ung thư cổ tử cung,C53.9,icd10_alias
+ung thư di căn theo đường bạch huyết ở hai phổi,C79.9,output_curated
+ung thư máu,C95.9,icd10_alias
+ung thư phổi,C34.9,output_curated
+ung thư phổi không tế bào nhỏ,C34.9,output_curated
+ung thư tuyến đại tràng,C18.9,output_curated
+ung thư vú,C50.9,output_curated
+ung thư vú trái,C50.9,output_curated
+ung thư đường mật,C24.0,output_curated
+ung thư đại tràng,C18.9,output_curated
+vi-rút dại,A82.9,icd10_alias
+virus dại,A82.9,icd10_alias
+viêm bao tử,K29.7,icd10_alias
+viêm bể thận,N12,output_curated
+viêm da tiếp xúc,L25.9,icd10_alias
+viêm dạ dày,K29.7,output_curated
+viêm dạ dày ruột do virus,A08.4,output_curated
+viêm gan,K75.9,output_curated
+viêm gan cấp tính do virus b thể,B16.9,icd10_alias
+viêm gan virus,B19.9,icd10_alias
+viêm gan virus b,B16.9,icd10_alias
+viêm gan virus c và b,B18.1,output_curated
+viêm gan virus c và b,B18.2,output_curated
+viêm hang vị sung huyết,K29.6,icd10_alias
+viêm họng do liên cầu,J02.0,output_curated
+viêm khớp dạng thấp,M06.9,icd10_alias
+viêm khớp nhiễm trùng,M00.9,output_curated
+viêm kết mạc,H10.9,icd10_alias
+viêm loét đại tràng,K51.9,output_curated
+viêm mô tế bào,L03.9,output_curated
+viêm nha chu,K05.6,icd10_alias
+viêm nội tâm mạc,I33.0,output_curated
+viêm phế quản,J40,output_curated
+viêm phổi,J18.9,output_curated
+viêm phổi bệnh viện,J18.9,output_curated
+viêm phổi hoại tử,J85.1,icd10_alias
+viêm phổi mắc phải cộng đồng,J18.9,output_curated
+viêm phổi thuỳ,J18.1,output_curated
+viêm phổi thùy dưới phải,J18.1,output_curated
+viêm phổi thùy dưới trái,J18.1,output_curated
+viêm sung huyết hang vị dạ dày,K29.6,icd10_alias
+viêm thần kinh ngoại biên,G62.9,output_curated
+viêm thực quản,K20,output_curated
+viêm tim,I51.4,icd10_alias
+viêm tuyến mồ hôi,L73.2,output_curated
+viêm tuỷ xương,M86.9,output_curated
+viêm túi mật,K81.9,output_curated
+viêm túi mật cấp,K81.0,output_curated
+viêm túi mật cấp tính không biến chứng,K81.0,output_curated
+viêm túi mật thủng cấp tính,K81.0,output_curated
+viêm tụy,K85.9,output_curated
+viêm tủy xương,M86.9,output_curated
+viêm tủy xương mãn tính,M86.9,output_curated
+viêm xương tủy,M86.9,output_curated
+xuất huyết dưới màng cứng,I62.0,output_curated
+xuất huyết dưới nhện,I60.9,output_curated
+xuất huyết dưới nhện vùng trán phải,I60.9,output_curated
+xuất huyết nội sọ,I62.9,output_curated
+xơ gan do rượu,K70.3,output_curated
+xơ gan mất bù,K74.6,output_curated
+xơ vữa động mạch,I70.9,output_curated
+xẹp phổi,J98.1,output_curated
+xẹp phổi thùy dưới phải,J98.1,output_curated
+áp xe,L02.9,output_curated
+áp xe phổi,J85.2,icd10_alias
+đa u tuỷ xương,C90.0,output_curated
+đa u tủy,C90.0,icd10_alias
+đa u tủy xương,C90.0,output_curated
+đau thắt ngực,I20.9,output_curated
+đay,L50.9,icd10_alias
+đay vô,L50.1,icd10_alias
+đái tháo đường,E11.9,output_curated
+đái tháo đường type 2,E11.9,output_curated
+đái tháo đường típ 1,E10.9,output_curated
+đái tháo đường típ 2,E11.9,output_curated
+"đái tháo đường, có biến chứng bệnh lý thần kinh ngoại biên",E11.4,output_curated
+đại tràng giãn,K59.3,output_curated
+động kinh,G40.9,output_curated
+động mạch vành,I25.9,icd10_alias
+đột quỵ,I63.9,output_curated
+đụng dập một vùng nhu mô phổi,S27.3,output_curated
+ổ loét trong bao tử,K25,icd10_alias

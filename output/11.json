@@ -1,0 +1,114 @@
+[
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      57,
+      70
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "bệnh thận mạn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      107,
+      120
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "N18.9"
+    ]
+  },
+  {
+    "text": "ung thư đại tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      143,
+      160
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C18.9"
+    ]
+  },
+  {
+    "text": "béo phì",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      167,
+      174
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E66.9"
+    ]
+  },
+  {
+    "text": "xơ gan mất bù",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      191,
+      204
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K74.6"
+    ]
+  },
+  {
+    "text": "tăng áp lực tĩnh mạch cửa",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      208,
+      233
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K76.6"
+    ]
+  },
+  {
+    "text": "cổ trướng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      235,
+      244
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "R18"
+    ]
+  },
+  {
+    "text": "tràn dịch màng phổi",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      248,
+      267
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "J91"
+    ]
+  }
+]

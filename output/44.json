@@ -1,0 +1,413 @@
+[
+  {
+    "text": "rung nhĩ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      39,
+      47
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I48"
+    ]
+  },
+  {
+    "text": "tăng huyết áp",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      50,
+      63
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I10"
+    ]
+  },
+  {
+    "text": "suy tim, không đặc hiệu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      66,
+      89
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I50.9"
+    ]
+  },
+  {
+    "text": "béo phì",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      92,
+      99
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E66.9"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      144,
+      151
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phù chi dưới",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      154,
+      166
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      169,
+      177
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      252,
+      259
+    ],
+    "assertions": []
+  },
+  {
+    "text": "yếu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      263,
+      266
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      292,
+      300
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau rát",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      317,
+      324
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chán ăn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      364,
+      371
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      391,
+      394
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      465,
+      472
+    ],
+    "assertions": []
+  },
+  {
+    "text": "phù chi dưới",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      475,
+      487
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      490,
+      498
+    ],
+    "assertions": []
+  },
+  {
+    "text": "mệt mỏi",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      501,
+      508
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      553,
+      561
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Đau buốt khi đi tiểu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      610,
+      630
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chán ăn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      633,
+      640
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      643,
+      646
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      690,
+      698
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tê",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      814,
+      816
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ở cánh tay",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      844,
+      858
+    ],
+    "assertions": []
+  },
+  {
+    "text": "shortness of breath",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      981,
+      1000
+    ],
+    "assertions": []
+  },
+  {
+    "text": "yếu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1034,
+      1037
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau rát",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1071,
+      1078
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Nôn mửa",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1154,
+      1161
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1208,
+      1216
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đánh trống ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1335,
+      1350
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "chóng mặt",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1352,
+      1361
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "lasix",
+    "type": "THUỐC",
+    "position": [
+      1440,
+      1445
+    ],
+    "assertions": [],
+    "candidates": [
+      "202991"
+    ]
+  },
+  {
+    "text": "lasix iv",
+    "type": "THUỐC",
+    "position": [
+      1720,
+      1728
+    ],
+    "assertions": [],
+    "candidates": [
+      "202991"
+    ]
+  },
+  {
+    "text": "morphine",
+    "type": "THUỐC",
+    "position": [
+      1740,
+      1748
+    ],
+    "assertions": [],
+    "candidates": [
+      "7052"
+    ]
+  },
+  {
+    "text": "dilaudid",
+    "type": "THUỐC",
+    "position": [
+      1760,
+      1768
+    ],
+    "assertions": [],
+    "candidates": [
+      "224913"
+    ]
+  },
+  {
+    "text": "metoprolol",
+    "type": "THUỐC",
+    "position": [
+      1783,
+      1793
+    ],
+    "assertions": [],
+    "candidates": [
+      "6918"
+    ]
+  },
+  {
+    "text": "diltiazem",
+    "type": "THUỐC",
+    "position": [
+      1813,
+      1822
+    ],
+    "assertions": [],
+    "candidates": [
+      "3443"
+    ]
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1862,
+      1869
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1886,
+      1894
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khó thở",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1913,
+      1920
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau ngực",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1937,
+      1945
+    ],
+    "assertions": []
+  }
+]

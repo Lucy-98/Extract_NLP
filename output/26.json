@@ -1,0 +1,52 @@
+[
+  {
+    "text": "béo phì",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      52,
+      59
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "E66.9"
+    ]
+  },
+  {
+    "text": "giảm cân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      202,
+      210
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng cân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      214,
+      222
+    ],
+    "assertions": []
+  },
+  {
+    "text": "giảm cân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      293,
+      301
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tăng cân",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      335,
+      343
+    ],
+    "assertions": []
+  }
+]

@@ -1,0 +1,147 @@
+[
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      53,
+      60
+    ],
+    "assertions": []
+  },
+  {
+    "text": "flagyl",
+    "type": "THUỐC",
+    "position": [
+      223,
+      229
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "202866"
+    ]
+  },
+  {
+    "text": "u nội tiết",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      432,
+      442
+    ],
+    "assertions": [
+      "isFamily"
+    ],
+    "candidates": [
+      "C75.9"
+    ]
+  },
+  {
+    "text": "rò ống tuỵ mật",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      470,
+      484
+    ],
+    "assertions": [
+      "isFamily"
+    ],
+    "candidates": [
+      "K86.8"
+    ]
+  },
+  {
+    "text": "nhiễm Clostridioides difficile",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      665,
+      695
+    ],
+    "assertions": [
+      "isFamily"
+    ],
+    "candidates": [
+      "A04.7"
+    ]
+  },
+  {
+    "text": "nhiễm trùng vết mổổ",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      700,
+      719
+    ],
+    "assertions": [
+      "isFamily"
+    ],
+    "candidates": [
+      "T81.4"
+    ]
+  },
+  {
+    "text": "flagyl",
+    "type": "THUỐC",
+    "position": [
+      742,
+      748
+    ],
+    "assertions": [
+      "isFamily"
+    ],
+    "candidates": [
+      "202866"
+    ]
+  },
+  {
+    "text": "sưng nề",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      930,
+      937
+    ],
+    "assertions": [
+      "isFamily"
+    ]
+  },
+  {
+    "text": "sưng nề",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1171,
+      1178
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1327,
+      1334
+    ],
+    "assertions": []
+  },
+  {
+    "text": "không phát hiện",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1337,
+      1352
+    ],
+    "assertions": []
+  },
+  {
+    "text": "huyết khối tĩnh mạch sâu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1353,
+      1377
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "I80.2"
+    ]
+  }
+]

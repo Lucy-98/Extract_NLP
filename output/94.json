@@ -1,0 +1,157 @@
+[
+  {
+    "text": "Ung thư vú",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      49,
+      59
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "C50.9"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      181,
+      189
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bụng hạ sườn phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      295,
+      316
+    ],
+    "assertions": []
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      318,
+      326
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      328,
+      331
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đi ngoài phân lỏng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      341,
+      359
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      413,
+      421
+    ],
+    "assertions": []
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      451,
+      459
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      461,
+      464
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Đau bụng hạ sườn phải",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      559,
+      580
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      582,
+      590
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      592,
+      595
+    ],
+    "assertions": []
+  },
+  {
+    "text": "SPO2",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      720,
+      724
+    ],
+    "assertions": []
+  },
+  {
+    "text": "99",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      726,
+      728
+    ],
+    "assertions": []
+  },
+  {
+    "text": "morphine",
+    "type": "THUỐC",
+    "position": [
+      812,
+      820
+    ],
+    "assertions": [],
+    "candidates": [
+      "7052"
+    ]
+  },
+  {
+    "text": "lorazepam",
+    "type": "THUỐC",
+    "position": [
+      829,
+      838
+    ],
+    "assertions": [],
+    "candidates": [
+      "6470"
+    ]
+  }
+]

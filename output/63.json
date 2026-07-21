@@ -1,0 +1,243 @@
+[
+  {
+    "text": "Bệnh túi thừa ở cả ruột non và đại tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      53,
+      93
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K57.9"
+    ]
+  },
+  {
+    "text": "áp xe",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      125,
+      130
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "L02.9"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      230,
+      238
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau hố chậu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      295,
+      306
+    ],
+    "assertions": []
+  },
+  {
+    "text": "táo bón",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      355,
+      362
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau hố chậu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      535,
+      546
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      618,
+      625
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      655,
+      662
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      743,
+      751
+    ],
+    "assertions": []
+  },
+  {
+    "text": "táo bón",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      758,
+      765
+    ],
+    "assertions": []
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      772,
+      780
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau hố chậu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      820,
+      831
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      896,
+      903
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      933,
+      941
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      1018,
+      1025
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "tylenol",
+    "type": "THUỐC",
+    "position": [
+      1080,
+      1087
+    ],
+    "assertions": [],
+    "candidates": [
+      "202433"
+    ]
+  },
+  {
+    "text": "thiếu máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1366,
+      1375
+    ],
+    "assertions": [],
+    "candidates": [
+      "D64.9"
+    ]
+  },
+  {
+    "text": "hồng cầu",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1376,
+      1384
+    ],
+    "assertions": []
+  },
+  {
+    "text": "bun",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1403,
+      1406
+    ],
+    "assertions": []
+  },
+  {
+    "text": "creatinine",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1407,
+      1417
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1455,
+      1457
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm túi mật cấp tính không biến chứng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1567,
+      1605
+    ],
+    "assertions": [],
+    "candidates": [
+      "K81.0"
+    ]
+  },
+  {
+    "text": "viêm túi mật cấp tính không biến chứng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1638,
+      1676
+    ],
+    "assertions": [],
+    "candidates": [
+      "K81.0"
+    ]
+  }
+]

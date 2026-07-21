@@ -1,0 +1,950 @@
+[
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      73,
+      81
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      85,
+      94
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "Nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      118,
+      128
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      144,
+      169
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "Nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      176,
+      186
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "hội chứng ruột kích thích",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      226,
+      251
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K58.9"
+    ]
+  },
+  {
+    "text": "hội chứng ruột kích thích",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      268,
+      293
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K58.9"
+    ]
+  },
+  {
+    "text": "Nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      353,
+      360
+    ],
+    "assertions": []
+  },
+  {
+    "text": "loét tá tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      390,
+      403
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K26.9"
+    ]
+  },
+  {
+    "text": "Nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      411,
+      418
+    ],
+    "assertions": []
+  },
+  {
+    "text": "loét tá tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      435,
+      448
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K26.9"
+    ]
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      469,
+      476
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Viêm thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      478,
+      492
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K20"
+    ]
+  },
+  {
+    "text": "loét thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      499,
+      513
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K22.1"
+    ]
+  },
+  {
+    "text": "loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      546,
+      550
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "K27.9"
+    ]
+  },
+  {
+    "text": "omeprazole",
+    "type": "THUỐC",
+    "position": [
+      625,
+      635
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "7646"
+    ]
+  },
+  {
+    "text": "test hơi thở h. pylori",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      654,
+      676
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      726,
+      736
+    ],
+    "assertions": []
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      809,
+      817
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      821,
+      830
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      842,
+      867
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      937,
+      945
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      949,
+      958
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      975,
+      1000
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "Nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1008,
+      1018
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1035,
+      1060
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "Nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1068,
+      1078
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1115,
+      1123
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1127,
+      1137
+    ],
+    "assertions": []
+  },
+  {
+    "text": "omeprazole",
+    "type": "THUỐC",
+    "position": [
+      1168,
+      1178
+    ],
+    "assertions": [],
+    "candidates": [
+      "7646"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1244,
+      1252
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1256,
+      1265
+    ],
+    "assertions": []
+  },
+  {
+    "text": "hội chứng ruột kích thích",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1277,
+      1302
+    ],
+    "assertions": [],
+    "candidates": [
+      "K58.9"
+    ]
+  },
+  {
+    "text": "loét tá tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1314,
+      1327
+    ],
+    "assertions": [],
+    "candidates": [
+      "K26.9"
+    ]
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1332,
+      1339
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1406,
+      1431
+    ],
+    "assertions": [
+      "isNegated"
+    ],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1460,
+      1485
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1534,
+      1542
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1544,
+      1553
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1555,
+      1565
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1567,
+      1574
+    ],
+    "assertions": []
+  },
+  {
+    "text": "loét tá tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      1590,
+      1603
+    ],
+    "assertions": [],
+    "candidates": [
+      "K26.9"
+    ]
+  },
+  {
+    "text": "dương tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      1618,
+      1628
+    ],
+    "assertions": []
+  },
+  {
+    "text": "xét nghiệm phân tìm cryptosporidium",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1629,
+      1664
+    ],
+    "assertions": []
+  },
+  {
+    "text": "omeprazole",
+    "type": "THUỐC",
+    "position": [
+      1695,
+      1705
+    ],
+    "assertions": [],
+    "candidates": [
+      "7646"
+    ]
+  },
+  {
+    "text": "test hơi thở h. pylori",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      1713,
+      1735
+    ],
+    "assertions": []
+  },
+  {
+    "text": "omeprazole",
+    "type": "THUỐC",
+    "position": [
+      1753,
+      1763
+    ],
+    "assertions": [],
+    "candidates": [
+      "7646"
+    ]
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1776,
+      1784
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1788,
+      1798
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1846,
+      1856
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1894,
+      1904
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Ăn uống kém",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1911,
+      1922
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nausea",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1930,
+      1936
+    ],
+    "assertions": []
+  },
+  {
+    "text": "diarrhea",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1943,
+      1951
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2025,
+      2050
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "buồn nôn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2120,
+      2128
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiêu chảy",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2132,
+      2141
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2158,
+      2183
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2204,
+      2214
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2231,
+      2256
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2264,
+      2271
+    ],
+    "assertions": []
+  },
+  {
+    "text": "loét tá tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2287,
+      2300
+    ],
+    "assertions": [],
+    "candidates": [
+      "K26.9"
+    ]
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2330,
+      2355
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "dương tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2363,
+      2373
+    ],
+    "assertions": []
+  },
+  {
+    "text": "xét nghiệm phân tìm cryptosporidium",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2374,
+      2409
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2426,
+      2451
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "omeprazole",
+    "type": "THUỐC",
+    "position": [
+      2473,
+      2483
+    ],
+    "assertions": [],
+    "candidates": [
+      "7646"
+    ]
+  },
+  {
+    "text": "test hơi thở h. pylori",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2491,
+      2513
+    ],
+    "assertions": []
+  },
+  {
+    "text": "đau bụng",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2541,
+      2549
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2553,
+      2563
+    ],
+    "assertions": []
+  },
+  {
+    "text": "omeprazole",
+    "type": "THUỐC",
+    "position": [
+      2594,
+      2604
+    ],
+    "assertions": [],
+    "candidates": [
+      "7646"
+    ]
+  },
+  {
+    "text": "nôn ra máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2656,
+      2666
+    ],
+    "assertions": [
+      "isHistorical"
+    ]
+  },
+  {
+    "text": "dương tính",
+    "type": "KẾT_QUẢ_XÉT_NGHIỆM",
+    "position": [
+      2744,
+      2754
+    ],
+    "assertions": []
+  },
+  {
+    "text": "xét nghiệm phân tìm cryptosporidium",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2755,
+      2790
+    ],
+    "assertions": []
+  },
+  {
+    "text": "viêm dạ dày ruột do virus",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2807,
+      2832
+    ],
+    "assertions": [],
+    "candidates": [
+      "A08.4"
+    ]
+  },
+  {
+    "text": "test hơi thở h. pylori",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2840,
+      2862
+    ],
+    "assertions": []
+  },
+  {
+    "text": "omeprazole",
+    "type": "THUỐC",
+    "position": [
+      2876,
+      2886
+    ],
+    "assertions": [],
+    "candidates": [
+      "7646"
+    ]
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2925,
+      2932
+    ],
+    "assertions": []
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2958,
+      2965
+    ],
+    "assertions": []
+  },
+  {
+    "text": "loét tá tràng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2982,
+      2995
+    ],
+    "assertions": [],
+    "candidates": [
+      "K26.9"
+    ]
+  },
+  {
+    "text": "nội soi",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      3016,
+      3023
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Viêm thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3025,
+      3039
+    ],
+    "assertions": [],
+    "candidates": [
+      "K20"
+    ]
+  },
+  {
+    "text": "loét thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3046,
+      3060
+    ],
+    "assertions": [],
+    "candidates": [
+      "K22.1"
+    ]
+  },
+  {
+    "text": "loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3093,
+      3097
+    ],
+    "assertions": [],
+    "candidates": [
+      "K27.9"
+    ]
+  },
+  {
+    "text": "Viêm thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3180,
+      3194
+    ],
+    "assertions": [],
+    "candidates": [
+      "K20"
+    ]
+  },
+  {
+    "text": "Loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3223,
+      3227
+    ],
+    "assertions": [],
+    "candidates": [
+      "K27.9"
+    ]
+  },
+  {
+    "text": "loét thực quản",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3228,
+      3242
+    ],
+    "assertions": [],
+    "candidates": [
+      "K22.1"
+    ]
+  },
+  {
+    "text": "loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3275,
+      3279
+    ],
+    "assertions": [],
+    "candidates": [
+      "K27.9"
+    ]
+  },
+  {
+    "text": "loét",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      3289,
+      3293
+    ],
+    "assertions": [],
+    "candidates": [
+      "K27.9"
+    ]
+  }
+]

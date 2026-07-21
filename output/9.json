@@ -1,0 +1,117 @@
+[
+  {
+    "text": "u cơ trơn tử cung",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      39,
+      56
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "D25.9"
+    ]
+  },
+  {
+    "text": "iron",
+    "type": "THUỐC",
+    "position": [
+      104,
+      108
+    ],
+    "assertions": [],
+    "candidates": [
+      "90176"
+    ]
+  },
+  {
+    "text": "đau bụng dưới",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      165,
+      178
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chảy máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      182,
+      190
+    ],
+    "assertions": []
+  },
+  {
+    "text": "chảy máu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      255,
+      263
+    ],
+    "assertions": []
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      312,
+      319
+    ],
+    "assertions": []
+  },
+  {
+    "text": "x-quang",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      480,
+      487
+    ],
+    "assertions": []
+  },
+  {
+    "text": "u xơ tử cung",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      542,
+      554
+    ],
+    "assertions": [],
+    "candidates": [
+      "D25.9"
+    ]
+  },
+  {
+    "text": "siêu âm",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      749,
+      756
+    ],
+    "assertions": []
+  },
+  {
+    "text": "U cơ trơn",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      829,
+      838
+    ],
+    "assertions": [],
+    "candidates": [
+      "D25.9"
+    ]
+  },
+  {
+    "text": "dịch tự do",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1008,
+      1018
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  }
+]

@@ -1,0 +1,160 @@
+[
+  {
+    "text": "Yếu nửa người",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      123,
+      136
+    ],
+    "assertions": []
+  },
+  {
+    "text": "yếu nửa người",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      218,
+      231
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      333,
+      335
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      386,
+      394
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cơn ngất",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      430,
+      438
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      466,
+      474
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiểu tiện ra sàn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      650,
+      666
+    ],
+    "assertions": []
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      691,
+      698
+    ],
+    "assertions": []
+  },
+  {
+    "text": "Yếu nửa người",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1309,
+      1322
+    ],
+    "assertions": []
+  },
+  {
+    "text": "yếu sức",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1343,
+      1350
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiểu tiện ra sàn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      1429,
+      1445
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      2383,
+      2385
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2436,
+      2444
+    ],
+    "assertions": []
+  },
+  {
+    "text": "cơn ngất",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2480,
+      2488
+    ],
+    "assertions": []
+  },
+  {
+    "text": "ngất xỉu",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2508,
+      2516
+    ],
+    "assertions": []
+  },
+  {
+    "text": "tiểu tiện ra sàn",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      2626,
+      2642
+    ],
+    "assertions": [
+      "isFamily"
+    ]
+  },
+  {
+    "text": "xuất huyết dưới màng cứng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      2713,
+      2738
+    ],
+    "assertions": [],
+    "candidates": [
+      "I62.0"
+    ]
+  }
+]

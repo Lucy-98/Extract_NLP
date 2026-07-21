@@ -1,0 +1,71 @@
+[
+  {
+    "text": "bệnh mạch máu",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      34,
+      47
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "I73.89"
+    ]
+  },
+  {
+    "text": "aspirin 325mg",
+    "type": "THUỐC",
+    "position": [
+      75,
+      88
+    ],
+    "assertions": [
+      "isHistorical"
+    ],
+    "candidates": [
+      "212033"
+    ]
+  },
+  {
+    "text": "rối loạn thần kinh",
+    "type": "TRIỆU_CHỨNG",
+    "position": [
+      177,
+      195
+    ],
+    "assertions": [
+      "isNegated"
+    ]
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      229,
+      231
+    ],
+    "assertions": []
+  },
+  {
+    "text": "khối máu tụ dưới màng cứng",
+    "type": "CHẨN_ĐOÁN",
+    "position": [
+      271,
+      297
+    ],
+    "assertions": [],
+    "candidates": [
+      "I62.0"
+    ]
+  },
+  {
+    "text": "ct",
+    "type": "TÊN_XÉT_NGHIỆM",
+    "position": [
+      347,
+      349
+    ],
+    "assertions": []
+  }
+]
