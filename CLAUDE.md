@@ -2,6 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **ĐỌC TRƯỚC TIÊN:** [docs/problem_statement.md](docs/problem_statement.md) là **đề bài gốc của BTC**
+> — nguồn sự thật cho luật thi, format nộp, metric, và các ràng buộc (đặc biệt: **model ≤ 9B params,
+> không dùng API ngoài lúc inference**). Bất kỳ mô tả nào bên dưới hoặc trong README mà mâu thuẫn với
+> file đó thì file đó đúng. Đọc nó trước khi bắt đầu bất kỳ việc gì trong repo này.
+
 ## Project
 
 ViettelRace AI Race 2026, Đề 2: extract and normalize medical concepts from free-form Vietnamese
