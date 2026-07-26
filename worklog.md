@@ -36,6 +36,20 @@ the self-hosted ≤9B model on those labels. Changes to `run_llm_analysis.py`:
   Turn 2 files with the new prompt → submit for immediate leaderboard lift; (2) feed these labels into
   `prepare_ner_dataset.py` → retrain the self-hosted model for a compliant submission.
 
+### 2026-07-26 — Candidate enrichment: Qwen-predicted ICD-10 → validated → diagnoses.csv
+
+Distillation (part 7) raised the turn-2 score **34.4 → 36.32** (WER 61.66 / J_assert 43.59 / **J_cand 29.34**):
+text +2.6, assertion +4.0, but **candidates flat** — because J_candidates is limited by the *lookup tables*,
+not the model, and `diagnoses.csv` has no ICD-10 for turn-2 Vietnamese diagnoses. J_candidates carries the
+heaviest weight (0.4), so it's the top remaining lever. Fix (highest ROI): during the on-Kaggle labeling
+pass, after entity extraction, Qwen also **codes the unique turn-2 diagnosis texts to ICD-10** (batched,
+numbered-JSON to keep alignment), each code **validated offline against `icd10_full.csv`** (format +
+existence) to drop hallucinations, written to `qwen_icd_supplement.csv`. The submission cell then **merges
+those rows into `diagnoses.csv` before `run_pipeline`**, but only for diagnosis texts not already in the
+curated table (preserves turn-1 mappings; Jaccard penalizes extra wrong codes). Added `icd10_full.csv` to
+`kaggle_bundle` (now 40MB). Teacher kept at Qwen2.5-7B (proven); the whole thing stays guarded/try-except
+and compliant (LLM only at data-prep; submitted model = offline encoder + lookup). Expected: J_cand 29 → 40+.
+
 ### 2026-07-25 (part 7) — Distillation: Qwen2.5-7B labels turn-2 on-Kaggle (compliant, no API/key)
 
 Highest-ceiling plan: the score is capped by **label starvation + domain shift** (~100 turn-1 curated
