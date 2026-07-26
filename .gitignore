@@ -21,6 +21,7 @@ kaggle_upload/kernel/run_output/
 # Prediction/submission artifacts
 input_turn*/
 output_model*/
+output_llm*/
 output_turn*.zip
 output.zip
 source_bundle.zip
@@ -42,3 +43,6 @@ prescribe/scripts/
 # Upstream release readmes/dumps that are local-only.
 /Readme_Full*.txt
 prescribe/Readme_Full*.txt
+
+# One-shot Kaggle upload bundle (train + terminology + BTC input)
+kaggle_bundle/

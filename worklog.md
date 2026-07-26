@@ -4,6 +4,125 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-25 — LLM Extraction Pipeline (`scripts/run_llm_analysis.py`)
+
+- **Built LLM Clinical Extraction Pipeline (`scripts/run_llm_analysis.py`)**: Prompting pipeline tailored for Vietnamese medical NER (`CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`) and assertions (`isNegated`, `isHistorical`, `isFamily`).
+- **Exact Position Matching & Offline Terminology Linking**: Implemented exact string matching to locate character span positions `[start, end]` in raw input documents without displacement, and integrated `TerminologyMatcher` (`drugs.csv`, `diagnoses.csv`) and `RxNormOfflineIndex` (`rxnorm_full.csv`) to resolve candidate codes.
+
+### 2026-07-25 (part 2) — Score-driven overhaul of `run_llm_analysis.py`
+
+Diagnosis of Turn 2 score **34.388** (text_score 35.7 / J_assertion 39.56 / J_candidates 29.51,
+weights 0.3/0.3/0.4). Root bottleneck: the 270M `xlm-roberta` model's *entity extraction* — truncated
+spans (`"THIẾU MEN"` vs `"THIẾU MEN G6PD"`) and wrong types (`"hồng cầu"`→TÊN_XÉT_NGHIỆM). Bad text caps
+all three components (a right code on a wrong span still earns 0). Gemini extraction is far cleaner, so
+the rules-compliant play is **distillation**: use Gemini as an offline data-prep labeler, then fine-tune
+the self-hosted ≤9B model on those labels. Changes to `run_llm_analysis.py`:
+
+- **Prompt**: demand minimal spans (no long explanatory clauses as CHẨN_ĐOÁN), occurrence-based listing,
+  precision-over-recall, and let Gemini emit ICD-10 / RxNorm candidate codes.
+- **`locate_exact_positions`**: added whitespace-tolerant (regex over collapsed spaces/newlines) and
+  punctuation-trim fallbacks so fewer entities are silently dropped; every kept entity carries the exact
+  raw slice (span-text check always passes).
+- **`resolve_candidates`**: curated offline matcher still wins (precision); the LLM's own code is used
+  ONLY to fill a gap the matcher can't cover, and only after validation against `icd10_full.csv`
+  (11,243 codes) / `rxnorm_full.csv` (336k RXCUIs) to drop hallucinations. This directly attacks the
+  0.4-weight J_candidates gap (was leaving 109 DIAG + 99 DRUG with empty candidates on the 23 done files).
+- **`--relink-only`**: recompute candidates on existing outputs with no API calls (verified: 23 files,
+  0 errors, no candidate regression). Removed the dead `prompt` param; added `sys.stdout.reconfigure`,
+  `--no-zip`, per-file failure logging.
+- **Rules hygiene**: added a prominent header docstring marking this as an offline data-prep/distillation
+  tool (NOT a compliant inference path — it calls the Gemini cloud API); gitignored `output_llm*/`.
+- **Next steps (need user's API key + later a GPU retrain)**: (1) re-run full extraction on all 100
+  Turn 2 files with the new prompt → submit for immediate leaderboard lift; (2) feed these labels into
+  `prepare_ner_dataset.py` → retrain the self-hosted model for a compliant submission.
+
+### 2026-07-25 (part 7) — Distillation: Qwen2.5-7B labels turn-2 on-Kaggle (compliant, no API/key)
+
+Highest-ceiling plan: the score is capped by **label starvation + domain shift** (~100 turn-1 curated
+labels vs turn-2 patient prose), not compute — so a bigger encoder alone won't move it. Added an
+**on-Kaggle distillation** step: inserted cells (before the DataLoader build, after types are defined; both
+notebook copies) that load **Qwen2.5-7B-Instruct in 4-bit** (bitsandbytes, auto-installed if missing) and
+pseudo-label all 100 `input_turn2` docs (5 entity types + 3 assertions), locate exact spans (exact +
+whitespace-tolerant), and **append** the results to `train_records` — curated turn-1 kept intact, LLM
+turn-2 added so the ≤9B encoder learns the test domain. Rules-clean: the LLM is used only at **data-prep**
+(like `fetch_icd.py`), runs **self-hosted on Kaggle GPU** (no external API, no key, Apache-2.0 model), and
+the **submitted** model stays the offline encoder + `run_pipeline`. Guarded: whole labeling block is
+`try/except` → on OOM/parse/version failure it prints a warning and trains on curated-only (~34.4, no
+wasted GPU); `LABEL_ENABLE=False` skips it. LLM freed (`del`+`empty_cache`) before encoder training. One
+Run All: label → train (xlm-roberta-large) → `run_pipeline` → `output.zip`. Dataset unchanged
+(`kaggle_bundle` already carries `input_turn2/`); needs **Internet: On** for the HF download.
+
+### 2026-07-25 (part 6) — FIX: Kaggle submission regressed to 31.89; use real run_pipeline
+
+Turn-2 submission from the part-5 all-Kaggle notebook scored **31.8937** (WER 65.03 / J_assert 38.53 /
+**J_cand 24.61** vs baseline 34.388 / 64.28 / 39.56 / 29.51). Cause: the inline reimplementation in the
+notebook was a **stripped-down** version of the tested pipeline — it dropped `--drop-short-noise`,
+`--add-terminology-entities`, `--add-public-phrase-entities` (which reads the turn-1 `output/` lexicon)
+and the RxNorm fallback, so J_candidates cratered. **Fix:** removed the 3 inline cells; the notebook now
+copies the bundled repo into `/kaggle/working/repo`, drops the trained model into `models/ner_model/`,
+and runs the **exact `run_all.py submit` recipe** (`run_pipeline.py` + those 3 flags → `package_submission.py`).
+Rebuilt `kaggle_bundle/` (39MB) with the full deps: `scripts/`, `data/terminology/{drugs,diagnoses,
+rxnorm_full}.csv`, `output/` (turn-1 labels), `input_turn2/`, train/holdout. **Validated locally**: running
+the recipe with the current base model reproduced `output_model_turn2` byte-for-byte (100/100 files) →
+recipe faithful, bundle complete. Kept `xlm-roberta-large` so the next run tests large under the *correct*
+pipeline; base+recipe is a proven 34.4 fallback (and `output_turn2.zip` already holds the 34.4 submission).
+
+### 2026-07-25 (part 5) — Full submission runs entirely on Kaggle (weak local machine)
+
+Dropped the Gemini/LLM direction entirely (removed `scripts/run_llm_analysis.py`, `.env`,
+`output_llm_turn2/`, `.kaggle_download/` cache). Local Kaggle CLI (1.7.4.5, the newest on PyPI for
+py3.9) can't auth with the account's new `KGAT_` tokens, and the machine is weak — so the notebook now
+does **train → inference on the 100 BTC `input_turn2/*.txt` → package `output.zip`** all on Kaggle;
+the user downloads only `output.zip` from the kernel Output tab. Appended 3 cells (both notebook copies)
+that are self-contained: an inline `TerminologyMatcher` (compact copy of `build_terminology_index.py`,
+stdlib) + `_norm`, glob-based location of `drugs.csv`/`diagnoses.csv`/`input_turn2/*.txt` under
+`/kaggle/input`, reuse of the notebook's own `predict_records` for NER+assertions, candidate linking for
+CHẨN_ĐOÁN(ICD)/THUỐC(RxNorm), and `output/{id}.json` + `output.zip` in the BTC schema (verified against
+`output/1.json` and `check_submission.py` field rules; `import re` added to the matcher cell). Created a
+single gitignored `kaggle_bundle/` (train+holdout jsonl, drugs+diagnoses csv, input_turn2/ — 1.2MB) to
+upload as one private Kaggle dataset. Compliance unchanged: self-hosted ≤9B, no external API at inference.
+
+### 2026-07-25 (part 4) — Backbone upgrade: xlm-roberta-large (no LLM path)
+
+Decided the rules-compliant, span-NER-appropriate way to spend the 9B budget is to **scale the
+encoder**, not adopt a 9B decoder LLM (wrong tool for exact-span BIO tagging, won't full-fine-tune on
+Kaggle free T4, would need a generative-rewrite + slow rerun). `MODEL_NAME` → `xlm-roberta-large`
+(560M, still ≪ 9B), a drop-in: same tokenizer/`offset_mapping`, heads auto-size from
+`encoder.config.hidden_size` (1024), and `run_pipeline.py` rebuilds from the bundled `hf_config.json`
+(no hard-coded 768 — verified lines 87-90/117). Added `gradient_checkpointing_enable(use_reentrant=
+False)` so large+seq512 fits a 16GB T4 (falls back to no-kwarg form on older transformers). Combined
+with the AMP + DataParallel edits above. If OOM on Kaggle, drop `BATCH_SIZE` 8→4. Escalation path if
+large plateaus: `xlm-roberta-xl` (3.5B, ≤9B, same architecture) with LoRA/checkpointing.
+
+### 2026-07-25 (part 3) — Faster Kaggle training: AMP + multi-GPU
+
+Training notebook was assigned a **P100** (cuda 6.0) again in the UI — the known crash case — so
+sped up the T4 path and hardened both notebook copies (`kaggle_upload/kernel/` +`notebooks/`, kept in
+sync). Nine edits, all syntax-checked:
+- **AMP (mixed precision)**: `USE_AMP = DEVICE.type=="cuda"`, `GradScaler`, `autocast` around the
+  forward+loss in `compute_loss` and around holdout inference. `scaler.scale/unscale_/step/update` in
+  the train step. ~1.5–2x on T4, no quality change (fp32 master weights). Guards keep CPU fallback working.
+- **`nn.DataParallel`** when `torch.cuda.device_count() > 1` (T4 x2). Introduced `raw_model` (the
+  unwrapped module) used for `snapshot_state_dict`, best-checkpoint restore, `torch.save(state_dict)`,
+  and `encoder.config` export — so the saved `model.pt` has **no `module.` prefix** and
+  `run_pipeline.py` still loads it unchanged.
+- Kept `BATCH_SIZE=8` to preserve the tuned baseline (batch 8 across 2 GPUs = 4/GPU; bump to 16 to
+  fully saturate both cards, at the risk of shifting the score).
+- `run_all.py train` already defaults to `--accelerator NvidiaTeslaT4` (= T4 x2 on Kaggle); the P100 came
+  from running interactively in the UI. Re-push the kernel to pick up the edited notebook + request T4.
+
+## 2026-07-24 — Turn 2 Pipeline Execution & Kaggle Retrain
+
+
+- **Integrated new Turn 2 dataset (`input_turn2_vong1.zip`)**: unzipped into `input_turn2/` (100 files: `1.txt` .. `100.txt`).
+- **Configured Kaggle environment under user account `quanganh1008`**: updated `dataset-metadata.json`, `kernel-metadata.json`, and `scripts/run_all.py` to point to `quanganh1008/viettelrace-ner-dataset` and `quanganh1008/viettelrace-ner-assertion-train`.
+- **Pushed & Retrained on Kaggle GPU Tesla T4**: uploaded augmented dataset (`train_augmented.jsonl`), triggered notebook execution on Kaggle. Log confirmed training completed successfully (`status: COMPLETE`).
+- **Downloaded model export & fixed local environment**: fetched `ner_model_export` weights (1.06GB `model.pt`) into `models/ner_model/`. Resolved PyTorch/NumPy 2.x compatibility error by installing `numpy==1.26.4` in `venv`.
+- **Generated Turn 2 submission (`output_turn2.zip`)**: ran offline sliding-window inference pipeline over all 100 `input_turn2` documents (`run_all.py submit`). Produced 2,884 entities across 100 files with 0 format errors (2 minor sub-word warnings). Packaged `output_turn2.zip` matching BTC submission specification (`output/{1..100}.json`).
+- **Turn 2 Real Leaderboard Score**: **34.3880** (WER: 64.2823, J_assertion: 39.5568, J_candidates: 29.514).
+
+
+
 ## 2026-07-21 (part 4) — .git was empty; reinitialized
 
 - `git status` started failing with "not a git repository": `.git/` had only an `info/` subdirectory,
