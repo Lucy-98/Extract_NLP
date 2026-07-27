@@ -4,6 +4,49 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-27 (part 2) — Denser teacher labels made it worse: distillation itself is the problem
+
+**Turn-2 leaderboard: 31.4429** (WER 68.2909 / J_assertion 33.9127 / J_candidates 29.391), down
+from 35.1865. The chunking fix did exactly what it was designed to do — **22.1 entities/doc (from
+12.1), density 10.9/1000 chars (from ~5.9), 0 empty docs** — and the score fell 3.7 points.
+
+**This inverts the working assumption of the last five runs.** Score against how many Qwen
+pseudo-labels reached training:
+
+| Qwen labels | leaderboard |
+| --- | ---: |
+| ~73 docs, sparse (27 empty from the parser bug) | **36.3160** |
+| 100 docs @ 12.1/doc | 35.1865 |
+| 100 docs @ 22.1/doc | **31.4429** |
+| 200 docs @ 12.1/doc (turn-1 relabeled too) | 32.7454 |
+
+Monotone, in the opposite direction to the one assumed: **the 36.32 run scored best because its
+distillation was accidentally crippled.** Every subsequent "improvement" to the teacher made the
+student worse. Confirmed off the leaderboard too — the notebook's own holdout, scored against
+curated turn-1 gold, degraded as labels got denser (WER 0.3680 -> 0.4494), so this is not
+leaderboard noise: Qwen's labels pull the model away from BTC annotation conventions.
+
+Supporting signal from the new type-distribution report: `TÊN_XÉT_NGHIỆM` is **4.8%** of Qwen's
+labels against **17%** of gold, while `TRIỆU_CHỨNG` is 47.9% against 42%. Chunking removes the
+surrounding context a lab-test name needs, so the teacher reclassifies it as a symptom — denser
+labels bought more of the wrong distribution.
+
+**Action: `LABEL_ENABLE = False`.** This also drops ~77% of the runtime (labeling was 5899s of
+7615s), so the next run costs roughly 25 minutes instead of two hours. It tests a configuration
+never actually run: xlm-roberta-large trained on curated labels only. The closest prior data point
+is the pre-distillation 34.388, which used xlm-roberta-*base*.
+
+The other two changes from part 1 are keepers and stay on:
+
+- **ICD merge off** produced J_candidates **29.391**, the best of any distillation run and level
+  with the 36.32 baseline's 29.3432.
+- **Assertion masking** lifted holdout J_assertion 0.2776 -> **0.3938**. Leaderboard J_assertion
+  fell only because it is gated on text/type — when extraction degrades, assertion Jaccard follows
+  it down regardless of how good the assertion head is.
+
+Chunking and the `_locate` word-boundary fix stay in the code (both are correct in isolation and
+verified) but are now dormant behind `LABEL_ENABLE`.
+
 ## 2026-07-27 — Teacher recall: list-length collapse + a mass span-placement bug
 
 Two defects found by measuring the teacher's own output (`output (4).zip`, the 100 files
