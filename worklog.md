@@ -4,6 +4,31 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-27 (part 5) — The 36.32 model artifact is lost; fallback verified
+
+`ner_model_export.zip` for the 36.32 run (26/07 07:09) was never downloaded and is no longer
+retrievable — subsequent runs pushed it back through the kernel's version history, the same failure
+mode that lost kernel v12 on 2026-07-21. Every `xlm-roberta-large` checkpoint from that series is
+gone with it.
+
+**A verified fallback survives locally.** `models/ner_model/` (2026-07-24 19:58-20:02,
+`base_model: xlm-roberta-base`) is the model that produced `output_model_turn2/`, which is
+byte-identical across all 100 files to `output_turn2.zip` (2884 entities) — the submission that
+scored **34.388**. The chain is intact, `package_source.py --dry-run` passes with it, and no GPU is
+needed to defend that number.
+
+**The loss is smaller than it looks.** 36.32 - 34.388 = 1.93 points, and no configuration has been
+run twice, so differences inside the 34-36 band are not separable from seed noise. Comparing the two
+runs that used no distillation at all isolates the encoder: xlm-roberta-base **34.388** vs
+xlm-roberta-large **34.7142** — doubling the encoder bought +0.33. If the BTC bundle has a size
+limit, the 1.1 GB base model already in place is a defensible choice rather than a concession.
+
+**Immediate action:** the most recent run (34.71) is the kernel's newest version, so its output is
+the one Kaggle is most likely to still serve. Download it before starting any further run.
+
+**Prevention:** both notebook copies now end with a cell that prints the export size and a download
+checklist, so the reminder appears in the log of every run.
+
 ## 2026-07-27 (part 4) — Flag ablation without a GPU, and the source bundle ships the wrong model
 
 ### `--add-terminology-entities` is worth about +10, not a liability
