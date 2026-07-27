@@ -4,6 +4,185 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-27 — Teacher recall: list-length collapse + a mass span-placement bug
+
+Two defects found by measuring the teacher's own output (`output (4).zip`, the 100 files
+`qwen_extract` produced) rather than guessing. Both are fixed in the distillation cell; neither
+needed a GPU run to diagnose.
+
+### 1. The teacher emits a fixed-length list, not a complete one
+
+Entity count barely tracks document length — correlation **r = 0.172** over the 73 non-empty files —
+so density collapses as documents get longer:
+
+| bucket | entities/doc | entities/1000 chars |
+| --- | ---: | ---: |
+| < 1500 chars | 14.5 | 10.3 |
+| 1500–2200 | 14.3 | 8.0 |
+| > 2200 | 15.6 | **5.6** |
+| turn-1 gold | — | **16.7** |
+
+Qwen returns roughly 14 items regardless of what is in front of it; long documents get a third of
+gold density. This is a decoding-behaviour limit, not a prompt-quality or parser one — no amount of
+parser salvage reaches it.
+
+**Fix:** `_chunks()` splits each document into ~1000-char pieces at line boundaries
+(`LLM_CHUNK_CHARS`, 0 disables) and `_extract` labels each piece separately, so every call only has
+to enumerate what it can. Validated locally over all 100 turn-2 files: chunk concatenation
+reproduces the original text byte-for-byte, and **0 of 2223 turn-1 gold entities straddle a chunk
+boundary** (entities never span lines in this corpus), so the split costs no recall. Cost: 251 LLM
+calls instead of 100 — expect labeling to run roughly 2.5x longer (~4-5h total for the notebook).
+Merging chunk results is safe because `_locate` resolves spans against the full raw text and its
+`used` set drops duplicate spans, so genuinely repeated mentions survive and phantom repeats do not.
+
+### 2. `_locate` placed short entities inside other words
+
+`raw.find(t)` is a plain substring search. `"ho"` (cough — a real symptom, 29 mentions in turn-1
+gold) matches **706 positions across the turn-2 inputs, only 30 of which are standalone words**:
+96% of placements landed inside `cho`, `khó`, `hoặc`, `Phosphate`. Entities of ≤4 characters are
+**366 of 2223 gold mentions (16%)**, so this silently poisoned a large slice of the pseudo-labels —
+and `check_submission` cannot catch it, because the span text still matches the raw slice exactly.
+
+**Fix:** `_locate` now tries word-boundary matches first (`(?<!\w)…(?!\w)`, case-sensitive then
+case-insensitive), and the two old fallbacks are gated: the substring scan requires
+`len(t) >= 5 or " " in t`, and the whitespace-flexible regex requires a multi-word text (for a
+single word it degenerated to an unbounded substring search — the same leak again). Audited across
+all 100 turn-2 files: `"ho"` now places in 18 documents with **0 in-word placements** (was 100%),
+and a fabricated drug name is dropped in all 100 instead of being pinned somewhere arbitrary.
+
+### Also
+
+- Labeling now prints **entity density vs the 16.7 gold baseline** and the per-type distribution
+  against gold's mix, with a warning under 10/1000 chars. Density is the early-warning number that
+  would have caught every regression in this series without a leaderboard submission.
+- `notebooks/qwen_extract.ipynb` and its kernel copy carry a dead-end banner at the top citing the
+  11.47 result and the 15.7 ceiling, so the path is not accidentally rerun.
+
+## 2026-07-26 (part 4) — Glob fix recovers 32.75 -> 35.19, still short of 36.32
+
+**Turn-2 leaderboard: 35.1865** (WER 62.2732 / J_assertion 41.6063 / J_candidates 28.4663), 7946s.
+The `input_turn2`-only glob worked (`docs to label: 100`, `train_records: 200 -> 300`) and the
+pipeline is healthy again — `docs rỗng: 0`, holdout WER 0.3680 / J_assertion 0.2776 at best epoch 4
+(vs 0.5056 / 0.2348 at epoch 2 last run), 2233 output entities (vs 1643). But all three leaderboard
+components still sit just below the 36.32 run, and the notebook's turn-1 holdout improving while
+turn-2 does not is the domain gap restated: **the holdout is not a usable proxy for the target.**
+
+Two causes identified, each with a clean monotone series across the three distillation runs:
+
+- **The ICD merge is negative.** `git log` puts the enrichment commit (`1e449e4`) at 07:29, twenty
+  minutes *after* the 36.32 submission at 07:09 — so that run had no merge. J_candidates: no merge
+  **29.3432** | +43 rows 28.766 | +31 rows 28.4663. Jaccard penalises extra wrong codes, and Qwen's
+  guesses for diagnoses outside the curated table are wrong more often than right. Now behind
+  `ICD_MERGE_ENABLE = False` in the submission cell.
+- **Qwen's assertion labels are actively harmful.** J_assertion against the number of Qwen-labeled
+  docs: ~73 (27 empty) **43.5864** | 100 41.6063 | 200 36.7040. Qwen labels negation/history/family
+  poorly, and scaling its labels scales that error into the curated signal. `encode_example` now
+  sets `assertion_mask = 0` for records whose id starts with `llm_`, so pseudo-labels still train
+  BIO/NER (where they help — entity count and holdout WER both improved) but no longer train the
+  assertion head.
+
+Ruled out: the transformers 5.0.0 *"incorrect regex pattern ... will lead to incorrect
+tokenization"* warning. A genuinely broken tokenizer would collapse WER, not move it 61.66 -> 62.27;
+the whole span architecture rides on `offset_mapping` and `check_submission` reports 0 span errors.
+
+Still open: **teacher recall is 12.1 entities/doc against turn-1 gold's 22.2.** Parser fixes cannot
+reach it — it is a prompt/decoding limit. `qwen_extract`'s 3-shot prompt hit 14.7/doc on its
+non-empty files, so few-shot examples in the distillation prompt remain the untried lever.
+
+## 2026-07-26 (part 3) — Distillation regressed 36.32 -> 32.75: the teacher relabeled turn-1
+
+**Turn-2 leaderboard: 32.7454** (WER 65.9074 / J_assertion 36.704 / J_candidates 28.766), down from
+36.3160. Kaggle run 13322s on T4 x2, transformers 5.0.0 / torch 2.10.0+cu128.
+
+**Root cause — the labeling glob picked up turn-1.** Cell 6 built its document list from
+`["/kaggle/input/**/input_turn2/*.txt", "/kaggle/input/**/*.txt"]`. Commit `32743f5` (26/07 10:29)
+added turn-1 `input/` to `kaggle_bundle` for `qwen_extract`'s few-shot examples, so the second
+pattern started matching it: `[distill] docs to label: 200`, `train_records: 200 -> 400`. The 36.32
+submission (07:09) predates that bundle change and labeled only the intended 100 turn-2 docs.
+
+The damage is worse than duplicated data: Qwen **relabeled the 100 turn-1 documents that already
+have curated gold labels**, at 11.3 entities/doc against gold's 22.2. The model therefore saw the
+same document twice with contradictory supervision, half of it teaching omission of entities the
+other half marks. Visible in the training curve — best at epoch 2, then six epochs of degradation:
+
+```
+epoch 2: holdout WER=0.5056 J_assertion=0.2310  <- best
+epoch 8: holdout WER=0.6281 J_assertion=0.1174  -> early stop
+```
+
+Final inference produced **1643 entities (16.4/doc)** vs 2884 (28.8/doc) for the pre-distillation
+pipeline, which is where WER 61.66 -> 65.91 came from.
+
+**Fixed** (both notebook copies): the glob is now `input_turn2`-only with an
+`assert len(_txts) <= 100` guard, so a future bundle change cannot silently widen the labeling set
+again. Also guarded `x in _ASRT` with `isinstance(x, str)` — Qwen occasionally emits nested-list
+assertions, which raised `unhashable type: 'list'` and lost documents 40 and 64 entirely.
+
+### What this run did confirm
+
+- **The part-2 parser fix works**: `docs rỗng: 2` versus 27/100 before. But it also exposes that the
+  parser was never the main constraint — **Qwen itself only extracts ~11.3 entities/doc**, roughly
+  half of gold density. Teacher recall, not teacher parsing, is now the ceiling on distillation.
+  (`qwen_extract`'s 3-shot prompt reached 14.7/doc on its non-empty files, so few-shot examples in
+  the distillation prompt are the obvious next lever.)
+- **The candidate analysis in part 2 holds**: `[submit] merged 43 Qwen ICD rows into diagnoses.csv`
+  moved J_candidates 29.3432 -> **28.766**, i.e. slightly negative. Enriching the lookup tables is
+  not where the remaining points are.
+- **Environment changed under us**: Kaggle now ships transformers 5.0.0 / torch 2.10.0+cu128, and
+  `run_pipeline` logged a new *"tokenizer ... incorrect regex pattern ... will lead to incorrect
+  tokenization"* warning against the exported tokenizer. Unverified whether it perturbs
+  `offset_mapping`, which the whole span architecture depends on — worth pinning or checking if the
+  next run's score does not recover as expected.
+
+## 2026-07-26 (part 2) — `qwen_extract` direct extraction scored 11.47: dead end, but diagnostic
+
+**Turn-2 leaderboard: 11.4736** (WER 86.4028 / J_assertion 14.0101 / J_candidates 7.9784) for
+`notebooks/qwen_extract.ipynb` (Qwen2.5-7B few-shot direct extraction as the submitted model).
+vs 36.32 for the distillation path. Kaggle run: 6635s, T4 x2, 1076 entities over 100 docs.
+
+- **27 of 100 output files are completely empty** (ids 3,4,7,11,23,25,26,27,31,33,35,43,46,47,58,
+  61,63,66,67,68,69,70,74,82,84,88,99). Cause: `extract()` does
+  `re.search(r"\[.*\]", gen, re.S)` then `json.loads`, and returns `[]` on either failure —
+  while the run loop only prints `[warn]` on an *exception*, so a totally empty document is
+  indistinguishable from a successful one in the log. **Not** correlated with document length
+  (empty-file median 1897 chars vs non-empty 1831; the longest doc, id 1 at 4481 chars, parsed
+  fine), so the trigger is malformed/truncated JSON, not input size.
+- **Recovering the 27 empties would not have saved it.** Score is a per-record mean, so the 73
+  non-empty files carry all of 11.4736 → `11.4736 × 100/73 ≈ 15.7` is the ceiling even if every
+  empty file were recovered at the same quality. Still under half of 36.32. On the 73 that did
+  work, recall was 14.7 entities/doc vs 28.8 for the encoder pipeline (`TÊN_XÉT_NGHIỆM` worst:
+  136 vs 489). **Do not retry direct LLM extraction as the submission path.**
+- **The same parser bug is in the distillation labeling cell** (`train_ner_assertion_model.ipynb`
+  cell 6: `LLM_MAX_NEW_TOKENS = 1536`, same `re.search(r"\[.*\]")` + `json.loads` → `return []`).
+  So the 36.32 run was almost certainly trained on turn-2 pseudo-labels missing ~27% of documents
+  entirely. Fixing the teacher's parser is the cheapest available recall gain.
+
+### Scoring structure: recall gates all three components
+
+`check_submission.py`'s `occurrence_keys` builds Jaccard items as `(text, type, occurrence_index,
+code_or_EMPTY)`. A mention whose text or type is wrong therefore scores zero on **J_assertion and
+J_candidates as well as** the text WER — the three components are not independent levers, and there
+is no way to "fix candidates" for an entity the model never extracted correctly.
+
+Simulation on turn-1 gold (drop a fraction of gold entities, corrupt a fraction of codes):
+
+| recall \ code accuracy | 50% | 75% | 100% |
+| ---: | ---: | ---: | ---: |
+| 40% | 20.5 | 33.8 | 47.2 |
+| 60% | 29.9 | 42.6 | 61.1 |
+| 80% | 38.6 | 59.9 | 82.1 |
+| 100% | 40.7 | 64.4 | 100.0 |
+
+Observed turn-2 J_candidates 29.34 at text_score 38.34 (≈40-50% recall) implies coding accuracy is
+already ~65-70% — i.e. **the lookup tables are not the bottleneck the earlier entry assumed**.
+Perfect coding at unchanged recall caps out around J_cand 47 (+5.6 final). Raising recall 40% → 70%
+instead moves J_cand *and* text_score *and* J_assertion together, worth roughly +17 final. Priority
+order is therefore extraction recall first, candidate coverage second.
+
+Minor: `output (4).zip` in the repo root was overwritten by this run's Kaggle download, so the
+stable Run 4 snapshot `docs/score_history.md` points at no longer exists (file is gitignored and
+`.agent_runs/` is gone). Run 8 is `output/` itself, so nothing important was lost.
+
 ## 2026-07-25 — LLM Extraction Pipeline (`scripts/run_llm_analysis.py`)
 
 - **Built LLM Clinical Extraction Pipeline (`scripts/run_llm_analysis.py`)**: Prompting pipeline tailored for Vietnamese medical NER (`CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`) and assertions (`isNegated`, `isHistorical`, `isFamily`).
