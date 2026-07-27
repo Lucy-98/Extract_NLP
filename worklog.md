@@ -4,6 +4,54 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-27 (part 4) — Flag ablation without a GPU, and the source bundle ships the wrong model
+
+### `--add-terminology-entities` is worth about +10, not a liability
+
+Measured offline, no model needed: build the injection lexicon from 4/5 of the turn-1 gold files,
+inject into the held-out fifth, and score with `check_submission`'s own formula against a base of
+gold entities randomly thinned to simulate model recall.
+
+| simulated model recall | no injection | with injection | delta |
+| ---: | ---: | ---: | ---: |
+| 35% | 35.51 | 47.65 | **+12.14** |
+| 45% | 46.24 | 56.29 | +10.05 |
+| 55% | 52.42 | 61.32 | +8.90 |
+| 70% | 70.21 | 74.89 | +4.68 |
+| 100% | 100.00 | 99.61 | -0.39 |
+
+Standalone precision of the injector on unseen documents is **76.6%** (307 correct / 94 wrong across
+5 folds). It only turns negative once the model is already near-perfect, which is nowhere near where
+we are. **Keep the flag.** `--add-public-phrase-entities` is structurally safe for a different
+reason: `add_public_phrase_entities` only fires when the candidate span *contains* an existing
+same-type entity (or is a `SAFE_SINGLE_TOKEN_TESTS` lab name), so it expands model output rather
+than inventing it.
+
+### Expanding the drug lexicon from RxNorm is a dead end
+
+`rxnorm_drug_names.csv` has 10790 usable names; 60 occur as whole words in the turn-2 inputs and all
+60 resolve to an RXCUI. But only 19 are absent from `drugs.csv`, and **10 of those 19 are lab
+analytes, not drugs** — `cholesterol`, `creatinine`, `glucose`, `glucose-6-phosphate`, `lactate`,
+`lipase`, `fibrinogen`, `prothrombin`, `calcium`, `guaiac`. Injecting them as `THUỐC` is a type
+error: no text credit, no candidate credit, plus an insertion penalty. The turn-1 simulation agrees
+(+0.57 / +0.05 / -0.33 at 35/45/55% recall). Roughly nine genuine new drugs are left, which is not
+worth the false-positive risk.
+
+### The source bundle contains the wrong model
+
+`package_source.py --dry-run` passes — 239 files, 1117.9 MiB, all required files present — but
+`models/ner_model/config.json` says `base_model: xlm-roberta-base`, `best_epoch: 10`, dated
+2026-07-24. That is **not** the `xlm-roberta-large` that produced any turn-2 submission from 36.32
+onward. Packaged as-is, the BTC rerun would execute the code against a much weaker model and
+reproduce none of the reported scores.
+
+Fix: download `ner_model_export.zip` from the Kaggle run behind whichever submission is being
+defended and unzip it into `models/ner_model/`. This is time-sensitive — kernel output for an older
+version has already proven unrecoverable once (see the 2026-07-21 entry on kernel v12), and the
+36.32 run is from 26/07 07:09, many versions back. `run_pipeline.py` itself is ready for large:
+`build_encoder` reads the bundled `hf_config.json` through `AutoModel.from_config`, so it needs no
+network. Note the bundle grows to roughly 2.2 GB with large weights — check the BTC size limit.
+
 ## 2026-07-27 (part 3) — No distillation at all scores 34.71: the dose curve is an inverted U
 
 **Turn-2 leaderboard: 34.7142** (WER 62.388 / J_assertion 38.7891 / J_candidates 29.4847) for
