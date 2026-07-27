@@ -4,6 +4,43 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-27 (part 3) — No distillation at all scores 34.71: the dose curve is an inverted U
+
+**Turn-2 leaderboard: 34.7142** (WER 62.388 / J_assertion 38.7891 / J_candidates 29.4847) for
+`LABEL_ENABLE = False` — curated labels only, no Qwen at all. 1158s.
+
+**This refutes part 2's conclusion.** The relationship between pseudo-label volume and score is not
+monotone; it peaks and then falls:
+
+| Qwen entities in training | leaderboard |
+| --- | ---: |
+| 0 | 34.7142 |
+| ~800 (~73 sparse docs) | **36.3160** |
+| 1208 (100 docs @ 12.1/doc) | 35.1865 |
+| 2213 (100 docs @ 22.1/doc) | 31.4429 |
+| ~2400 (200 docs, turn-1 relabeled) | 32.7454 |
+
+A small dose helps: the 200 curated records are all turn-1 clinical notes, and a modest amount of
+turn-2 patient prose — even noisily labeled — is the only exposure the model gets to the target
+domain. Past roughly a thousand entities the annotation-convention noise dominates. Part 2 read the
+right-hand half of the curve and extrapolated straight through the peak.
+
+**The holdout is now actively misleading.** This run set records on both holdout metrics — WER
+**0.3404**, J_assertion **0.4228**, best epoch 13 — and still scored below two configurations with
+worse holdout numbers. Holdout is 15 curated turn-1 files; fitting turn-1 harder is not the same as
+fitting turn-2. Stop treating holdout improvements as evidence.
+
+**Caveat that limits everything above:** 34.71 / 35.19 / 36.32 span 1.6 points and **no
+configuration has been run twice**. Training is stochastic (head init, batch order, epoch
+selection), so differences inside that band cannot be separated from seed noise on one sample each.
+What is solid is the low end — 31.44 and 32.75 are far enough down to be real. The practical
+consequence: stop tuning inside the 34-36 band, return to the best known regime, stop.
+
+**Action:** `LABEL_ENABLE = True`, `LLM_CHUNK_CHARS = 0` (chunking off — it works exactly as
+designed and that is the problem), `LLM_MAX_DOCS = 70` sampled at an even stride across the corpus
+rather than the first 70. That targets ~850 entities, the peak regime, while keeping the three
+independently-verified wins: assertion masking, ICD merge off, and the `_locate` word-boundary fix.
+
 ## 2026-07-27 (part 2) — Denser teacher labels made it worse: distillation itself is the problem
 
 **Turn-2 leaderboard: 31.4429** (WER 68.2909 / J_assertion 33.9127 / J_candidates 29.391), down
