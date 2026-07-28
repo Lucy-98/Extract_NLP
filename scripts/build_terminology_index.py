@@ -398,13 +398,29 @@ class TerminologyMatcher:
                 key=lambda t: (-len(t), t),
             )
 
-    def lookup(self, text: str, fuzzy_threshold: float = 0.86) -> list[str]:
+    def lookup_exact(self, text: str) -> list[str]:
+        """Only the high-precision half of `lookup`: exact normalized match, then
+        whole-word containment of a known term. No difflib fuzzy fallback.
+
+        Callers that have a second, authoritative index to consult (e.g.
+        run_pipeline.py's ICD10VietnameseIndex for CHẨN_ĐOÁN) use this to order
+        the two: a curated hit is trusted, but a *fuzzy* curated hit is just the
+        nearest of the few hundred mined turn-1 strings and is worse than an
+        official-vocabulary match, so it belongs after it, not before.
+        """
         key = norm(text)
         if key in self.exact:
             return self.exact[key]
         for candidate_key in self.containment_texts:
             if re.search(rf"(?<!\w){re.escape(candidate_key)}(?!\w)", key):
                 return self.exact[candidate_key]
+        return []
+
+    def lookup(self, text: str, fuzzy_threshold: float = 0.86) -> list[str]:
+        key = norm(text)
+        exact_hit = self.lookup_exact(text)
+        if exact_hit:
+            return exact_hit
         best_score, best_key = 0.0, None
         for candidate_key in self.texts:
             score = SequenceMatcher(None, key, candidate_key).ratio()

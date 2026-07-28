@@ -1,9 +1,10 @@
 {
   "title": "ViettelRace NER Dataset",
-  "id": "lucylng/viettelrace-ner-dataset",
+  "id": "quanganh1008/viettelrace-ner-dataset",
   "licenses": [
     {
       "name": "CC0-1.0"
     }
   ]
 }
+

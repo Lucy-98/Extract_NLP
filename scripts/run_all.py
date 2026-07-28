@@ -43,7 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 KERNEL_DIR = ROOT / "kaggle_upload" / "kernel"
 KAGGLE_DATASET_DIR = ROOT / "kaggle_upload" / "dataset"
-KERNEL_SLUG = "lucylng/viettelrace-ner-assertion-train"
+KERNEL_SLUG = "quanganh1008/viettelrace-ner-assertion-train"
 MODEL_DIR = ROOT / "models" / "ner_model"
 INPUT_DIR = ROOT / "input"
 PRED_DIR = ROOT / "output_model"
@@ -250,7 +250,7 @@ def install_kernel_export(download_dir: Path) -> None:
         install_export_from_dir(export)
 
 
-def stage_prepare(aug_multiplier: int, assertion_docs: int, train_all_labels: bool) -> None:
+def stage_prepare(aug_multiplier: int, assertion_docs: int, train_all_labels: bool = False) -> None:
     prepare_cmd = [sys.executable, str(SCRIPTS / "prepare_ner_dataset.py")]
     if train_all_labels:
         prepare_cmd.append("--train-all-labels")

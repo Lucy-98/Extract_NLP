@@ -4,6 +4,210 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-28 — Vietnamese ICD-10 entity linking wired into the pipeline
+
+- **`scripts/build_icd10_vi_index.py` + `data/terminology/icd10_vi.csv` (15,144 rows) finished and
+  wired into `run_pipeline.py`.** Both existed untracked on disk but nothing imported them; the
+  diagnosis half of entity linking was still curated-table-only. `link_candidates` now does, for
+  `CHẨN_ĐOÁN`: curated exact/containment → `ICD10VietnameseIndex` → curated difflib fuzzy. The
+  ordering is the point — a *fuzzy* curated hit is only the nearest of ~320 strings mined from the
+  turn-1 public labels, which is a worse bet on unseen text than an official BYT vocabulary match,
+  so it belongs after it. Added `TerminologyMatcher.lookup_exact()` (exact + containment, no fuzzy)
+  to express that split without changing `lookup()`'s behaviour for existing callers, and
+  `--no-icd-fallback` to restore the old path.
+- **Two fixes to the index's ranking, both found by measurement, not inspection:**
+  - **Category → "unspecified" subcode expansion.** The index returned 3-character categories
+    (`I26` for "thuyên tắc phổi", `J96` for "suy hô hấp") while the graded truth uses 4-character
+    codes compared as exact strings — so a *correct* category scored exactly as badly as a wrong
+    code. `unspecified_subcode()` resolves a matched category to its `.9` child, falling back to a
+    title-marker scan ("không xác định"/"không đặc hiệu"/…), shortest code first so `J96` lands on
+    `J96.9` and not the more specific `J96.09`. This single fix is most of the gain below.
+  - **Sepsis synonym.** Clinical Vietnamese writes "nhiễm khuẩn/nhiễm trùng huyết"; the BYT catalog
+    titles A40–A41 "nhiễm trùng hệ thống", so the token-subset matcher was pushing "nhiễm khuẩn
+    huyết" onto A20.7 (plague septicaemia). Added ahead of the generic nhiễm trùng↔nhiễm khuẩn rule.
+- **Measured leakage-free** (curated `diagnoses.csv` rebuilt from the 85-file train split only, then
+  scored on the 15-file holdout split's 66 ground-truth `CHẨN_ĐOÁN` mentions, perfect-NER assumption
+  so only linking is measured): **`J_candidates` 0.5909 → 0.7424**, empty-prediction rate 0.348 →
+  0.167. Full 100-file corpus with the full committed table is **unchanged at 0.9852** — the index
+  only fires where the curated table had nothing, so this cannot regress known text. Second,
+  independent read: the index alone tops-1 the right code for 36.2% of all 229 distinct corpus
+  diagnosis texts, with no leakage in either direction (the BYT catalog does not derive from
+  `output/`).
+- **End-to-end with the real model on the 15 holdout docs** (one inference pass, three linking
+  configs, scored by `check_submission.simulate_metrics`): curated-train-only `final_score` 0.6848 →
+  0.7855 with the fallback on; curated-full is 0.9785 either way. Caveat on that end-to-end number:
+  the currently deployed model was trained on turn-1 curated labels *including* these 15 files, so
+  its span/assertion quality here is memorised, not generalisation — only the relative J_candidates
+  delta is meaningful.
+- **The change also lifts text_score and J_assertion, which at first looked like a bug.** It isn't:
+  `filter_noisy_entities` (`run_pipeline.py:576`) drops any `CHẨN_ĐOÁN`/`THUỐC` that ends up with no
+  candidates, so before this an uncodable diagnosis was deleted from the submission **entirely**,
+  losing its text and assertions too. On the private test, where curated coverage is near zero, that
+  filter was silently deleting correctly-extracted diagnoses. Worth remembering when reading any
+  score component in isolation: linking coverage and recall are coupled through that filter.
+- **A/B on the real turn-2 set exposed a failure mode the perfect-NER eval structurally could not
+  see, and it changed the design.** Ran the full submit recipe over `input_turn2/` twice, identical
+  except `--no-icd-fallback`: 2898 → 3010 entities, 112 diagnoses gained codes, none lost. But
+  inspecting the 112 showed ~a third were junk one-word model fragments that the no-candidate filter
+  had been usefully deleting — "viêm", "thiếu", "vàng" → A95.9 (yellow fever), "tính" → A80.9
+  (polio), "nhiễm trùng lợi" → Y41.9 (adverse effect of anti-infectives). Over 15k titles, a bare
+  one-word query always finds *some* title containing it. The holdout eval could never show this
+  because it feeds the linker ground-truth entity texts, so noisy spans never reach it. **Lesson:
+  a perfect-NER linking eval measures the ceiling, not the pipeline — A/B any linking change on a
+  real inference run before shipping it.** Added three guards, all evidence-backed:
+  - `_MIN_FALLBACK_TOKENS = 2` — the token-subset fallback refuses one-word queries (an exact match
+    against a full official title is still honoured at any length).
+  - `_EXCLUDED_CHAPTERS = UVWXY` — external causes / special purposes, never a bare diagnosis;
+    confirmed not one of the 542 graded turn-1 diagnosis codes falls in these chapters.
+  - `_CONTEXT_GATED_CHAPTERS` extended from `OP` to `OPZ` (Z = factors influencing health status,
+    appears exactly once in turn-1 truth), pushed last rather than dropped.
+  Together they remove 34 of the 112 turn-2 additions **at zero cost on both turn-1 evals** —
+  holdout `J_candidates` stays 0.7424 and the 229-text top-1 rate stays 0.362.
+- **Ranking ideas that were tried and rejected** (kept here so they don't get re-tried): a
+  prefix-of-title bonus (title starts with the query) and a qualifier-token discount (not counting
+  "xác/định/đặc/hiệu/tác/nhân" as extra specificity). The two eval sets disagreed — the prefix rule
+  gained 1 holdout mention (0.7424 → 0.7576) but lost ~8 texts on the larger 229-text standalone set
+  (0.362 → 0.328), and the qualifier discount changed nothing on either, since `extra` is compared
+  after the 3-char preference in the score tuple. Not enough evidence for the complexity; kept the
+  simpler ranking.
+- **Housekeeping around the new data**: `data/terminology/raw/` gitignored (the ~10MB BYT source CSV
+  stays local, same raw-in/derived-out rule as `rrf/`), excluded from `package_source.py`, and
+  `icd10_vi.csv` added to that script's required-files check so a source bundle can't ship without
+  the file the pipeline now depends on. Verified: `--dry-run` → 241 files, 1120.1 MiB.
+
+## 2026-07-25 — LLM Extraction Pipeline (`scripts/run_llm_analysis.py`)
+
+- **Built LLM Clinical Extraction Pipeline (`scripts/run_llm_analysis.py`)**: Prompting pipeline tailored for Vietnamese medical NER (`CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`) and assertions (`isNegated`, `isHistorical`, `isFamily`).
+- **Exact Position Matching & Offline Terminology Linking**: Implemented exact string matching to locate character span positions `[start, end]` in raw input documents without displacement, and integrated `TerminologyMatcher` (`drugs.csv`, `diagnoses.csv`) and `RxNormOfflineIndex` (`rxnorm_full.csv`) to resolve candidate codes.
+
+### 2026-07-25 (part 2) — Score-driven overhaul of `run_llm_analysis.py`
+
+Diagnosis of Turn 2 score **34.388** (text_score 35.7 / J_assertion 39.56 / J_candidates 29.51,
+weights 0.3/0.3/0.4). Root bottleneck: the 270M `xlm-roberta` model's *entity extraction* — truncated
+spans (`"THIẾU MEN"` vs `"THIẾU MEN G6PD"`) and wrong types (`"hồng cầu"`→TÊN_XÉT_NGHIỆM). Bad text caps
+all three components (a right code on a wrong span still earns 0). Gemini extraction is far cleaner, so
+the rules-compliant play is **distillation**: use Gemini as an offline data-prep labeler, then fine-tune
+the self-hosted ≤9B model on those labels. Changes to `run_llm_analysis.py`:
+
+- **Prompt**: demand minimal spans (no long explanatory clauses as CHẨN_ĐOÁN), occurrence-based listing,
+  precision-over-recall, and let Gemini emit ICD-10 / RxNorm candidate codes.
+- **`locate_exact_positions`**: added whitespace-tolerant (regex over collapsed spaces/newlines) and
+  punctuation-trim fallbacks so fewer entities are silently dropped; every kept entity carries the exact
+  raw slice (span-text check always passes).
+- **`resolve_candidates`**: curated offline matcher still wins (precision); the LLM's own code is used
+  ONLY to fill a gap the matcher can't cover, and only after validation against `icd10_full.csv`
+  (11,243 codes) / `rxnorm_full.csv` (336k RXCUIs) to drop hallucinations. This directly attacks the
+  0.4-weight J_candidates gap (was leaving 109 DIAG + 99 DRUG with empty candidates on the 23 done files).
+- **`--relink-only`**: recompute candidates on existing outputs with no API calls (verified: 23 files,
+  0 errors, no candidate regression). Removed the dead `prompt` param; added `sys.stdout.reconfigure`,
+  `--no-zip`, per-file failure logging.
+- **Rules hygiene**: added a prominent header docstring marking this as an offline data-prep/distillation
+  tool (NOT a compliant inference path — it calls the Gemini cloud API); gitignored `output_llm*/`.
+- **Next steps (need user's API key + later a GPU retrain)**: (1) re-run full extraction on all 100
+  Turn 2 files with the new prompt → submit for immediate leaderboard lift; (2) feed these labels into
+  `prepare_ner_dataset.py` → retrain the self-hosted model for a compliant submission.
+
+### 2026-07-26 — Candidate enrichment: Qwen-predicted ICD-10 → validated → diagnoses.csv
+
+Distillation (part 7) raised the turn-2 score **34.4 → 36.32** (WER 61.66 / J_assert 43.59 / **J_cand 29.34**):
+text +2.6, assertion +4.0, but **candidates flat** — because J_candidates is limited by the *lookup tables*,
+not the model, and `diagnoses.csv` has no ICD-10 for turn-2 Vietnamese diagnoses. J_candidates carries the
+heaviest weight (0.4), so it's the top remaining lever. Fix (highest ROI): during the on-Kaggle labeling
+pass, after entity extraction, Qwen also **codes the unique turn-2 diagnosis texts to ICD-10** (batched,
+numbered-JSON to keep alignment), each code **validated offline against `icd10_full.csv`** (format +
+existence) to drop hallucinations, written to `qwen_icd_supplement.csv`. The submission cell then **merges
+those rows into `diagnoses.csv` before `run_pipeline`**, but only for diagnosis texts not already in the
+curated table (preserves turn-1 mappings; Jaccard penalizes extra wrong codes). Added `icd10_full.csv` to
+`kaggle_bundle` (now 40MB). Teacher kept at Qwen2.5-7B (proven); the whole thing stays guarded/try-except
+and compliant (LLM only at data-prep; submitted model = offline encoder + lookup). Expected: J_cand 29 → 40+.
+
+### 2026-07-25 (part 7) — Distillation: Qwen2.5-7B labels turn-2 on-Kaggle (compliant, no API/key)
+
+Highest-ceiling plan: the score is capped by **label starvation + domain shift** (~100 turn-1 curated
+labels vs turn-2 patient prose), not compute — so a bigger encoder alone won't move it. Added an
+**on-Kaggle distillation** step: inserted cells (before the DataLoader build, after types are defined; both
+notebook copies) that load **Qwen2.5-7B-Instruct in 4-bit** (bitsandbytes, auto-installed if missing) and
+pseudo-label all 100 `input_turn2` docs (5 entity types + 3 assertions), locate exact spans (exact +
+whitespace-tolerant), and **append** the results to `train_records` — curated turn-1 kept intact, LLM
+turn-2 added so the ≤9B encoder learns the test domain. Rules-clean: the LLM is used only at **data-prep**
+(like `fetch_icd.py`), runs **self-hosted on Kaggle GPU** (no external API, no key, Apache-2.0 model), and
+the **submitted** model stays the offline encoder + `run_pipeline`. Guarded: whole labeling block is
+`try/except` → on OOM/parse/version failure it prints a warning and trains on curated-only (~34.4, no
+wasted GPU); `LABEL_ENABLE=False` skips it. LLM freed (`del`+`empty_cache`) before encoder training. One
+Run All: label → train (xlm-roberta-large) → `run_pipeline` → `output.zip`. Dataset unchanged
+(`kaggle_bundle` already carries `input_turn2/`); needs **Internet: On** for the HF download.
+
+### 2026-07-25 (part 6) — FIX: Kaggle submission regressed to 31.89; use real run_pipeline
+
+Turn-2 submission from the part-5 all-Kaggle notebook scored **31.8937** (WER 65.03 / J_assert 38.53 /
+**J_cand 24.61** vs baseline 34.388 / 64.28 / 39.56 / 29.51). Cause: the inline reimplementation in the
+notebook was a **stripped-down** version of the tested pipeline — it dropped `--drop-short-noise`,
+`--add-terminology-entities`, `--add-public-phrase-entities` (which reads the turn-1 `output/` lexicon)
+and the RxNorm fallback, so J_candidates cratered. **Fix:** removed the 3 inline cells; the notebook now
+copies the bundled repo into `/kaggle/working/repo`, drops the trained model into `models/ner_model/`,
+and runs the **exact `run_all.py submit` recipe** (`run_pipeline.py` + those 3 flags → `package_submission.py`).
+Rebuilt `kaggle_bundle/` (39MB) with the full deps: `scripts/`, `data/terminology/{drugs,diagnoses,
+rxnorm_full}.csv`, `output/` (turn-1 labels), `input_turn2/`, train/holdout. **Validated locally**: running
+the recipe with the current base model reproduced `output_model_turn2` byte-for-byte (100/100 files) →
+recipe faithful, bundle complete. Kept `xlm-roberta-large` so the next run tests large under the *correct*
+pipeline; base+recipe is a proven 34.4 fallback (and `output_turn2.zip` already holds the 34.4 submission).
+
+### 2026-07-25 (part 5) — Full submission runs entirely on Kaggle (weak local machine)
+
+Dropped the Gemini/LLM direction entirely (removed `scripts/run_llm_analysis.py`, `.env`,
+`output_llm_turn2/`, `.kaggle_download/` cache). Local Kaggle CLI (1.7.4.5, the newest on PyPI for
+py3.9) can't auth with the account's new `KGAT_` tokens, and the machine is weak — so the notebook now
+does **train → inference on the 100 BTC `input_turn2/*.txt` → package `output.zip`** all on Kaggle;
+the user downloads only `output.zip` from the kernel Output tab. Appended 3 cells (both notebook copies)
+that are self-contained: an inline `TerminologyMatcher` (compact copy of `build_terminology_index.py`,
+stdlib) + `_norm`, glob-based location of `drugs.csv`/`diagnoses.csv`/`input_turn2/*.txt` under
+`/kaggle/input`, reuse of the notebook's own `predict_records` for NER+assertions, candidate linking for
+CHẨN_ĐOÁN(ICD)/THUỐC(RxNorm), and `output/{id}.json` + `output.zip` in the BTC schema (verified against
+`output/1.json` and `check_submission.py` field rules; `import re` added to the matcher cell). Created a
+single gitignored `kaggle_bundle/` (train+holdout jsonl, drugs+diagnoses csv, input_turn2/ — 1.2MB) to
+upload as one private Kaggle dataset. Compliance unchanged: self-hosted ≤9B, no external API at inference.
+
+### 2026-07-25 (part 4) — Backbone upgrade: xlm-roberta-large (no LLM path)
+
+Decided the rules-compliant, span-NER-appropriate way to spend the 9B budget is to **scale the
+encoder**, not adopt a 9B decoder LLM (wrong tool for exact-span BIO tagging, won't full-fine-tune on
+Kaggle free T4, would need a generative-rewrite + slow rerun). `MODEL_NAME` → `xlm-roberta-large`
+(560M, still ≪ 9B), a drop-in: same tokenizer/`offset_mapping`, heads auto-size from
+`encoder.config.hidden_size` (1024), and `run_pipeline.py` rebuilds from the bundled `hf_config.json`
+(no hard-coded 768 — verified lines 87-90/117). Added `gradient_checkpointing_enable(use_reentrant=
+False)` so large+seq512 fits a 16GB T4 (falls back to no-kwarg form on older transformers). Combined
+with the AMP + DataParallel edits above. If OOM on Kaggle, drop `BATCH_SIZE` 8→4. Escalation path if
+large plateaus: `xlm-roberta-xl` (3.5B, ≤9B, same architecture) with LoRA/checkpointing.
+
+### 2026-07-25 (part 3) — Faster Kaggle training: AMP + multi-GPU
+
+Training notebook was assigned a **P100** (cuda 6.0) again in the UI — the known crash case — so
+sped up the T4 path and hardened both notebook copies (`kaggle_upload/kernel/` +`notebooks/`, kept in
+sync). Nine edits, all syntax-checked:
+- **AMP (mixed precision)**: `USE_AMP = DEVICE.type=="cuda"`, `GradScaler`, `autocast` around the
+  forward+loss in `compute_loss` and around holdout inference. `scaler.scale/unscale_/step/update` in
+  the train step. ~1.5–2x on T4, no quality change (fp32 master weights). Guards keep CPU fallback working.
+- **`nn.DataParallel`** when `torch.cuda.device_count() > 1` (T4 x2). Introduced `raw_model` (the
+  unwrapped module) used for `snapshot_state_dict`, best-checkpoint restore, `torch.save(state_dict)`,
+  and `encoder.config` export — so the saved `model.pt` has **no `module.` prefix** and
+  `run_pipeline.py` still loads it unchanged.
+- Kept `BATCH_SIZE=8` to preserve the tuned baseline (batch 8 across 2 GPUs = 4/GPU; bump to 16 to
+  fully saturate both cards, at the risk of shifting the score).
+- `run_all.py train` already defaults to `--accelerator NvidiaTeslaT4` (= T4 x2 on Kaggle); the P100 came
+  from running interactively in the UI. Re-push the kernel to pick up the edited notebook + request T4.
+
+## 2026-07-24 — Turn 2 Pipeline Execution & Kaggle Retrain
+
+
+- **Integrated new Turn 2 dataset (`input_turn2_vong1.zip`)**: unzipped into `input_turn2/` (100 files: `1.txt` .. `100.txt`).
+- **Configured Kaggle environment under user account `quanganh1008`**: updated `dataset-metadata.json`, `kernel-metadata.json`, and `scripts/run_all.py` to point to `quanganh1008/viettelrace-ner-dataset` and `quanganh1008/viettelrace-ner-assertion-train`.
+- **Pushed & Retrained on Kaggle GPU Tesla T4**: uploaded augmented dataset (`train_augmented.jsonl`), triggered notebook execution on Kaggle. Log confirmed training completed successfully (`status: COMPLETE`).
+- **Downloaded model export & fixed local environment**: fetched `ner_model_export` weights (1.06GB `model.pt`) into `models/ner_model/`. Resolved PyTorch/NumPy 2.x compatibility error by installing `numpy==1.26.4` in `venv`.
+- **Generated Turn 2 submission (`output_turn2.zip`)**: ran offline sliding-window inference pipeline over all 100 `input_turn2` documents (`run_all.py submit`). Produced 2,884 entities across 100 files with 0 format errors (2 minor sub-word warnings). Packaged `output_turn2.zip` matching BTC submission specification (`output/{1..100}.json`).
+- **Turn 2 Real Leaderboard Score**: **34.3880** (WER: 64.2823, J_assertion: 39.5568, J_candidates: 29.514).
+
+
+
 ## 2026-07-21 (part 4) — .git was empty; reinitialized
 
 - `git status` started failing with "not a git repository": `.git/` had only an `info/` subdirectory,
