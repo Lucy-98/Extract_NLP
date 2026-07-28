@@ -199,10 +199,29 @@ def download_kernel_output(download_dir: Path, retries: int = 3, retry_delay: in
     raise SystemExit(f"kaggle kernels output failed after {retries} attempts.")
 
 
+def snapshot_current_model() -> None:
+    """Copy models/ner_model aside before a new export overwrites it.
+
+    Kaggle's kernel-output endpoint ignores a version suffix and always returns
+    the latest run, so a model you overwrite is gone for good -- that is how the
+    40.828-scoring v12 weights were lost (worklog 2026-07-21). One local copy is
+    ~1.1GB, which is cheap next to a leaderboard regression you cannot roll back.
+    """
+    if not (MODEL_DIR / "model.pt").is_file():
+        return
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    backup = MODEL_DIR.parent / f"{MODEL_DIR.name}_backup_{stamp}"
+    if backup.exists():
+        return
+    shutil.copytree(MODEL_DIR, backup)
+    print(f"Snapshotted the model being replaced -> {backup}")
+
+
 def install_export_from_dir(export_dir: Path) -> None:
     issues = export_dir_issues(export_dir)
     if issues:
         raise SystemExit("Invalid extracted model export:\n  " + "\n  ".join(issues))
+    snapshot_current_model()
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
     for name in EXPORT_FILES:
         copy_file(export_dir / name, MODEL_DIR / name)
