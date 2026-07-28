@@ -40,6 +40,10 @@ rrf/
 prescribe/rrf/
 prescribe/scripts/
 
+# Same raw-in/derived-out rule for the BYT ICD-10 catalog: the ~10MB source CSV
+# stays local, only data/terminology/icd10_vi.csv is committed.
+data/terminology/raw/
+
 # Upstream release readmes/dumps that are local-only.
 /Readme_Full*.txt
 prescribe/Readme_Full*.txt

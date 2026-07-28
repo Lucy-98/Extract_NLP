@@ -43,10 +43,14 @@ tại, và coi `output/` là **dữ liệu train**, không phải đáp án đ�
 - `scripts/build_terminology_index.py` → `data/terminology/{drugs,diagnoses}.csv` mined từ
   `output/` + fallback dict legacy. `TerminologyMatcher` = exact-normalized-text + fuzzy (difflib).
   `conflicts.txt` liệt kê text map nhiều mã theo ngữ cảnh (vd "loét", "ung thư biểu mô tuyến").
-- `scripts/build_rxnorm_rrf_index.py` → `rxnorm_full.csv` (~512k dòng text→RXCUI, gồm cả concept
+- `scripts/build_rxnorm_rrf_index.py` → `rxnorm_full.csv` (517,991 dòng text→RXCUI, gồm cả concept
   "Remapped"/retired qua `RXNATOMARCHIVE.RRF`) + `rxnorm_drug_names.csv` (~11.2k tên thuốc sạch cho
   augmentation). `RxNormOfflineIndex` = exact match rồi first-token + dose/form token-overlap.
   Xử đúng ví dụ đề bài (Chlorpheniramine... → 360047) mà RxNav API không tra được.
+- `scripts/build_icd10_vi_index.py` → `icd10_vi.csv` (15,144 dòng, danh mục song ngữ BYT QĐ 4469).
+  `ICD10VietnameseIndex` = exact tên chuẩn hóa → token-subset → mở rộng nhóm 3 ký tự sang mã con
+  "không xác định". `run_pipeline.py` dùng nó cho mọi `CHẨN_ĐOÁN` mà `diagnoses.csv` không khớp
+  *chính xác* (28/07: holdout J_candidates leakage-free 0.5909 → 0.7424).
 
 ### Glue
 - `scripts/run_pipeline.py` — **khối DUY NHẤT cần torch/transformers**. Load model từ
@@ -95,15 +99,18 @@ python scripts/run_all.py all --aug-multiplier 1 --assertion-docs 30   # prepare
 
 ## 5. Điểm cần lưu ý / việc dang dở
 
-1. **`models/` đang TRỐNG** — chưa có model export cục bộ. Muốn chạy `run_pipeline.py` phải train
-   lại trên Kaggle hoặc lấy export về `models/ner_model/` (cần `model.pt` + `config.json` +
-   tokenizer files).
+1. ~~**`models/` đang TRỐNG**~~ — cập nhật 28/07: `models/ner_model/` đã có export đầy đủ
+   (`model.pt` 1.06GB + `config.json` + `hf_config.json` + tokenizer), chạy `run_pipeline.py` cục bộ
+   được (CPU, ~7 phút cho 100 file). Vẫn giữ nguyên khuyến nghị: **snapshot thư mục này trước khi
+   ghi đè bằng export mới**, vì không tải lại được artifact của một version Kaggle cũ.
 2. **Rủi ro OneDrive (lịch sử)** — repo từng nằm dưới OneDrive: `.git` từng desync/rỗng, `model.pt`
    1.1GB từng bị rehydrate giữa session gây kết quả không deterministic. Hiện repo ở
    `/Users/quanganh/Documents/code/ViettelRace`, git sạch, 1 commit `735fc41`. Nên xác minh
    `model.pt` bằng hash sau mỗi lần tải.
-3. **ICD-10 full đã crawl** (`icd10_full.csv`, 11.243 mã) nhưng **chưa dùng được để match** — chỉ
-   có title tiếng Anh, thiếu bước cầu nối Việt→Anh (dịch hoặc embedding đa ngôn ngữ).
+3. ~~**ICD-10 full đã crawl** nhưng chưa dùng được để match — chỉ có title tiếng Anh.~~ **Đã giải
+   quyết 28/07**: không cần cầu nối Việt→Anh nữa, `build_icd10_vi_index.py` lấy thẳng tên tiếng Việt
+   từ danh mục BYT. `icd10_full.csv` (11.243 mã, tiếng Anh) nay chỉ dùng để **validate** mã ICD do
+   Qwen sinh ra trước khi merge vào `diagnoses.csv`.
 4. **Split 85/15 seed 13 cố định** — dữ liệu quá nhỏ, coi số holdout là ước lượng sơ bộ.
    `prepare_ner_dataset.py --folds N` sinh thêm fold để spot-check (mỗi fold vẫn tốn 1 run Kaggle).
 5. **`legacy/`** chỉ giữ để audit — wordlist chép verbatim từ 100 file public, không generalize.

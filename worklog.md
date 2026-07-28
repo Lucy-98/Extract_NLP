@@ -4,6 +4,77 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-28 — Vietnamese ICD-10 entity linking wired into the pipeline
+
+- **`scripts/build_icd10_vi_index.py` + `data/terminology/icd10_vi.csv` (15,144 rows) finished and
+  wired into `run_pipeline.py`.** Both existed untracked on disk but nothing imported them; the
+  diagnosis half of entity linking was still curated-table-only. `link_candidates` now does, for
+  `CHẨN_ĐOÁN`: curated exact/containment → `ICD10VietnameseIndex` → curated difflib fuzzy. The
+  ordering is the point — a *fuzzy* curated hit is only the nearest of ~320 strings mined from the
+  turn-1 public labels, which is a worse bet on unseen text than an official BYT vocabulary match,
+  so it belongs after it. Added `TerminologyMatcher.lookup_exact()` (exact + containment, no fuzzy)
+  to express that split without changing `lookup()`'s behaviour for existing callers, and
+  `--no-icd-fallback` to restore the old path.
+- **Two fixes to the index's ranking, both found by measurement, not inspection:**
+  - **Category → "unspecified" subcode expansion.** The index returned 3-character categories
+    (`I26` for "thuyên tắc phổi", `J96` for "suy hô hấp") while the graded truth uses 4-character
+    codes compared as exact strings — so a *correct* category scored exactly as badly as a wrong
+    code. `unspecified_subcode()` resolves a matched category to its `.9` child, falling back to a
+    title-marker scan ("không xác định"/"không đặc hiệu"/…), shortest code first so `J96` lands on
+    `J96.9` and not the more specific `J96.09`. This single fix is most of the gain below.
+  - **Sepsis synonym.** Clinical Vietnamese writes "nhiễm khuẩn/nhiễm trùng huyết"; the BYT catalog
+    titles A40–A41 "nhiễm trùng hệ thống", so the token-subset matcher was pushing "nhiễm khuẩn
+    huyết" onto A20.7 (plague septicaemia). Added ahead of the generic nhiễm trùng↔nhiễm khuẩn rule.
+- **Measured leakage-free** (curated `diagnoses.csv` rebuilt from the 85-file train split only, then
+  scored on the 15-file holdout split's 66 ground-truth `CHẨN_ĐOÁN` mentions, perfect-NER assumption
+  so only linking is measured): **`J_candidates` 0.5909 → 0.7424**, empty-prediction rate 0.348 →
+  0.167. Full 100-file corpus with the full committed table is **unchanged at 0.9852** — the index
+  only fires where the curated table had nothing, so this cannot regress known text. Second,
+  independent read: the index alone tops-1 the right code for 36.2% of all 229 distinct corpus
+  diagnosis texts, with no leakage in either direction (the BYT catalog does not derive from
+  `output/`).
+- **End-to-end with the real model on the 15 holdout docs** (one inference pass, three linking
+  configs, scored by `check_submission.simulate_metrics`): curated-train-only `final_score` 0.6848 →
+  0.7855 with the fallback on; curated-full is 0.9785 either way. Caveat on that end-to-end number:
+  the currently deployed model was trained on turn-1 curated labels *including* these 15 files, so
+  its span/assertion quality here is memorised, not generalisation — only the relative J_candidates
+  delta is meaningful.
+- **The change also lifts text_score and J_assertion, which at first looked like a bug.** It isn't:
+  `filter_noisy_entities` (`run_pipeline.py:576`) drops any `CHẨN_ĐOÁN`/`THUỐC` that ends up with no
+  candidates, so before this an uncodable diagnosis was deleted from the submission **entirely**,
+  losing its text and assertions too. On the private test, where curated coverage is near zero, that
+  filter was silently deleting correctly-extracted diagnoses. Worth remembering when reading any
+  score component in isolation: linking coverage and recall are coupled through that filter.
+- **A/B on the real turn-2 set exposed a failure mode the perfect-NER eval structurally could not
+  see, and it changed the design.** Ran the full submit recipe over `input_turn2/` twice, identical
+  except `--no-icd-fallback`: 2898 → 3010 entities, 112 diagnoses gained codes, none lost. But
+  inspecting the 112 showed ~a third were junk one-word model fragments that the no-candidate filter
+  had been usefully deleting — "viêm", "thiếu", "vàng" → A95.9 (yellow fever), "tính" → A80.9
+  (polio), "nhiễm trùng lợi" → Y41.9 (adverse effect of anti-infectives). Over 15k titles, a bare
+  one-word query always finds *some* title containing it. The holdout eval could never show this
+  because it feeds the linker ground-truth entity texts, so noisy spans never reach it. **Lesson:
+  a perfect-NER linking eval measures the ceiling, not the pipeline — A/B any linking change on a
+  real inference run before shipping it.** Added three guards, all evidence-backed:
+  - `_MIN_FALLBACK_TOKENS = 2` — the token-subset fallback refuses one-word queries (an exact match
+    against a full official title is still honoured at any length).
+  - `_EXCLUDED_CHAPTERS = UVWXY` — external causes / special purposes, never a bare diagnosis;
+    confirmed not one of the 542 graded turn-1 diagnosis codes falls in these chapters.
+  - `_CONTEXT_GATED_CHAPTERS` extended from `OP` to `OPZ` (Z = factors influencing health status,
+    appears exactly once in turn-1 truth), pushed last rather than dropped.
+  Together they remove 34 of the 112 turn-2 additions **at zero cost on both turn-1 evals** —
+  holdout `J_candidates` stays 0.7424 and the 229-text top-1 rate stays 0.362.
+- **Ranking ideas that were tried and rejected** (kept here so they don't get re-tried): a
+  prefix-of-title bonus (title starts with the query) and a qualifier-token discount (not counting
+  "xác/định/đặc/hiệu/tác/nhân" as extra specificity). The two eval sets disagreed — the prefix rule
+  gained 1 holdout mention (0.7424 → 0.7576) but lost ~8 texts on the larger 229-text standalone set
+  (0.362 → 0.328), and the qualifier discount changed nothing on either, since `extra` is compared
+  after the 3-char preference in the score tuple. Not enough evidence for the complexity; kept the
+  simpler ranking.
+- **Housekeeping around the new data**: `data/terminology/raw/` gitignored (the ~10MB BYT source CSV
+  stays local, same raw-in/derived-out rule as `rrf/`), excluded from `package_source.py`, and
+  `icd10_vi.csv` added to that script's required-files check so a source bundle can't ship without
+  the file the pipeline now depends on. Verified: `--dry-run` → 241 files, 1120.1 MiB.
+
 ## 2026-07-25 — LLM Extraction Pipeline (`scripts/run_llm_analysis.py`)
 
 - **Built LLM Clinical Extraction Pipeline (`scripts/run_llm_analysis.py`)**: Prompting pipeline tailored for Vietnamese medical NER (`CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`) and assertions (`isNegated`, `isHistorical`, `isFamily`).

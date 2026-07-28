@@ -48,6 +48,8 @@ when the public-label `output/` folder is available and you intentionally want t
 python scripts/build_rxnorm_rrf_index.py   # rrf/ + prescribe/rrf/ (local, gitignored) -> data/terminology/rxnorm_full.csv,
                                             # rxnorm_drug_names.csv -- only needs rerunning if the RRF dump changes,
                                             # not part of every iteration (see Architecture below)
+python scripts/build_icd10_vi_index.py     # data/terminology/raw/icd10_danh_muc.csv (local, gitignored) ->
+                                            # data/terminology/icd10_vi.csv -- same raw-in/derived-out rule as above
 python scripts/prepare_ner_dataset.py      # output/ (hand-curated) -> data/ner_dataset/{train,holdout,all}.jsonl
 python scripts/build_terminology_index.py  # output/ + legacy dicts -> data/terminology/{drugs,diagnoses}.csv
 python scripts/augment_ner_dataset.py      # train.jsonl + terminology -> train_augmented.jsonl
@@ -109,6 +111,20 @@ console codepage (cp932/cp1252) cannot print Vietnamese text and will crash othe
   synthetic pool). `RxNormOfflineIndex` (exact match, then first-token + dose/form-token-overlap
   fallback) is the class `run_pipeline.py` and `augment_ner_dataset.py` both import. Only needs
   rerunning when the RRF dump changes — the derived CSVs are what everything else reads.
+- **`scripts/build_icd10_vi_index.py`** — the Vietnamese half of entity linking, and the ICD-10
+  counterpart to `build_rxnorm_rrf_index.py`. Derives `data/terminology/icd10_vi.csv` (15,144 rows,
+  `code,name_vi,name_en`) from the official Bộ Y tế bilingual catalog (QĐ 4469, raw ~10MB under
+  `data/terminology/raw/`, gitignored). `ICD10VietnameseIndex` = exact normalized name, then
+  all-query-tokens-⊆-title fallback, then category → "unspecified" subcode expansion (`I26` → `I26.9`)
+  because the scorer compares codes as exact strings and truth uses 4-character codes. `run_pipeline.py`
+  consults it for any `CHẨN_ĐOÁN` the curated `diagnoses.csv` can't match *exactly* — that curated
+  table is mined from the 100 public files, so on unseen text its difflib fallback is just the nearest
+  of ~320 turn-1 strings. Measured leakage-free (curated table rebuilt from the 85-file train split,
+  scored on the 15-file holdout): `J_candidates` 0.5909 → 0.7424, no change on the full corpus with
+  the full table. This also raises recall, not just codes: `filter_noisy_entities` **deletes** any
+  `CHẨN_ĐOÁN`/`THUỐC` that ends up with no candidates, so before this an uncodable diagnosis was
+  dropped from the submission entirely. Note the ICD-10 chapter/subcode conventions it relies on are
+  in the ranking comments — read them before "simplifying" the score tuple.
 - **`scripts/augment_ner_dataset.py`** — synthetic data generation required by the task statement
   ("dùng giải pháp ngoài lời giải chính để tạo thêm dữ liệu"), stdlib-only. Three techniques: (1)
   entity-text substitution within real sentences, shifting downstream offsets, to teach the model
@@ -136,7 +152,9 @@ console codepage (cp932/cp1252) cannot print Vietnamese text and will crash othe
   of calling Hugging Face Hub, runs inference over `input/*.txt`, decodes BIO spans + assertion
   probabilities (threshold 0.5), links `CHẨN_ĐOÁN`/`THUỐC` spans through
   `TerminologyMatcher`, falling back to `RxNormOfflineFallback` (offline RxNorm RRF index, see
-  `build_rxnorm_rrf_index.py`) for `THUỐC` mentions `drugs.csv` doesn't cover, writes
+  `build_rxnorm_rrf_index.py`) for `THUỐC` mentions `drugs.csv` doesn't cover and to
+  `ICD10VietnameseIndex` for `CHẨN_ĐOÁN` mentions `diagnoses.csv` doesn't cover *exactly* (both
+  disableable: `--no-rxnorm-fallback` / `--no-icd-fallback`), writes
   `output_model/*.json`. It probes the prediction folder before loading the 1.1GB model so OneDrive
   placeholder/reparse-point write failures fail fast.
 - **`scripts/package_submission.py`** — validates a prediction folder and writes the required
@@ -150,8 +168,10 @@ console codepage (cp932/cp1252) cannot print Vietnamese text and will crash othe
   touching the leaderboard.
 - **`scripts/fetch_icd.py`** — pulls ICD-10 codes from the WHO ICD-API; `--crawl-all` built
   `data/terminology/icd10_full.csv` (11,243 codes, English titles only — WHO's ICD-10 free-text
-  search doesn't work, only ICD-11's does, so this table needs a Vietnamese→English bridge before
-  it's usable for entity linking; not yet built).
+  search doesn't work, only ICD-11's does). The Vietnamese→English bridge this table was waiting for
+  was never needed: `build_icd10_vi_index.py` (2026-07-28) sources Vietnamese titles directly from
+  the BYT catalog instead. `icd10_full.csv` is still used, as a *validator* — the Kaggle notebook
+  checks Qwen-predicted ICD codes against it before merging them into `diagnoses.csv`.
 - **`scripts/fetch_rxnorm.py`** — **superseded 2026-07-21** by `build_rxnorm_rrf_index.py` now that
   the official RxNorm RRF release (needs a UMLS account) has actually been obtained; kept only as a
   manual one-off live-lookup tool, no longer part of the default pipeline. Originally used the free
