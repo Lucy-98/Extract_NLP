@@ -434,8 +434,13 @@ class RxNormOfflineFallback:
     the old network fallback had on a connectivity failure.
     """
 
-    def __init__(self, csv_path: Path = TERM_DIR / "rxnorm_full.csv", max_candidates: int = 1):
-        self.index = RxNormOfflineIndex(csv_path)
+    def __init__(
+        self,
+        csv_path: Path = TERM_DIR / "rxnorm_full.csv",
+        max_candidates: int = 1,
+        promote_dose_form: bool = True,
+    ):
+        self.index = RxNormOfflineIndex(csv_path, promote_dose_form=promote_dose_form)
         self.max_candidates = max_candidates
 
     def lookup(self, text: str) -> list[str]:
@@ -462,9 +467,18 @@ def link_candidates(
     """
     for ent in entities:
         if ent["type"] == DRUG:
-            candidates = drug_matcher.lookup(ent["text"])
-            if not candidates and rxnorm_fallback is not None:
+            if rxnorm_fallback is None:
+                ent["candidates"] = drug_matcher.lookup(ent["text"])
+                continue
+            # Same three tiers as CHẨN_ĐOÁN below, but the curated table's
+            # substring tier is demoted past RxNorm rather than trusted: it
+            # matches on the ingredient alone, so it answers a 1.5mg mention
+            # with a 0.5mg code. RxNorm's index resolves the dose+form.
+            candidates = drug_matcher.lookup_exact(ent["text"], containment=False)
+            if not candidates:
                 candidates = rxnorm_fallback.lookup(ent["text"])
+            if not candidates:
+                candidates = drug_matcher.lookup(ent["text"])
             ent["candidates"] = candidates
         elif ent["type"] == DIAG:
             if icd_fallback is None:
@@ -831,6 +845,13 @@ def main() -> int:
         "iteration; no effect on correctness for texts already covered by drugs.csv).",
     )
     parser.add_argument(
+        "--no-dose-form-promotion",
+        action="store_true",
+        help="For THUỐC: don't resolve a dosed mention to its complete dose+form RxNorm product "
+        "(SCD/SBD), and let the curated drugs.csv substring match answer first. This restores the "
+        "pre-2026-07-28 behaviour, which scored 1/3 on the task statement's own worked examples.",
+    )
+    parser.add_argument(
         "--no-icd-fallback",
         action="store_true",
         help="Skip the offline Vietnamese ICD-10 lookup (data/terminology/icd10_vi.csv) for "
@@ -875,7 +896,10 @@ def main() -> int:
     drug_matcher = TerminologyMatcher(TERM_DIR / "drugs.csv")
     diag_matcher = TerminologyMatcher(TERM_DIR / "diagnoses.csv")
     matchers = {DRUG: drug_matcher, DIAG: diag_matcher}
-    rxnorm_fallback = None if args.no_rxnorm_fallback else RxNormOfflineFallback()
+    rxnorm_fallback = (
+        None if args.no_rxnorm_fallback
+        else RxNormOfflineFallback(promote_dose_form=not args.no_dose_form_promotion)
+    )
     icd_fallback = None if args.no_icd_fallback else ICD10VietnameseIndex(TERM_DIR / "icd10_vi.csv")
     if icd_fallback is not None and not icd_fallback.entries:
         print(

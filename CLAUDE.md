@@ -111,6 +111,17 @@ console codepage (cp932/cp1252) cannot print Vietnamese text and will crash othe
   synthetic pool). `RxNormOfflineIndex` (exact match, then first-token + dose/form-token-overlap
   fallback) is the class `run_pipeline.py` and `augment_ner_dataset.py` both import. Only needs
   rerunning when the RRF dump changes — the derived CSVs are what everything else reads.
+  **Dose+form resolution (2026-07-28)**: a *dosed* mention now resolves to the complete product
+  (SCD/SBD) rather than the form-less component. `strip_administration_noise()` turns "clonazepam
+  0.5 mg po qam:prn" into core `clonazepam 0.5 mg` + form hint `oral`, and
+  `resolve_complete_product()` prefix-matches that core against official product strings (prefix, not
+  equality, is what lets one named ingredient reach a combination product). Before this the index
+  scored **1/3 on the three drug codes the task statement itself publishes** (197527 / 197528 /
+  360047) despite all three being present in `rxnorm_full.csv`; now 2/3 — the miss needs dose
+  arithmetic (1.5mg dispensed as 1mg tablets) and is deliberately not attempted. This deliberately
+  stops reproducing `output/`'s ingredient-level coding of dosed mentions, so agreement with
+  `output/` there is low *by design*; read worklog 2026-07-28 part 2 before "fixing" that, and
+  falsify with `--no-dose-form-promotion` rather than re-tuning.
 - **`scripts/build_icd10_vi_index.py`** — the Vietnamese half of entity linking, and the ICD-10
   counterpart to `build_rxnorm_rrf_index.py`. Derives `data/terminology/icd10_vi.csv` (15,144 rows,
   `code,name_vi,name_en`) from the official Bộ Y tế bilingual catalog (QĐ 4469, raw ~10MB under

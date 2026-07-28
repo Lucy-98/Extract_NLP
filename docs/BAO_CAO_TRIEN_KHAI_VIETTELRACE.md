@@ -95,8 +95,9 @@ Model **không** sinh mã; gán mã là bài toán tra cứu riêng, chạy offl
 
 | Loại | Bảng | Cơ chế |
 | :--- | :--- | :--- |
-| `THUỐC` | `drugs.csv` (159 dòng, mined từ `output/`) | exact chuẩn hóa → containment → difflib |
-| ↳ fallback | `rxnorm_full.csv` (**517,991** dòng) | `RxNormOfflineIndex`: exact → first-token + trùng token liều/dạng |
+| `THUỐC` | `drugs.csv` (159 dòng, mined từ `output/`) | **chỉ** exact chuẩn hóa (containment bị đẩy xuống cuối, xem 2.7) |
+| ↳ fallback | `rxnorm_full.csv` (**517,991** dòng) | `RxNormOfflineIndex`: exact → **mở rộng sang sản phẩm đủ liều+dạng (SCD/SBD)** → first-token overlap |
+| ↳ cuối cùng | `drugs.csv` | containment + difflib |
 | `CHẨN_ĐOÁN` | `diagnoses.csv` (321 dòng, mined từ `output/`) | exact chuẩn hóa → containment |
 | ↳ fallback | `icd10_vi.csv` (**15,144** dòng) | `ICD10VietnameseIndex` (mục 2.5) |
 | ↳ cuối cùng | `diagnoses.csv` | difflib fuzzy (ngưỡng 0.86) |
@@ -204,6 +205,40 @@ thấy nó hỏng theo hai kiểu, cả hai đều đánh vào `J_candidates` (t
 không gán được mã. Nghĩa là trước thay đổi này, một chẩn đoán trích xuất **đúng** nhưng không tra
 được mã sẽ bị loại khỏi bài nộp, mất luôn cả `text` lẫn `assertions`. Vì vậy thay đổi này nâng cả ba
 thành phần điểm. Kết quả đo: mục 4.2.
+
+---
+
+### 2.7. Phương pháp 6 (mới 28/07) — Chuẩn hóa RxNorm theo **liều + dạng bào chế**
+
+**Phát hiện quyết định**: `RxNormOfflineIndex` **trượt 2/3 mã thuốc mà chính đề bài công bố**
+(197527, 197528, 360047) — dù **cả ba mã đều có sẵn** trong `rxnorm_full.csv`. Đây là *dữ liệu đúng
+duy nhất đã được kiểm chứng* về mã thuốc trong repo, và trước đó chưa từng được đem ra đánh giá.
+
+**Nguyên nhân**: bệnh án ghi dạng bào chế bằng **ký hiệu đường dùng** (`po`) hoặc tiếng Việt
+("đường uống", "đặt dưới lưỡi") — không chuỗi RxNorm nào chứa các từ đó. Vì vậy một mention có liều
+chỉ với tới được **concept thành phần không có dạng bào chế**: `clonazepam 0.5 mg po qam:prn` →
+SCDC **315699** thay vì SCD **197527** ("clonazepam 0.5 mg oral tablet"). Cùng *hình dạng* lỗi với
+ICD ở mục 2.5: mã đúng nằm trong từ điển, nhưng ta trả về **sai cấp độ**.
+
+**Cách sửa**:
+- `strip_administration_noise()` tách mention thành `core` (hoạt chất + liều) và `hints` (dạng bào
+  chế suy ra từ đường dùng/tần suất, cả Anh lẫn Việt, kể cả cụm trong ngoặc và ký hiệu `qam:prn`).
+- `resolve_complete_product()` coi `core` là **tiền tố** của tên sản phẩm chính thức, ưu tiên phần
+  hoàn chỉnh khớp dạng bào chế → sản phẩm đủ (SCD/SBD) → tên ngắn nhất. Dùng *tiền tố* thay vì
+  *bằng nhau* chính là cách một hoạt chất đơn với tới được thuốc **phối hợp** — đúng cơ chế lấy 360047.
+- `drugs.csv` đang trả lời **mù liều**: tầng containment khớp theo hoạt chất nên trả **cùng mã 197527
+  cho cả hai liều clonazepam** — đúng điều đề bài cấm. Nay `link_candidates` dùng cùng cấu trúc 3
+  tầng như chẩn đoán, nhưng đẩy tầng containment xuống **sau** RxNorm.
+
+**Kết quả**: ví dụ BTC **1/3 → 2/3** (ca còn lại cần suy luận liều 1.5mg → viên 1mg, cố ý không làm);
+holdout leakage-free `J` 0.7500 → **0.7778**; đồng thuận trên 109 text thuốc 0.550 → **0.606**; toàn
+bộ 100 file với bảng đầy đủ **không đổi** (THUỐC 1.0000).
+
+> ⚠️ **Đây là một canh bạc có chủ đích**: đồng thuận với `output/` ở nhóm mention **có liều** vẫn thấp
+> (0.107) — **cố ý**, vì `output/` gán 74% mã thuốc ở mức hoạt chất (IN/BN), điều đề bài cấm. Bằng
+> chứng hậu thuẫn: `output/` chỉ đạt `J_candidates` **29.98** thật ⇒ ~70% mã của nó sai, nên "giống
+> `output/`" không phải bằng chứng đúng. Nếu một lần nộp thật làm `J_candidates` **giảm**, giả thuyết
+> bị bác bỏ ⇒ tắt bằng `--no-dose-form-promotion`, đừng đi tinh chỉnh tiếp.
 
 ---
 

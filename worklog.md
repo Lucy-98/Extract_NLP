@@ -4,6 +4,65 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-28 (part 2) — Dose+form-aware RxNorm linking: the index failed the task statement's own examples
+
+Picked as *the* next optimization by measurement, not preference. Candidate levers were text_score
+(needs a retrain, can't be validated locally), J_assertion, and the drug half of J_candidates. The
+drug half won because it is the last high-weight lever measurable offline, and because the check
+below turned up something unambiguous.
+
+- **`RxNormOfflineIndex` scored 1/3 on the three drug codes BTC actually published** — the two
+  clonazepam doses (197527 / 197528) and the Chlorpheniramine combination (360047) — even though
+  **every one of those codes is present in `rxnorm_full.csv`**. This is the only *verified* drug
+  truth in the repo, and nothing had ever been evaluated against it beyond `--verify`'s single case.
+- **Root cause**: a clinical mention writes the dose form as a route abbreviation ("po") or in
+  Vietnamese ("đường uống", "đặt dưới lưỡi"), and no RxNorm string contains those. So a dosed mention
+  could only ever reach the *form-less component* concept: `clonazepam 0.5 mg po qam:prn` resolved to
+  SCDC **315699** ("clonazepam 0.5 mg") instead of SCD **197527** ("clonazepam 0.5 mg oral tablet").
+  Structurally the same shape as the ICD bug in part 1 — the right answer was in the vocabulary, but
+  we returned the wrong *level* of it.
+- **Fix**: `strip_administration_noise()` splits a mention into an ingredient+dose `core` plus
+  dose-form `hints` (route/frequency/sig vocabulary, EN + VI, incl. parenthetical asides and sig
+  shorthand like `qam:prn`), and `resolve_complete_product()` treats that core as a *prefix* of an
+  official product string, preferring completions whose form matches the hints, then complete
+  products (SCD/SBD), then the shortest completion. Prefix rather than equality is what lets a
+  single named ingredient reach a combination product — which is exactly how 360047 is reached.
+  Result on BTC's examples: **1/3 → 2/3**. The remaining miss (1.5 mg dispensed as 1 mg tablets)
+  needs dose arithmetic and is deliberately not attempted.
+- **`drugs.csv` was answering dose-blind, and it wins before RxNorm.** `TerminologyMatcher`'s
+  containment tier matches on the ingredient alone, so it returns **the same code 197527 for both**
+  clonazepam mentions — precisely the mapping the task statement forbids. `link_candidates` now uses
+  the same three-tier shape as diagnoses for `THUỐC`, with the substring tier demoted *past* RxNorm:
+  curated exact → RxNorm (dose+form aware) → curated containment/fuzzy. Added
+  `lookup_exact(containment=False)` to express that.
+- **Measured**: leakage-free holdout (drugs.csv rebuilt from the train split) `J` 0.7500 → **0.7778**;
+  agreement over all 109 distinct drug texts 0.550 → **0.606**; full 100-file corpus with the full
+  committed tables **unchanged** (THUỐC 1.0000, CHẨN_ĐOÁN 0.9852), so no regression on known text.
+- **A/B on real turn-2 inference — small blast radius, and it caught one genuine regression.**
+  Identical entity set either way (2976, nothing added or lost); exactly **6 drug codes changed**,
+  because on turn-2 most `THUỐC` mentions are bare names already covered by `drugs.csv`'s exact tier.
+  Four are clear improvements under the stated rule (`metoclopramide 10mg` IN 6915 -> 311666
+  "metoclopramide 10 mg oral tablet"; `Ceftriaxone 1g` IN 2193 -> 309091 an injectable product;
+  `Augmentin (amoxicillin/acid clavulanic)` IN amoxicillin 723 -> BN augmentin 151392), two are a
+  junk `1000ml` span that is wrong either way. The fifth was a **regression**: `bumetanide 2mg iv`
+  resolved to `197419` **"bumetanide 2 mg oral tablet"** -- an oral tablet for an IV order. Cause:
+  injectable bumetanide is dosed per mL, so no completion of "bumetanide 2 mg " is injectable, and
+  the "no completion matches the route, fall back to all completions" rule then happily returned one
+  that *contradicts* the mention. Fixed: when the mention states a route and nothing matches it,
+  return empty and let another tier answer. Verified the fix costs nothing -- BTC 2/3, agreement
+  0.606, holdout 0.7778 all unchanged, and the mention now resolves route-consistently (315502).
+  **Same lesson as part 1, hit again: the offline evals never surfaced this; only a real inference
+  run did.**
+- **Read this caveat before trusting the numbers.** Agreement on *dosed* mentions stays low (0.107)
+  and that is **by design**: `output/` codes most dosed mentions at ingredient level (IN/BN 74% of
+  its drug codes), which the task statement explicitly forbids. So this change is a deliberate bet on
+  the published rules over the style of our own public labels. The supporting evidence is that
+  `output/` scored `J_candidates` **29.98** on the real leaderboard — ~70% of its codes are wrong —
+  so agreement with it is not evidence of correctness, and the ~30 J_candidates ceiling across every
+  submission is consistent with ingredient-level coding being the thing that is wrong. If a real
+  submission with this change *drops* J_candidates, that hypothesis is falsified: revert with
+  `--no-dose-form-promotion` (kept switchable for exactly this reason) rather than re-tuning.
+
 ## 2026-07-28 — Vietnamese ICD-10 entity linking wired into the pipeline
 
 - **`scripts/build_icd10_vi_index.py` + `data/terminology/icd10_vi.csv` (15,144 rows) finished and
