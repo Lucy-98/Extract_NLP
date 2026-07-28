@@ -168,8 +168,11 @@ def main() -> int:
     print(f"\nWrote {args.out} — {files} files, {total / 1e6:.1f} MB. Verified "
           f"{len(CRITICAL)} critical members match the repo.")
     print("Next: upload as a Kaggle dataset version, then push the kernel:")
-    print("  python -m kaggle datasets version -p kaggle_bundle -m \"<message>\"")
+    print("  python -m kaggle datasets version -p kaggle_bundle -m \"<message>\" --dir-mode zip")
     print("  python -m kaggle kernels push -p kaggle_upload/kernel --accelerator NvidiaTeslaT4")
+    print("\n  --dir-mode zip is REQUIRED: the default (skip) uploads only the root files and")
+    print("  silently drops scripts/, data/, output/ and input_turn2/. Check the dataset size on")
+    print(f"  Kaggle afterwards -- it must be tens of MB, not ~140KB (this bundle: {total / 1e6:.1f} MB).")
     return 0
 
 

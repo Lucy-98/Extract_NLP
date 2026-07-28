@@ -332,6 +332,15 @@ def stage_dataset_version() -> None:
             str(BUNDLE_DIR),
             "-m",
             "sync ViettelRace bundle (scripts + terminology + labels + turn-2 inputs)",
+            # WITHOUT THIS the upload silently contains only the bundle's root
+            # files: `kaggle datasets version` defaults to --dir-mode skip, i.e.
+            # it *ignores every subdirectory*. That produced a 142KB dataset
+            # (train.jsonl + holdout.jsonl + metadata) instead of 43.8MB on
+            # 2026-07-28, and the kernel then failed with no scripts/, no
+            # terminology and no input_turn2/ to work with. It fails as a kernel
+            # ERROR minutes later, not at upload time, so nothing points back here.
+            "--dir-mode",
+            "zip",
         ],
         env=KAGGLE_ENV,
     )
