@@ -43,7 +43,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 KERNEL_DIR = ROOT / "kaggle_upload" / "kernel"
 KAGGLE_DATASET_DIR = ROOT / "kaggle_upload" / "dataset"
-KERNEL_SLUG = "quanganh1008/viettelrace-ner-assertion-train"
+BUNDLE_DIR = ROOT / "kaggle_bundle"  # full dataset uploaded to Kaggle; see stage_dataset_version
+KERNEL_SLUG = "lucylng/viettelrace-ner-assertion-train"
 MODEL_DIR = ROOT / "models" / "ner_model"
 INPUT_DIR = ROOT / "input"
 PRED_DIR = ROOT / "output_model"
@@ -287,8 +288,20 @@ def sync_kaggle_dataset() -> None:
 
 
 def stage_dataset_version() -> None:
-    if not (KAGGLE_DATASET_DIR / "dataset-metadata.json").exists():
-        raise SystemExit(f"{KAGGLE_DATASET_DIR / 'dataset-metadata.json'} not found.")
+    """Version the *full* Kaggle bundle, not just train/holdout jsonl.
+
+    Since 2026-07-25 the kernel doesn't only train -- it also runs the real
+    `run_pipeline.py` from the bundled repo to produce output.zip, so the dataset
+    has to carry `scripts/`, `data/terminology/*`, `output/` and `input_turn2/`
+    too. Versioning the old thin `kaggle_upload/dataset/` folder instead would
+    upload train.jsonl alone and the kernel's submission half would find nothing
+    -- burning a full GPU run to produce a broken (or silently degraded)
+    submission, which is exactly how the 31.89 regression happened.
+    `build_kaggle_bundle.py` assembles and verifies it.
+    """
+    run([sys.executable, str(SCRIPTS / "build_kaggle_bundle.py"), "--out", str(BUNDLE_DIR)])
+    if not (BUNDLE_DIR / "dataset-metadata.json").exists():
+        raise SystemExit(f"{BUNDLE_DIR / 'dataset-metadata.json'} not found after building the bundle.")
     run(
         [
             sys.executable,
@@ -297,9 +310,9 @@ def stage_dataset_version() -> None:
             "datasets",
             "version",
             "-p",
-            str(KAGGLE_DATASET_DIR),
+            str(BUNDLE_DIR),
             "-m",
-            "sync augmented ViettelRace NER dataset",
+            "sync ViettelRace bundle (scripts + terminology + labels + turn-2 inputs)",
         ],
         env=KAGGLE_ENV,
     )
