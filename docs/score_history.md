@@ -24,7 +24,7 @@
 | 7 -> 8 | +0.50350 | -0.2827 | +0.4417 | +0.7155 | Cải thiện đều cả ba chỉ số |
 | 1 -> 8 | +5.29340 | -2.4958 | +2.7573 | +9.2937 | Best mới, cân bằng WER/assertion/candidates |
 
-## Current Best
+## Current Best (turn 1)
 
 - Final score: 41.59120
 - WER: 51.6596
@@ -33,12 +33,40 @@
 
 Lower WER is better. Higher J_assertion and J_candidates are better.
 
+**Not reusable.** Run 8 is `output/`, hand-tuned file by file against the visible turn-1 answers
+over eight scored rounds. It does not generalise and must never be submitted for a private rerun.
+It survives only as training data and as the source of the terminology tables.
+
+## Turn 2 (model pipeline, blind — no public labels)
+
+Every row is a real leaderboard submission. Full reasoning for each is in `worklog.md`.
+
+| Score | WER | J_assert | J_cand | Configuration | Model kept? |
+| ---: | ---: | ---: | ---: | --- | --- |
+| **36.3160** | 61.66 | 43.59 | 29.34 | distill, ~73 docs sparse (parser bug), base tables | **lost** |
+| **35.7087** | 63.11 | 42.82 | 29.49 | distill 70 docs, assert-mask, ICD off, propagate | **yes** |
+| 35.1865 | 62.27 | 41.61 | 28.47 | distill 100 docs @12.1/doc, ICD merge on | lost |
+| 34.7142 | 62.39 | 38.79 | 29.48 | no distillation, curated labels only, large | lost |
+| 34.3880 | 64.28 | 39.56 | 29.51 | pre-distillation baseline, xlm-roberta-**base** | **yes** |
+| 32.7454 | 65.91 | 36.70 | 28.77 | distill 200 docs — relabeled turn-1 over its gold | lost |
+| 31.4429 | 68.29 | 33.91 | 29.39 | distill 100 docs @22.1/doc (chunking on) | lost |
+| 11.4736 | 86.40 | 14.01 |  7.98 | Qwen few-shot direct extraction (dead end) | n/a |
+
+**Submit 35.7087.** It is the highest score whose checkpoint still exists, and the 0.61 gap to
+36.3160 sits inside the run-to-run spread — no configuration has ever been run twice, so nothing in
+the 34–36 band is separable from seed noise. 34.3880 (`models/ner_model` before the large export was
+restored) is the zero-GPU fallback.
+
+Pseudo-label dose is an inverted U, not a monotone gain: 0 entities → 34.71, ~800 → 36.32, ~1030 →
+35.71, 1208 → 35.19, 2213 → 31.44.
+
 ## Active Output
 
-- Current `output/` is pending Run 9 candidate, not yet scored.
-- It validates with 100 files, 2223 entities, 0 errors, 1 warning.
-- It differs from stable Run 4 in 35 files: 3, 4, 11, 12, 13, 14, 15, 16, 18, 23, 24, 32, 34, 35, 37, 38, 39, 40, 46, 47, 49, 54, 56, 59, 61, 64, 71, 72, 73, 74, 88, 94, 96, 97, 100.
-- Stable Run 4 is still available as `output (4).zip` and backup `.agent_runs/stable_before_breakthrough_20260714_211926`.
+- `output/` is the turn-1 Run 9 candidate, never scored; 100 files, 2223 entities, 0 errors,
+  1 warning. Kept as the label set the terminology tables and training data are mined from.
+- Turn-1 zip snapshots and `.agent_runs/` backups referenced by earlier revisions of this file are
+  **gone** — `.agent_runs/` was removed in cleanup and `output (4).zip` was overwritten on
+  2026-07-26 by a Kaggle download. Run 8 survives as `output/` itself, which is what matters.
 - Scored Run 7 snapshots: `.agent_runs/run7_breakthrough_candidate_20260714_215223`, `.agent_runs/scored_run7_4108770_20260714_215511`.
 - Pending Run 8 snapshot: `.agent_runs/run8_candidate_20260714_220220`.
 - Scored Run 8 snapshot: `.agent_runs/scored_run8_4159120_20260714_220609`.

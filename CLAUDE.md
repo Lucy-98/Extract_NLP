@@ -33,6 +33,21 @@ at run time (regex/wordlist keyed off specific file contents) won't generalize a
 disqualification. This is why the repo has a `legacy/` (rule-based, deprecated) and a current model
 pipeline, and why `output/` is treated as *training data*, not as the artifact to keep hand-tuning.
 
+## Status (2026-07-29)
+
+Best turn-2 score whose checkpoint still exists: **35.7087** (`xlm-roberta-large`, in
+`models/ner_model/`). 36.3160 scored higher but its export was never downloaded and Kaggle no longer
+serves it — see `docs/score_history.md` for the full run table and `worklog.md` for why each
+configuration was tried. Two things that table settles, so they are not re-litigated:
+
+- **Qwen pseudo-label dose is an inverted U**, not a monotone gain (0 → 34.71, ~800 → 36.32,
+  1208 → 35.19, 2213 → 31.44). More or better teacher labels is not the lever it looks like.
+- **The turn-1 holdout is not a proxy for turn-2.** Runs have set holdout records while scoring
+  below runs with worse holdout. Turn-2 is patient-education *articles*; turn-1 is doctor's notes.
+
+Nothing in the 34–36 band has been run twice, so differences that size are not separable from seed
+noise. Do not spend GPU chasing them.
+
 ## Pipeline
 
 For private-test/submission recreation, use the offline path only:
@@ -137,8 +152,21 @@ console codepage (cp932/cp1252) cannot print Vietnamese text and will crash othe
   probabilities (threshold 0.5), links `CHẨN_ĐOÁN`/`THUỐC` spans through
   `TerminologyMatcher`, falling back to `RxNormOfflineFallback` (offline RxNorm RRF index, see
   `build_rxnorm_rrf_index.py`) for `THUỐC` mentions `drugs.csv` doesn't cover, writes
-  `output_model/*.json`. It probes the prediction folder before loading the 1.1GB model so OneDrive
-  placeholder/reparse-point write failures fail fast.
+  `output_model/*.json`. It probes the prediction folder before loading the model so OneDrive
+  placeholder/reparse-point write failures fail fast. Post-processing flags, all measured rather
+  than assumed (see `worklog.md` 2026-07-27 part 4 and 2026-07-29):
+  - `--add-terminology-entities` injects lexicon terms found in the text. Worth **+8.9 to +12.1**
+    at realistic recall (76.6% standalone precision on held-out turn-1 folds); only turns negative
+    once the model is near-perfect. Keep it on.
+  - `--add-public-phrase-entities` only *expands* a span that already contains a same-type model
+    entity, so it cannot invent entities. Safe by construction.
+  - `--propagate-repeats` copies each detected mention onto its other whole-word occurrences,
+    because gold is occurrence-based (94.1% of occurrences of an annotated string carry a label on
+    turn-1). Real effect measured on actual turn-2 predictions is **+5.5% entities**, not the +9
+    *points* an earlier simulation claimed — that simulation deleted gold entities independently at
+    random, which fabricates per-occurrence gaps. Real recall errors are correlated across
+    occurrences: the model gets a known term nearly everywhere and misses an unknown one
+    everywhere, and a wholly missed term has nothing to propagate from.
 - **`scripts/package_submission.py`** — validates a prediction folder and writes the required
   `output.zip` with exactly `output/{1..100}.json` entries. Defaults to `output_model/`.
 - **`scripts/package_source.py`** — packages code, notebooks, derived data, public input/output labels,
