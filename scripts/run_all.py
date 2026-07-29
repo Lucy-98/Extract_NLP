@@ -379,6 +379,7 @@ def stage_infer(input_dir: Path, pred_dir: Path, out_zip: Path) -> None:
         str(pred_dir),
         "--drop-short-noise",
         "--add-terminology-entities",
+        "--propagate-repeats",
         "--add-public-phrase-entities",
     ])
     run_check_submission(input_dir, pred_dir)

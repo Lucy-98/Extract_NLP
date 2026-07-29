@@ -692,6 +692,58 @@ def add_public_phrase_entities(
     return out
 
 
+def propagate_repeat_entities(
+    text: str,
+    entities: list[dict[str, Any]],
+    min_len: int = 4,
+) -> list[dict[str, Any]]:
+    """Copy every detected mention onto its other occurrences in the same document.
+
+    The gold labels are occurrence-based: measured over the 100 turn-1 files, 94.1% of
+    the times an annotated string appears in its document carry an annotation, and 93.5%
+    of `(text, type)` pairs are annotated at every occurrence. The model, by contrast,
+    tags a term in one sentence and misses the same term three paragraphs later --
+    `add_terminology_entities` repairs that only for `CHẨN_ĐOÁN`/`THUỐC` strings that are
+    already in the curated lexicon, leaving symptoms and lab names unrepaired.
+
+    Simulated on turn-1 (gold thinned to model-like recall, lexicon injection already
+    applied) this is worth +9.2 / +7.4 / +5.2 / +2.1 points at 100 / 85 / 70 / 55%
+    precision -- it stays positive even when the base predictions are poor, because a
+    wrong mention repeated costs insertions while a right one repeated earns text,
+    assertion and candidate credit at once.
+
+    Texts shorter than `min_len` are skipped: gold does *not* propagate short generic
+    words uniformly (`ho` is annotated 5 times out of 9 occurrences, `yếu` once out of 9),
+    so copying them would manufacture disagreement.
+    """
+    out = [dict(e) for e in entities]
+    taken = {(e["type"], tuple(e["position"])) for e in out}
+    spans = sorted(tuple(e["position"]) for e in out)
+    seen: set[tuple[str, str]] = set()
+    for ent in entities:
+        key = (ent["text"].lower(), ent["type"])
+        if len(ent["text"]) < min_len or key in seen:
+            continue
+        seen.add(key)
+        for start, end in find_term_occurrences(text, ent["text"]):
+            if (ent["type"], (start, end)) in taken:
+                continue
+            if any(a < end and start < b for a, b in spans):
+                continue
+            copied = dict(ent)
+            copied["text"] = text[start:end]
+            copied["position"] = [start, end]
+            if "assertions" in ent:
+                copied["assertions"] = list(ent.get("assertions") or [])
+            if "candidates" in ent:
+                copied["candidates"] = list(ent.get("candidates") or [])
+            out.append(copied)
+            taken.add((ent["type"], (start, end)))
+            spans.append((start, end))
+            spans.sort()
+    return out
+
+
 def add_terminology_entities(
     text: str,
     entities: list[dict[str, Any]],
@@ -828,6 +880,15 @@ def main() -> int:
         "index, then resolve overlaps by keeping longer candidate-linked spans.",
     )
     parser.add_argument(
+        "--propagate-repeats",
+        action="store_true",
+        help=(
+            "Copy each detected mention onto its other occurrences in the same document. "
+            "Gold is occurrence-based (94.1%% of occurrences carry a label on turn-1); the "
+            "model tags a term once and misses its repeats."
+        ),
+    )
+    parser.add_argument(
         "--add-public-phrase-entities",
         action="store_true",
         help="Use safe TRIỆU_CHỨNG/TÊN_XÉT_NGHIỆM phrases from the public labels to extend "
@@ -876,6 +937,8 @@ def main() -> int:
             )
         if public_phrase_lexicon:
             entities = add_public_phrase_entities(text, entities, public_phrase_lexicon)
+        if args.propagate_repeats:
+            entities = propagate_repeat_entities(text, entities)
         entities = resolve_submission_overlaps(entities)
         write_json(args.pred / f"{path.stem}.json", entities)
 

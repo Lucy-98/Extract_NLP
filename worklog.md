@@ -4,6 +4,52 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-29 — Occurrence propagation: +9.5 points, no GPU, no new data
+
+Two facts, measured rather than assumed, that together explain a large slice of the turn-2 gap.
+
+**Turn-2 is not clinical notes.** `input_turn2/1.txt` is a patient-education article about G6PD
+deficiency — headings, bullet lists, explanatory prose — and the same concept recurs constantly
+("thiếu men G6PD" appears about fifteen times in that one file). The curated training data is all
+turn-1 doctor's notes. That is the domain gap the whole distillation series was flailing at.
+
+**Gold is exhaustively occurrence-based.** Over the 100 turn-1 files, **94.1%** of the times an
+annotated string occurs in its document carry an annotation, and **93.5%** of `(text, type)` pairs
+are annotated at *every* occurrence (`nôn ra máu` 13/13, `viêm dạ dày ruột do virus` 12/12,
+`đánh trống ngực` 10/10). The model tags a term in one paragraph and misses it in the next, and
+nothing in the pipeline repaired that except `add_terminology_entities`, which only covers
+`CHẨN_ĐOÁN`/`THUỐC` strings already in the curated lexicon — symptoms, lab names and results were
+never propagated at all.
+
+**`propagate_repeat_entities()` + `--propagate-repeats`** copies each detected mention onto its
+other whole-word occurrences in the same document, skipping texts under 4 characters and never
+creating an overlapping span. Measured with the shipped function on turn-1, gold thinned to
+model-like recall, **on top of** the lexicon injection the pipeline already runs:
+
+| simulated recall | current pipeline | + propagation | delta |
+| ---: | ---: | ---: | ---: |
+| 35% | 48.78 | 57.94 | **+9.16** |
+| 45% | 54.47 | 64.20 | **+9.73** |
+| 55% | 61.80 | 71.22 | **+9.43** |
+
+Robust to bad input, which matters because the real model is not clean. Holding recall at 45% and
+injecting wrong-type false positives to drive precision down: **+9.2 / +7.4 / +5.2 / +2.1** at
+100 / 85 / 70 / 55% precision. It never turned negative — a wrong mention repeated costs insertions,
+while a right one repeated earns text, assertion and candidate credit simultaneously. The repo's own
+`validate_prediction` reports 0 errors and 0 warnings on the propagated output.
+
+Wired into `run_all.py submit` and both notebook copies alongside the existing flags.
+
+### Why this was invisible for so long
+
+Every previous attempt tried to make the *model* better — a bigger encoder, more pseudo-labels,
+denser pseudo-labels. None of them addressed the fact that the scorer counts occurrences and the
+model does not. The ceiling analysis says the headroom was always there: with perfect NER and
+candidates drawn only from the held-out lookup table, the score would be **73.72** (text 100,
+assertion 100, candidates 34.3), so the terminology tables were never the binding constraint.
+The in-domain/out-of-domain split makes the same point from the other side — the same model scores
+WER 0.3404 on turn-1 holdout against 0.6239 on turn-2.
+
 ## 2026-07-27 (part 5) — The 36.32 model artifact is lost; fallback verified
 
 `ner_model_export.zip` for the 36.32 run (26/07 07:09) was never downloaded and is no longer
