@@ -4,6 +4,50 @@ Dated engineering changelog for this repo. Newest entries at the top. For the ma
 history (Run 1–8, legacy hand-tuned `output/`), see `docs/score_history.md` — that file is
 score-only and unaffected by this one.
 
+## 2026-07-29 (part 2) — 35.7087, and why the propagation simulation was wrong
+
+**Turn-2 leaderboard: 35.7087** (WER 63.1128 / J_assertion 42.8212 / J_candidates 29.4904), 6159s.
+Second-best score ever and, more importantly, **the first one whose model artifact survives** — the
+1749 MB `ner_model_export.zip` was downloaded before any further run could bury it.
+
+Config: 70 turn-2 docs labeled by Qwen (no chunking, 1032 entities @ 14.7/doc), assertion loss masked
+on those labels, ICD merge off, `--propagate-repeats` on. The flag genuinely ran — the log shows it
+on the `run_pipeline.py` command line.
+
+### The +9 never materialised, and the reason is a flaw in how the simulation modelled the model
+
+`entities: 2407`, *lower* than the 2706 of the no-distillation run. Running
+`propagate_repeat_entities` directly over the real turn-2 predictions in `output_model_turn2/`
+explains it: **2884 entities in, 158 added (+5.5%)** — 74 `TÊN_XÉT_NGHIỆM`, 61 `TRIỆU_CHỨNG`, 21
+`KẾT_QUẢ_XÉT_NGHIỆM`, 2 `THUỐC`. Against that, the model had **already tagged 2438 repeat
+positions** on its own.
+
+The simulation built its fake model by deleting gold entities **independently at random**. That
+manufactures exactly the defect propagation repairs: a term labeled at occurrence 3 but not at
+occurrence 7. Real models do not fail that way. Recall errors are **correlated across occurrences of
+the same string** — same tokens, same local context, so a term the model knows it gets nearly
+everywhere, and a term it does not know it misses everywhere. There is nothing to propagate from a
+term that was missed entirely. The entire +9.16/+9.73/+9.43 came from that independence assumption.
+
+Keep the flag: +5.5% entities is small but the leaderboard components moved the right way versus the
+34.7142 run (J_assertion 38.7891 -> **42.8212**, J_candidates 29.4847 -> **29.4904**, WER 62.388 ->
+63.1128). Attribution between the flag and the restored Qwen dose is not separable from one run each.
+
+**Methodological rule going forward:** a simulated ablation is only trustworthy if the simulated
+failure mode matches the real one. Random thinning of gold is not a model. Where a real prediction
+dump exists — and one always does — measure the intervention on *that* instead.
+
+### Bundle correctness for the BTC rerun
+
+- `requirements.txt` re-pinned from torch 2.13.0 / transformers 5.14.1 down to **torch 2.10.0 /
+  transformers 5.0.0**, matching the environment that exported the checkpoint. The old pins rested
+  on a 2026-07-20 check performed against the xlm-roberta-*base* export; the shipped checkpoint is
+  large, with a tokenizer.json that transformers 5.0.0 flags as having an incorrect regex pattern,
+  and no torch is installed on the dev machine to re-verify. The rerun is pass/fail — zero version
+  drift beats an untested upgrade.
+- The `'gout' may be embedded in a larger word` warning is a false alarm: `input_turn2/95.txt` has a
+  typo, `bệnhgout` with no space, and the model correctly pulled `gout` out of it. No fix needed.
+
 ## 2026-07-29 — Occurrence propagation: +9.5 points, no GPU, no new data
 
 Two facts, measured rather than assumed, that together explain a large slice of the turn-2 gap.

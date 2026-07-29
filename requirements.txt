@@ -2,12 +2,22 @@
 # augment_ner_dataset.py, build_terminology_index.py, check_submission.py, fetch_icd.py, run_all.py
 # are stdlib-only by design and need nothing from this file.
 #
-# The Kaggle training kernel uses its own preinstalled versions instead (see
-# notebooks/train_ner_assertion_model.ipynb cell 1's printed versions each run) -- that's fine for
-# inference-only compatibility across a version drift: verified 2026-07-20 that a model trained
-# under torch==2.10.0+cu128 / transformers==5.0.0 on Kaggle loaded and ran correctly here under the
-# versions pinned below. If you deliberately upgrade, re-verify with
-# `python scripts/run_pipeline.py && python scripts/check_submission.py --pred output_model --input input`
-# before trusting the output.
-torch==2.13.0
-transformers==5.14.1
+# These pins deliberately match the environment that EXPORTED models/ner_model, as printed by the
+# Kaggle kernel that produced the submitted checkpoint: `transformers 5.0.0 | torch 2.10.0+cu128`
+# (2026-07-29 run, xlm-roberta-large, turn-2 score 35.7087). The BTC rerun is pass/fail, so the
+# lowest-risk configuration is no version drift at all between export and load.
+#
+# History: this file previously pinned torch==2.13.0 / transformers==5.14.1, on the strength of a
+# 2026-07-20 check that a Kaggle-trained model loaded and ran under those newer versions. That check
+# used the xlm-roberta-*base* export and its tokenizer; the current checkpoint is large, with a
+# tokenizer.json that transformers 5.0.0 itself flags ("incorrect regex pattern ... will lead to
+# incorrect tokenization"). Loading that tokenizer under a different transformers major was never
+# verified here, and cannot be verified on this dev machine, which has no torch installed. Matching
+# the export environment removes the question instead of betting on it.
+#
+# If you deliberately upgrade, re-verify end to end before trusting the output:
+#   python scripts/run_pipeline.py --input input --pred output_model
+#   python scripts/check_submission.py --pred output_model --input input --truth output
+# and confirm the entity count and score do not move.
+torch==2.10.0
+transformers==5.0.0
