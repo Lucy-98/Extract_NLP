@@ -62,6 +62,13 @@ BASE_ENV = {**os.environ, "PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1", "PYTHO
 KAGGLE_ENV = {**BASE_ENV}
 
 
+def get_kaggle_cmd() -> list[str]:
+    venv_kaggle = ROOT / "venv" / "bin" / "kaggle"
+    if venv_kaggle.exists():
+        return [str(venv_kaggle)]
+    return ["kaggle"]
+
+
 def run(cmd: list[str], **kwargs) -> None:
     print(f"$ {' '.join(cmd)}")
     kwargs.setdefault("env", BASE_ENV)
@@ -173,9 +180,7 @@ def find_kernel_export(download_dir: Path) -> Path | None:
 def download_kernel_output(download_dir: Path, retries: int = 3, retry_delay: int = 20) -> None:
     download_dir.mkdir(parents=True, exist_ok=True)
     cmd = [
-        sys.executable,
-        "-m",
-        "kaggle",
+        *get_kaggle_cmd(),
         "kernels",
         "output",
         KERNEL_SLUG,
@@ -288,9 +293,7 @@ def stage_dataset_version() -> None:
         raise SystemExit(f"{KAGGLE_DATASET_DIR / 'dataset-metadata.json'} not found.")
     run(
         [
-            sys.executable,
-            "-m",
-            "kaggle",
+            *get_kaggle_cmd(),
             "datasets",
             "version",
             "-p",
@@ -309,7 +312,7 @@ def kaggle_status(retries: int = 5, retry_delay: int = 15) -> str:
     last_error = ""
     for attempt in range(1, retries + 1):
         result = subprocess.run(
-            [sys.executable, "-m", "kaggle", "kernels", "status", KERNEL_SLUG],
+            [*get_kaggle_cmd(), "kernels", "status", KERNEL_SLUG],
             cwd=ROOT, env=KAGGLE_ENV, capture_output=True, text=True,
         )
         if result.returncode == 0:
@@ -340,7 +343,7 @@ def stage_train(
         if not skip_dataset_version:
             stage_dataset_version()
         run(
-            [sys.executable, "-m", "kaggle", "kernels", "push", "-p", str(KERNEL_DIR), "--accelerator", accelerator],
+            [*get_kaggle_cmd(), "kernels", "push", "-p", str(KERNEL_DIR), "--accelerator", accelerator],
             env=KAGGLE_ENV,
         )
 

@@ -43,8 +43,9 @@ Every row is a real leaderboard submission. Full reasoning for each is in `workl
 
 | Score | WER | J_assert | J_cand | Configuration | Model kept? |
 | ---: | ---: | ---: | ---: | --- | --- |
-| **36.3160** | 61.66 | 43.59 | 29.34 | distill, ~73 docs sparse (parser bug), base tables | **lost** |
-| **35.7087** | 63.11 | 42.82 | 29.49 | distill 70 docs, assert-mask, ICD off, propagate | **yes** |
+| **36.3385** | **60.40** | 42.42 | 29.33 | **NEW BEST**: distill 70 docs + xlm-roberta-large + GPU T4 | **yes** |
+| 36.3160 | 61.66 | 43.59 | 29.34 | distill, ~73 docs sparse (parser bug), base tables | lost |
+| 35.7087 | 63.11 | 42.82 | 29.49 | distill 70 docs, assert-mask, ICD off, propagate | yes |
 | 35.1865 | 62.27 | 41.61 | 28.47 | distill 100 docs @12.1/doc, ICD merge on | lost |
 | 34.7142 | 62.39 | 38.79 | 29.48 | no distillation, curated labels only, large | lost |
 | 34.3880 | 64.28 | 39.56 | 29.51 | pre-distillation baseline, xlm-roberta-**base** | **yes** |

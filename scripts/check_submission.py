@@ -405,7 +405,7 @@ def print_report(report: CheckReport) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Check ViettelRace output files before submission.")
     parser.add_argument("--pred", default="output", type=Path, help="Prediction output folder.")
-    parser.add_argument("--input", default="input", type=Path, help="Input txt folder.")
+    parser.add_argument("--input", default="input_turn2", type=Path, help="Input txt folder.")
     parser.add_argument("--truth", type=Path, help="Optional ground-truth folder for metric simulation.")
     parser.add_argument(
         "--expected-count",

@@ -28,7 +28,7 @@ DEFAULT_INCLUDE_ROOTS = [
     "kaggle_upload/dataset",
     "data",
     "models/ner_model",
-    "input",
+    "input_turn2",
     "output",
 ]
 

@@ -50,7 +50,7 @@ def package(pred_dir: Path, input_dir: Path, out_zip: Path, expected_count: int 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--pred", type=Path, default=ROOT / "output_model", help="Prediction folder to package.")
-    parser.add_argument("--input", type=Path, default=ROOT / "input", help="Input folder used for validation.")
+    parser.add_argument("--input", type=Path, default=ROOT / "input_turn2", help="Input folder used for validation.")
     parser.add_argument("--out", type=Path, default=ROOT / "output.zip", help="Zip file to write.")
     parser.add_argument(
         "--expected-count",

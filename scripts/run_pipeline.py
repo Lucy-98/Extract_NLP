@@ -27,7 +27,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-INPUT_DIR = ROOT / "input"
+INPUT_DIR = ROOT / "input_turn2"
 DEFAULT_MODEL_DIR = ROOT / "models" / "ner_model"
 DEFAULT_PRED_DIR = ROOT / "output_model"
 TERM_DIR = ROOT / "data" / "terminology"
@@ -35,6 +35,7 @@ TERM_DIR = ROOT / "data" / "terminology"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_terminology_index import TerminologyMatcher, DIAG, DRUG  # noqa: E402
 from build_rxnorm_rrf_index import RxNormOfflineIndex  # noqa: E402
+from clinical_normalizer import HybridCandidateLinker, VietnameseRxNormNormalizer, ContextAssertionEngine  # noqa: E402
 
 SYM = "TRIỆU_CHỨNG"
 TEST = "TÊN_XÉT_NGHIỆM"
@@ -441,20 +442,38 @@ class RxNormOfflineFallback:
         return self.index.lookup(text, max_candidates=self.max_candidates)
 
 
+def enrich_assertions(text: str, entities: list[dict[str, Any]]) -> None:
+    assertion_types = {"CHẨN_ĐOÁN", "TRIỆU_CHỨNG", "THUỐC"}
+    for ent in entities:
+        if ent["type"] in assertion_types:
+            s, e = ent["position"]
+            ent["assertions"] = ContextAssertionEngine.detect_assertions(
+                text, s, e, ent.get("assertions", [])
+            )
+
+
 def link_candidates(
     entities: list[dict[str, Any]],
     drug_matcher: TerminologyMatcher,
     diag_matcher: TerminologyMatcher,
+    hybrid_linker: HybridCandidateLinker | None = None,
     rxnorm_fallback: "RxNormOfflineFallback | None" = None,
 ) -> None:
     for ent in entities:
         if ent["type"] == DRUG:
-            candidates = drug_matcher.lookup(ent["text"])
-            if not candidates and rxnorm_fallback is not None:
-                candidates = rxnorm_fallback.lookup(ent["text"])
+            if hybrid_linker is not None:
+                candidates = hybrid_linker.link_drug(ent["text"])
+            else:
+                candidates = drug_matcher.lookup(ent["text"])
+                if not candidates and rxnorm_fallback is not None:
+                    candidates = rxnorm_fallback.lookup(ent["text"])
             ent["candidates"] = candidates
         elif ent["type"] == DIAG:
-            ent["candidates"] = diag_matcher.lookup(ent["text"])
+            if hybrid_linker is not None:
+                candidates = hybrid_linker.link_diagnosis(ent["text"])
+            else:
+                candidates = diag_matcher.lookup(ent["text"])
+            ent["candidates"] = candidates
 
 
 SAFE_SHORT_ENTITIES = {
@@ -507,6 +526,12 @@ PRIVATE_SAFE_NOISY_ENTITY_TEXTS = {
     (SYM, "khó"),
     (SYM, "sinh"),
     (SYM, "thai"),
+    (SYM, "uống"),
+    (SYM, "tiêm"),
+    (SYM, "bôi"),
+    (SYM, "xịt"),
+    (SYM, "nhỏ"),
+    (DRUG, "viên"),
     (TEST, "biến"),
     (TEST, "huyết"),
 }
@@ -909,6 +934,11 @@ def main() -> int:
     diag_matcher = TerminologyMatcher(TERM_DIR / "diagnoses.csv")
     matchers = {DRUG: drug_matcher, DIAG: diag_matcher}
     rxnorm_fallback = None if args.no_rxnorm_fallback else RxNormOfflineFallback()
+    hybrid_linker = HybridCandidateLinker(
+        rxnorm_index=rxnorm_fallback.index if rxnorm_fallback else None,
+        term_matcher_drug=drug_matcher,
+        term_matcher_diag=diag_matcher,
+    )
     candidate_lexicon = build_candidate_lexicon(drug_matcher, diag_matcher) if args.add_terminology_entities else []
     public_phrase_lexicon = (
         build_public_phrase_lexicon(args.public_label_dir, {SYM, TEST})
@@ -920,7 +950,14 @@ def main() -> int:
     for path in files:
         text = path.read_text(encoding="utf-8")
         entities = run_inference(model, tokenizer, config, text, matchers=matchers)
-        link_candidates(entities, drug_matcher, diag_matcher, rxnorm_fallback=rxnorm_fallback)
+        enrich_assertions(text, entities)
+        link_candidates(
+            entities,
+            drug_matcher,
+            diag_matcher,
+            hybrid_linker=hybrid_linker,
+            rxnorm_fallback=rxnorm_fallback,
+        )
         entities = filter_noisy_entities(
             text,
             entities,
@@ -940,6 +977,14 @@ def main() -> int:
         if args.propagate_repeats:
             entities = propagate_repeat_entities(text, entities)
         entities = resolve_submission_overlaps(entities)
+        enrich_assertions(text, entities)
+        link_candidates(
+            entities,
+            drug_matcher,
+            diag_matcher,
+            hybrid_linker=hybrid_linker,
+            rxnorm_fallback=rxnorm_fallback,
+        )
         write_json(args.pred / f"{path.stem}.json", entities)
 
     print(f"Wrote {len(files)} files to {args.pred}")

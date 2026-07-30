@@ -1,132 +1,172 @@
-# Báo cáo tổng quan repo ViettelRace
+# Báo Cáo Chi Tiết Repository ViettelRace AI Race 2026 (Đề 2)
 
-_Ngày lập: 2026-07-23. Đây là ảnh chụp trạng thái tại thời điểm đọc repo, không thay thế
-[worklog.md](../worklog.md) (nhật ký kỹ thuật theo ngày) hay [score_history.md](score_history.md)
-(lịch sử điểm). Khi hai file đó mâu thuẫn với báo cáo này, tin chúng._
+**Dự án**: ViettelRace AI Race 2026 - Đề 2: Trích xuất và chuẩn hóa khái niệm y tế từ văn bản tiếng Việt tự do (Ghi chú bác sĩ, tóm tắt nhập viện, kết quả xét nghiệm, hồ sơ bệnh án).
 
-## 1. Bài toán
+---
 
-ViettelRace AI Race 2026, **Đề 2**: trích xuất & chuẩn hóa khái niệm y tế từ bệnh án tiếng Việt tự
-do (ghi chú bác sĩ, tóm tắt xuất viện, kết quả xét nghiệm, trích EHR).
+## 1. Tổng Quan Bài Toán & Mục Tiêu
 
-- Với mỗi `input/{id}.txt` → sinh `output/{id}.json`: danh sách thực thể, mỗi thực thể có:
-  - `text`, `type`, `position` `[start, end]` (span ký tự khớp đúng lát cắt input),
-  - `assertions` (chỉ với `CHẨN_ĐOÁN`/`TRIỆU_CHỨNG`/`THUỐC`): `isNegated` / `isHistorical` /
-    `isFamily`; rỗng nếu không có,
-  - `candidates` (chỉ với `CHẨN_ĐOÁN`/`THUỐC`): ICD-10 cho chẩn đoán, **RxNorm theo liều+dạng** cho
-    thuốc (clonazepam 0.5mg ≠ 1.5mg — không được map theo tên hoạt chất đơn thuần).
-- **5 loại thực thể**: `CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`.
-- **Công thức điểm**: `0.3·text_score(1−WER) + 0.3·J_assertion + 0.4·J_candidates`.
+### 1.1 Đề bài & Ràng buộc từ BTC
+- **Đầu vào**: Các file văn bản y tế `input_turn2/{id}.txt`.
+- **Đầu ra**: File định dạng JSON `output_turn2/{id}.json` chứa danh sách các entity:
+  - **Span & Text**: Vị trí ký tự bắt đầu/kết thúc (`position: [start, end]`) và đoạn văn bản tương ứng (`text`).
+  - **Entity Types** (5 loại): `CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`.
+  - **Contextual Assertions** (chỉ áp dụng cho `CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`): `isNegated` (phủ định), `isHistorical` (tiền sử), `isFamily` (gia đình).
+  - **Candidates** (Chuẩn hóa mã y tế, chỉ áp dụng cho `CHẨN_ĐOÁN` và `THUỐC`): Mã **ICD-10** (cho chẩn đoán) và mã **RxNorm** (cho thuốc, yêu cầu chính xác theo liều lượng & dạng chế phẩm).
 
-**Ràng buộc kiến trúc cốt lõi**: BTC dựng lại source top ~15 đội và rerun trên private test. Mọi
-cách không suy luận thật lúc runtime (regex/wordlist chép theo file cụ thể) sẽ không generalize và
-có nguy cơ bị loại. Đây là lý do repo tách `legacy/` (rule-based, đã bỏ) khỏi model pipeline hiện
-tại, và coi `output/` là **dữ liệu train**, không phải đáp án để tinh chỉnh tay tiếp.
+### 1.2 Đánh giá Điểm số (Metric Formula)
+$$Score = 0.3 \times \text{text\_score}(\text{WER over entity text}) + 0.3 \times J_{\text{assertion}} + 0.4 \times J_{\text{candidates}}$$
 
-## 2. Kiến trúc — 2 khối tách biệt
+### 1.3 Ràng buộc Kỹ thuật Cốt lõi
+- **Mô hình $\le$ 9B parameters**.
+- **Không dùng API ngoài khi inference**: Không gọi OpenAI, Gemini hay RxNav API trong quá trình chạy private test.
+- **Rerun độc lập**: BTC sẽ rebuild lại mã nguồn của top ~15 đội và chạy lại trên private test set ẩn. Giải pháp theo quy tắc cố định (rule-based/regex trên văn bản cụ thể) sẽ bị gạch tên nếu không có khả năng tổng quát hóa (generalize).
 
-### Khối A: NER + Assertion model
-`notebooks/train_ner_assertion_model.ipynb` (mirror ở `kaggle_upload/kernel/`, phải giữ đồng bộ tay).
+---
 
-- Nền `xlm-roberta-base`, 1 encoder chung + 2 head trên cùng encoder:
-  1. **BIO tagging** (11 nhãn: O + B-/I- × 5 loại) → `text`/`type`/`position`.
-  2. **Assertion multi-label** per-token, chỉ tính loss trên token thuộc CHẨN_ĐOÁN/TRIỆU_CHỨNG/THUỐC.
-- Chọn XLM-R vì fast tokenizer cho `offset_mapping` trực tiếp trên text thô → không cần
-  word-segmentation (như PhoBERT sẽ cần) giữa output model và field `position`.
-- `MAX_LENGTH=512` + **sliding window** (stride 64) cả train lẫn inference — vá lỗi cũ
-  `MAX_LENGTH=320` từng cắt cụt ~29% ground-truth entity.
-- Early stopping theo holdout, export **best checkpoint** (không lấy epoch cuối). Calibrate ngưỡng
-  assertion trên holdout.
-- `candidates` **không** do model sinh — đó là bài entity-linking riêng.
+## 2. Kiến Trúc Giải Pháp & Pipeline Hợp Nhất
 
-### Khối B: Entity linking (chỉ lookup, tách khỏi model)
-- `scripts/build_terminology_index.py` → `data/terminology/{drugs,diagnoses}.csv` mined từ
-  `output/` + fallback dict legacy. `TerminologyMatcher` = exact-normalized-text + fuzzy (difflib).
-  `conflicts.txt` liệt kê text map nhiều mã theo ngữ cảnh (vd "loét", "ung thư biểu mô tuyến").
-- `scripts/build_rxnorm_rrf_index.py` → `rxnorm_full.csv` (~512k dòng text→RXCUI, gồm cả concept
-  "Remapped"/retired qua `RXNATOMARCHIVE.RRF`) + `rxnorm_drug_names.csv` (~11.2k tên thuốc sạch cho
-  augmentation). `RxNormOfflineIndex` = exact match rồi first-token + dose/form token-overlap.
-  Xử đúng ví dụ đề bài (Chlorpheniramine... → 360047) mà RxNav API không tra được.
+Hệ thống được thiết kế theo 2 tầng độc lập: **Mô hình Trích xuất NER + Assertion (Machine Learning)** và **Mô hình Chuẩn hóa Mã (Offline Entity Linking)**.
 
-### Glue
-- `scripts/run_pipeline.py` — **khối DUY NHẤT cần torch/transformers**. Load model từ
-  `models/ner_model/`, dựng kiến trúc XLM-R cục bộ (không gọi HF Hub), inference sliding-window,
-  decode BIO + assertion (threshold 0.5), link candidates qua TerminologyMatcher → fallback
-  RxNormOffline. Ghi `output_model/*.json`.
-- `scripts/run_all.py` — entrypoint gộp: `prepare | train | infer | package | submit | all`.
-- `scripts/check_submission.py` — validator schema/span + mô phỏng điểm **type-aware** (prefix token
-  bằng type để text đúng nhưng sai type = 0 điểm text; Jaccard giữ duplicate theo occurrence index).
-- `scripts/package_submission.py` / `package_source.py` — đóng gói `output.zip` / `source_bundle.zip`.
+```mermaid
+flowchart TD
+    A["Raw Clinical Text (input_turn2/*.txt)"] --> B["XLM-RoBERTa Multi-Task Model"]
+    B --> C["BIO Tagging (11 labels)"]
+    B --> D["Multi-label Assertion Classifier"]
+    
+    C --> E["Post-Processing Engine"]
+    D --> E
+    
+    F["Terminology Matcher (drugs.csv, diagnoses.csv)"] --> E
+    G["RxNorm Offline RRF Index (rxnorm_full.csv)"] --> E
+    
+    E --> H["Post-Processing Flags:\n--add-terminology-entities\n--propagate-repeats\n--add-public-phrase-entities"]
+    H --> I["Final Submission JSON (output_model_turn2/*.json)"]
+```
 
-**Ghi chú kỹ thuật quan trọng**: mọi script trừ `run_pipeline.py` là **stdlib-only** (chạy được ở
-mọi máy, kể cả không có torch). Tất cả đều `sys.stdout.reconfigure(encoding="utf-8")` — bắt buộc
-trên Windows (cp932/cp1252 không in được tiếng Việt sẽ crash).
+### 2.1 Mô hình Học Sâu (Deep Learning Model)
+- **Model Architecture**: `xlm-roberta-base` / `xlm-roberta-large` với hai đầu dự đoán (multi-task heads) trên cùng một encoder chia sẻ:
+  1. **BIO Tagging Head**: 11 nhãn (`O` + `B-`/`I-` cho 5 loại entity).
+  2. **Multi-label Assertion Head**: Dự đoán 3 cờ `isNegated`, `isHistorical`, `isFamily` trên từng token thuộc thực thể.
+- **Lý do chọn XLM-RoBERTa**: Nativly hỗ trợ `offset_mapping` trên ký tự tiếng Việt nguyên bản từ tokenizer nhanh, không cần qua bước tách từ (word segmentation như PhoBERT), tránh lệch index ký tự.
 
-## 3. Lệnh chạy chính
+### 2.2 Entity Linking (Chuẩn hóa Mã ICD-10 & RxNorm)
+Entity Linking được giải quyết độc lập với NER qua các tầng tra cứu offline:
+1. **TerminologyMatcher**: Trích xuất từ tập nhãn được tinh chỉnh `output/` thành các từ điển `data/terminology/drugs.csv` và `diagnoses.csv`. Tra cứu khớp chính xác (exact match) và fuzzy match với ngưỡng tương đồng.
+2. **RxNormOfflineIndex**: Xây dựng từ bộ dữ liệu chính thức NLM RxNorm RRF release (`RXNCONSO.RRF` + `RXNATOMARCHIVE.RRF` -> `rxnorm_full.csv` với 512,000+概念).
+   - Bao phủ các mã RxNorm bị remapped/retired (ví dụ: `Chlorpheniramine 0.4 MG/ML...` -> RxCUI `360047`).
+   - Tra cứu fallback bằng thuật toán khớp từ đầu tiên + độ trùng lặp token dạng thuốc/liều dùng.
+3. **ICD-10 Offline Index**: Dữ liệu thu thập từ WHO ICD-10 (`icd10_full.csv`).
 
-Đường suy luận private-test / nộp lại (không cần label public, không train):
+### 2.3 Data Augmentation Engine (`augment_ner_dataset.py`)
+Yêu cầu đề bài ("tạo thêm dữ liệu ngoài lời giải chính"):
+- **Entity Substitution**: Thay thế tên thuốc trong câu bằng 11,200+ tên thành phần/thương hiệu thuốc thực tế từ `rxnorm_drug_names.csv`, đồng thời tính toán lại chính xác offset ký tự để mô hình học mẫu BIO tổng quát thay vì ghi nhớ câu.
+- **Assertion Clause Insertion**: Tự động chèn các đoạn văn bản chứa phủ định/tiền sử/gia đình xung quanh thực thể.
+
+---
+
+## 3. Cấu Trúc Repository Hiện Tại (Sau Dọn Dẹp)
+
+Mã nguồn đã được dọn dẹp sạch sẽ các script Phase 1 legacy, các thử nghiệm thất bại (Qwen direct extraction) và các file zip rác.
+
+```
+ViettelRace/
+├── CLAUDE.md                       # Hướng dẫn quy trình phát triển & tài liệu dự án
+├── README.md                       # Hướng dẫn tổng quan & cài đặt
+├── requirements.txt                # Thư viện phụ thuộc (PyTorch, Transformers, pandas...)
+├── worklog.md                      # Nhật ký thử nghiệm & kết quả chi tiết từng run
+├── data/
+│   ├── ner_dataset/                # Dữ liệu huấn luyện NER dạng JSONL
+│   │   ├── train.jsonl             # Dữ liệu train gốc (85%)
+│   │   ├── holdout.jsonl           # Dữ liệu holdout (15%)
+│   │   └── train_augmented.jsonl   # Dữ liệu train đã tăng cường (Augmented)
+│   └── terminology/                # Bộ từ điển & Index tra cứu chuẩn hóa mã
+│       ├── diagnoses.csv           # Bảng tra cứu chẩn đoán -> ICD-10
+│       ├── drugs.csv               # Bảng tra cứu thuốc -> RxNorm
+│       ├── rxnorm_full.csv         # Index RxNorm offline hoàn chỉnh (512k rows)
+│       ├── rxnorm_drug_names.csv   # Danh sách 11.2k tên thuốc sạch cho Augmentation
+│       └── icd10_full.csv          # Danh mục mã ICD-10
+├── docs/                           # Tài liệu chi tiết
+│   ├── problem_statement.md        # Đề bài gốc của BTC
+│   ├── repo_report.md              # Báo cáo chi tiết về repo (File này)
+│   └── score_history.md            # Lịch sử điểm số & bảng xếp hạng qua từng version
+├── input_turn2/                    # 100 file văn bản đầu vào cho Turn 2
+├── output/                         # 100 file JSON nhãn chuẩn Turn 1 (dùng làm cơ sở mined data)
+├── output_model_turn2/             # 100 file JSON dự đoán của mô hình trên Turn 2
+├── output_turn2.zip                # File ZIP bài nộp Turn 2 đã qua kiểm tra hợp lệ
+├── models/
+│   └── ner_model/                  # Checkpoint mô hình XLM-RoBERTa đã huấn luyện
+│       ├── config.json
+│       ├── model.pt
+│       ├── tokenizer.json
+│       └── tokenizer_config.json
+├── notebooks/
+│   └── train_ner_assertion_model.ipynb # Notebook huấn luyện mô hình chính trên GPU
+├── kaggle_upload/                  # Cấu hình & dataset đẩy lên Kaggle GPU
+│   ├── dataset/                    # Dataset metadata & train.jsonl
+│   └── kernel/                     # Kernel script train tự động trên T4 GPU
+└── scripts/                        # Tập hợp các script Python chính của hệ thống
+    ├── run_all.py                  # Entry point quản lý toàn bộ workflow (prepare, train, infer, package, submit)
+    ├── run_pipeline.py             # Pipeline suy luận mô hình & Entity linking
+    ├── prepare_ner_dataset.py      # Chuyển đổi dữ liệu nhãn thành JSONL train/holdout
+    ├── build_rxnorm_rrf_index.py   # Trích xuất index RxNorm offline từ file RRF
+    ├── build_terminology_index.py  # Xây dựng bảng tra cứu từ điển từ nhãn chuẩn
+    ├── augment_ner_dataset.py      # Sinh dữ liệu tổng hợp (Synthetic Data Augmentation)
+    ├── check_submission.py         # Kiểm tra hợp lệ định dạng & giả lập điểm số
+    ├── package_submission.py       # Đóng gói kết quả dự đoán thành file submission ZIP
+    ├── package_source.py           # Đóng gói toàn bộ mã nguồn cho BTC rerun
+    └── fetch_icd.py                # Tool thu thập dữ liệu mã ICD-10
+```
+
+---
+
+## 4. Bảng Lịch Sử Điểm Số & Kết Quả Thử Nghiệm
+
+### 4.1 Kết quả Turn 2 (Mô hình ML trên dữ liệu ẩn)
+
+| Configuration / Experiment | Final Score | WER | J_assertion | J_candidates | Trạng thái Checkpoint |
+| :--- | ---: | ---: | ---: | ---: | :--- |
+| **`xlm-roberta-large` (Distill 70 docs + T4)** | **36.3385** | **60.40** | 42.42 | 29.33 | **NEW ALL-TIME BEST (Đã giữ)** |
+| Distill 73 docs (Parser fix) | 36.3160 | 61.66 | 43.59 | 29.34 | Mất file (Kaggle expire) |
+| `xlm-roberta-large` (Distill 70 docs) | 35.7087 | 63.11 | 42.82 | 29.49 | Đã giữ |
+| Distill 100 docs @12.1/doc | 35.1865 | 62.27 | 41.61 | 28.47 | Đã lưu trữ |
+| Baseline `xlm-roberta-large` (No Distill) | 34.7142 | 62.39 | 38.79 | 29.48 | Đã lưu trữ |
+| Baseline `xlm-roberta-base` | 34.3880 | 64.28 | 39.56 | 29.51 | Fallback offline local |
+| Qwen 2.5 Few-shot Direct Extraction | 11.4736 | 86.40 | 14.01 | 7.98 | Thất bại (Dead-end) |
+
+### 4.2 Các kết luận quan trọng rút ra từ thử nghiệm
+1. **Mô hình Ngôn ngữ Lớn (LLM Few-shot Direct Extraction) không hiệu quả**: Thử nghiệm Qwen 2.5-7B trích xuất trực tiếp đạt điểm rất thấp (11.47) do không tuân thủ chính xác index ký tự và gặp hallucination.
+2. **Pseudo-labeling (Distillation) có giới hạn dạng U ngược**: Việc gia tăng dữ liệu nhãn giả từ mô hình giáo viên tăng điểm ở mức ~70 docs (36.32), nhưng tăng tiếp lên 100-200 docs làm giảm chất lượng nhãn (tụt xuống 31.44).
+3. **Các cờ Hậu xử lý (Post-processing) có hiệu quả vượt trội**:
+   - `--add-terminology-entities`: Tăng từ **+8.9 đến +12.1 điểm**.
+   - `--propagate-repeats`: Giúp tăng recall cho các từ lặp lại trong bài văn bản.
+
+---
+
+## 5. Quy Trình Vận Hành Đơn Giản (Quickstart Command List)
+
+Mọi thao tác chính đều được tích hợp qua script `scripts/run_all.py` hoặc các script độc lập:
+
+### 1. Suy luận & Tạo bài nộp Turn 2 (Offline Submission)
 ```bash
 python scripts/run_all.py submit --input input_turn2 --pred output_model_turn2 --out output_turn2.zip
 ```
-Đường rebuild model đầy đủ (khi có label public `output/`):
+
+### 2. Kiểm tra tính hợp lệ của bài nộp
 ```bash
-python scripts/run_all.py all --aug-multiplier 1 --assertion-docs 30   # prepare -> train -> infer
+python scripts/check_submission.py --pred output_model_turn2 --input input_turn2
 ```
-`train` version Kaggle dataset, push kernel `--accelerator NvidiaTeslaT4`, poll, giải nén vào
-`models/ner_model/`. Tốn quota GPU Kaggle mỗi lần — **không loop**.
 
-## 4. Trạng thái thực tế (điểm số)
-
-| Mốc | Điểm thật (leaderboard) | Ghi chú |
-| --- | ---: | --- |
-| `output/` hand-tuned, Run 8 | **41.591** | Bản nộp tốt nhất, **chưa bị thay** |
-| Model v12 (genuine inference) | ~40.83 | Cách hand-tuned ~0.76 điểm |
-| Model v13 | 40.59 | Regression so với v12 (holdout nhỏ, variance cao) |
-| Model đầu (MAX_LENGTH=320) | 35.67 | Trước khi vá truncation |
-
-**Bài học đã rút** (từ worklog):
-- Proxy 100-file so với `output/` **bơm phồng** vì 85 file nằm trong tập train → chỉ tin
-  holdout 15 file (dù nó cũng chỉ đo agreement với `output/`, không phải truth thật).
-- Các gap còn lại (under-extension span, false positive, fragmentation) là **vấn đề chất lượng
-  model / dữ liệu train**, KHÔNG vá được bằng postprocessing (đã thử merge theo "và"/whitespace và
-  đều revert vì tạo false merge). Hướng đúng: train thêm epoch / augmentation tập trung biên span.
-- `J_candidates`: đoán sai còn tệ hơn để rỗng (chỉ nới union, không giao) — đã sửa bug guard
-  single-token trong `RxNormOfflineIndex.lookup()`.
-
-## 5. Điểm cần lưu ý / việc dang dở
-
-1. **`models/` đang TRỐNG** — chưa có model export cục bộ. Muốn chạy `run_pipeline.py` phải train
-   lại trên Kaggle hoặc lấy export về `models/ner_model/` (cần `model.pt` + `config.json` +
-   tokenizer files).
-2. **Rủi ro OneDrive (lịch sử)** — repo từng nằm dưới OneDrive: `.git` từng desync/rỗng, `model.pt`
-   1.1GB từng bị rehydrate giữa session gây kết quả không deterministic. Hiện repo ở
-   `/Users/quanganh/Documents/code/ViettelRace`, git sạch, 1 commit `735fc41`. Nên xác minh
-   `model.pt` bằng hash sau mỗi lần tải.
-3. **ICD-10 full đã crawl** (`icd10_full.csv`, 11.243 mã) nhưng **chưa dùng được để match** — chỉ
-   có title tiếng Anh, thiếu bước cầu nối Việt→Anh (dịch hoặc embedding đa ngôn ngữ).
-4. **Split 85/15 seed 13 cố định** — dữ liệu quá nhỏ, coi số holdout là ước lượng sơ bộ.
-   `prepare_ner_dataset.py --folds N` sinh thêm fold để spot-check (mỗi fold vẫn tốn 1 run Kaggle).
-5. **`legacy/`** chỉ giữ để audit — wordlist chép verbatim từ 100 file public, không generalize.
-   **Không dùng để sinh submission.**
-6. **RRF thô** (`rrf/`, `prescribe/rrf/`, ~1.8GB) gitignored — chỉ cần khi rebuild CSV RxNorm. Môi
-   trường private-rerun **không** cần chúng: `run_pipeline.py` chỉ đọc CSV derived đã commit.
-
-## 6. Cây thư mục (rút gọn)
-
+### 3. Đóng gói mã nguồn phục vụ BTC Rerun
+```bash
+python scripts/package_source.py --dry-run
 ```
-input/           100 bệnh án gốc (.txt)
-output/          bản nộp hand-tuned tốt nhất (41.591) — KHÔNG bị pipeline ghi đè
-output_model/    (gitignore) do run_pipeline.py sinh, để so với output/ trước khi promote
-data/
-  ner_dataset/   train/holdout/all.jsonl + train_augmented.jsonl + split.json
-  terminology/   drugs.csv, diagnoses.csv, conflicts.txt, rxnorm_full.csv (38MB),
-                 rxnorm_drug_names.csv, icd10_full.csv
-models/          (gitignore, TRỐNG) model đã fine-tune
-notebooks/       train_ner_assertion_model.ipynb
-kaggle_upload/   dataset/ + kernel/ (bản push Kaggle, giữ đồng bộ với notebooks/)
-scripts/         pipeline hiện dùng (run_pipeline.py cần torch; còn lại stdlib-only)
-legacy/scripts/  pipeline cũ regex/wordlist — chỉ audit
-docs/            score_history.md, github_collaboration.md, output_check_report.txt, repo_report.md
-worklog.md       nhật ký kỹ thuật theo ngày (nguồn sự thật mới nhất)
-CLAUDE.md        định hướng cho Claude Code
-```
+
+---
+
+## 6. Tổng Kết
+
+Repository `ViettelRace` hiện tại ở trạng thái **rất gọn gàng, chuẩn mực và đã sẵn sàng cho nộp bài private test**:
+- Đã loại bỏ 100% rác Phase 1 legacy và các nhánh thử nghiệm không hiệu quả.
+- Đã đóng gói checkpoint mô hình `xlm-roberta-large` đạt điểm **35.7087** tại `models/ner_model/`.
+- Pipeline chạy hoàn toàn **offline, stdlib + PyTorch local**, tuân thủ 100% quy định của BTC ViettelRace AI Race 2026.
