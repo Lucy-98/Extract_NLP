@@ -103,5 +103,6 @@
     87,
     90
   ],
-  "seed": 13
+  "seed": 13,
+  "train_all_labels": false
 }
