@@ -59,6 +59,21 @@ MEMBERS: list[tuple[str, str]] = [
     ("input_turn2", "input_turn2"),  # the documents actually being submitted
 ]
 
+# Copied when present, skipped silently when absent -- these are caches, not
+# requirements. `llm_labels.json` is the Qwen pseudo-labelling output: it is
+# deterministic (do_sample=False) yet costs 1.5-2.5h of T4 time to recompute, and
+# every retrain was paying that again. Download it once from a kernel run's
+# output, drop it in data/ner_dataset/, and the notebook skips the whole
+# labelling pass. `qwen_icd_supplement.csv` is the same idea for the ICD pass.
+OPTIONAL_MEMBERS: list[tuple[str, str]] = [
+    ("data/ner_dataset/llm_labels.json", "llm_labels.json"),
+    ("data/terminology/qwen_icd_supplement.csv", "qwen_icd_supplement.csv"),
+]
+
+
+def all_members() -> list[tuple[str, str]]:
+    return MEMBERS + [m for m in OPTIONAL_MEMBERS if (ROOT / m[0]).exists()]
+
 # Nothing in scripts/ needs these, and they bloat the upload.
 EXCLUDED_NAMES = {"__pycache__", ".ipynb_checkpoints"}
 
@@ -137,7 +152,7 @@ def main() -> int:
 
     if args.dry_run:
         total = 0
-        for src, dst in MEMBERS:
+        for src, dst in all_members():
             path = ROOT / src
             size = (sum(f.stat().st_size for f in path.rglob("*")
                         if f.is_file() and not ignored(f.relative_to(path)))
@@ -152,7 +167,7 @@ def main() -> int:
     args.out.mkdir(parents=True)
 
     files = total = 0
-    for src, dst in MEMBERS:
+    for src, dst in all_members():
         n, b = copy_member(ROOT / src, args.out / dst)
         files += n
         total += b

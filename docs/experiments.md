@@ -16,6 +16,75 @@ Add a row **before** you submit, fill in the score **the same day** you get it.
 | 07-31 | **33.679** | 35.944 | 38.084 | 28.676 | `archive/submissions/output_turn2_icd.zip` — base model + ICD fallback + dose/form RxNorm |
 | 08-01 | **34.303** | 36.057 | 38.297 | **29.992** | `submissions/v5_recoded.zip` — `--no-icd-fallback` + 22 deterministic code fixes |
 | 08-01 | 33.644 | 36.057 | **36.101** | 29.992 | `submissions/v7_assert_union.zip` — v5 + rule-based assertion post-processing |
+| 08-01 | **35.951** | 38.309 | 42.348 | 29.384 | `submissions/v9_kaggle_large.zip` — xlm-roberta-large + Qwen2.5-7B distillation, retrained |
+| 08-01 | **36.379** | 38.553 | 42.447 | **30.197** | `submissions/v10_large_cleantable.zip` — v9's model, repo's own table (no Qwen ICD rows) |
+
+### What the v10 result settled — best score to date
+
+Beats the previously best-ever 36.315, and `J_candidates` **passes 30 for the first time** (old
+record 29.9917, set by the deterministic recode; before that 29.98 from hand labels).
+
+Single-variable A/B against v9 — identical model, only the linking table differs:
+
+```
+v9 -> v10:  text +0.245   J_assert +0.099   J_cand +0.813   final +0.428
+```
+
+The repo's own table beat the kernel's Qwen-augmented one. Only 9 codes differed, and the direction
+is unambiguous: `tràn dịch màng phổi` J91 -> **J90** (J91 is absent from the BYT catalog, so it was a
+guaranteed zero), `Rối loạn chuyển hóa tinh bột` E50.9 -> **E85.9** (vitamin A deficiency ->
+amyloidosis), `rối loạn cảm xúc lưỡng cực khác` F40.9 -> F34.9. Removing the 46 Qwen rows also
+dropped 42 spurious spans that `--add-terminology-entities` had been generating from them.
+
+**This validates the recoding thesis end to end**: correcting codes against the authoritative
+catalog moves `J_candidates`, and nothing else tried this session did.
+
+**And the headroom is untouched.** Implied code accuracy `k = 2J/(1+J)`:
+
+| run | `J_cand` | implied `k` |
+| --- | ---: | ---: |
+| turn-1 hand labels | 0.2998 | 46.1% |
+| v8 (base + fixes) | 0.2999 | 46.1% |
+| v9 (large) | 0.2938 | 45.4% |
+| **v10 (best)** | **0.3020** | **46.4%** |
+
+Across every configuration ever run — two backbones, distillation on and off, human labels, three
+different tables — code accuracy sits at 45–46%. v10 is the highest and it moved 0.3 points. The
+0.4-weight component remains the one large untapped lever, exactly as
+[linking_recode.md](linking_recode.md) predicts.
+
+### What the v9 result settled
+
+Best score of the session, **+1.648 over v5/v8**, and the first time the recipe behind the lost
+36.32 run has been reproduced from source:
+
+```
+v8 -> v9:     text +2.252   J_assert +4.052   J_cand -0.608   final +1.648
+v9 -> 36.32:  J_assert +1.242 (= +0.372 final); text and J_cand within 0.04
+```
+
+**The entire remaining gap to the best-ever score is J_assertion**, and it has a named cause. The
+kernel early-stopped at epoch 9 and kept epoch 5 (`best_epoch=5`, against 16 in the base run). The
+stop fires on a composite of holdout WER and J_assertion; holdout WER rose after epoch 5 so the
+composite peaked there — but that rise **did not appear on the real test set** (v9 text_score
+38.309 vs the 36.32 run's 38.340). With 15 holdout files the WER estimate is too noisy to arbitrate,
+while assertion loss was still falling steeply at epoch 9 (0.143 -> 0.086). `EARLY_STOP_PATIENCE`
+raised 4 -> 8 in both notebook mirrors.
+
+Two things worth recording because they contradicted the prediction made before submitting:
+
+- v9 emits **far fewer assertions** than v8 (isHistorical 163 vs 366, isFamily 0 vs 19) and
+  `J_assertion` went **up** 4.05. Precision beat coverage. The same lesson the falsified
+  `postprocess.py` levers taught from the other direction.
+- This run also carries a *second* change: the kernel merged **46 Qwen-predicted ICD rows** into
+  `diagnoses.csv` at submit time (`[submit] merged 46 Qwen ICD rows`). So v9 is not a clean
+  single-variable A/B, and `J_candidates` fell 29.992 -> 29.384 off the record set by the
+  deterministic recode. `experiments/v10_large_cleantable` isolates it: same model, the repo's own
+  table, no Qwen additions.
+
+First honest offline number in the repo, too: this model's `config.json` has no
+`train_holdout_overlap` flag and reports holdout WER 0.546 / J_assertion 0.215 — ugly, but real,
+where the base model's contaminated 0.006 / 0.983 was meaningless.
 
 ### What the 08-01 result settled
 

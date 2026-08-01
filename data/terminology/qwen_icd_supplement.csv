@@ -1,0 +1,107 @@
+text,candidate,source
+Bệnh Kawasaki,B90.9,qwen_icd
+Bệnh gan do rượu,K70.9,qwen_icd
+Bệnh lý đau nửa đầu,G90.9,qwen_icd
+Bệnh mạch vành,I25.9,qwen_icd
+Bệnh túi thừa,D11.9,qwen_icd
+Herpes simplex,B02.9,qwen_icd
+Hội chứng mạch vành cấp,I21.9,qwen_icd
+Ngưng thở khi ngủ,R07.0,qwen_icd
+Ngưng thở khi ngủ do tắc nghẽn,R07.0,qwen_icd
+Nhiễm trùng đường tiết niệu kháng thuốc,N18.9,qwen_icd
+Nhồi máu cơ tim,I21.9,qwen_icd
+Nhồi máu cơ tim gần đây,I21.9,qwen_icd
+Rối loạn chuyển hóa tinh bột,E50.9,qwen_icd
+Rối loạn chuyển hóa tinh bột (amyloidosis),E50.9,qwen_icd
+Tăng huyết áp,I10,qwen_icd
+Tăng áp động mạch phổi,I25.9,qwen_icd
+U Sacoit tổn thương chủ yếu tại tim,C75.9,qwen_icd
+U cơ trơn,D10.9,qwen_icd
+Viêm cầu thận mạn - Hội chứng thận hư,N13.9,qwen_icd
+Viêm gan virus C,B17.9,qwen_icd
+Viêm loét đại tràng,K52.9,qwen_icd
+Viêm mô tế bào,D50.9,qwen_icd
+Viêm nội tâm mạc,I05.9,qwen_icd
+Xơ vữa động mạch,I10,qwen_icd
+bệnh Graves,E83.9,qwen_icd
+bệnh bàn chân bẹt,M85.4,qwen_icd
+bệnh dại,R50.9,qwen_icd
+bệnh gút,M25.9,qwen_icd
+bệnh gút không đặc hiệu,M25.9,qwen_icd
+bệnh mãn tính,R95.9,qwen_icd
+bệnh mạch vành,I25.9,qwen_icd
+bệnh rễ thần kinh tuỷ sống ở ngón tay cái,C51.9,qwen_icd
+bệnh thận mạn,N18.9,qwen_icd
+"bệnh thận mạn, không đặc hiệu",N18.9,qwen_icd
+bệnh tim mạch do xơ vữa động mạch,I70.9,qwen_icd
+bệnh tim mạch do xơ vữa động mạch sau CABG,I70.9,qwen_icd
+bệnh tim mạch do xơ vữa động mạch đặt stent,I70.9,qwen_icd
+bệnh trĩ,K81.9,qwen_icd
+bệnh tăng HA vô căn(nguyên phát),I10,qwen_icd
+bệnh động mạch vành,I25.9,qwen_icd
+chứng đau đầu,G90.9,qwen_icd
+cml,C61,qwen_icd
+cường cận giáp nguyên phát,E20.9,qwen_icd
+dị tật thiểu sản vành tai,Q06.9,qwen_icd
+hen suyễn,J45.9,qwen_icd
+hẹp tắc mạch vành,I25.5,qwen_icd
+mày đay,N30.9,qwen_icd
+mề đay,G70.9,qwen_icd
+mụn,D10.9,qwen_icd
+mụn cám,D10.9,qwen_icd
+mụn trứng cá,D10.9,qwen_icd
+mụn đầu trắng,D10.9,qwen_icd
+nhịp nhanh trên thất,I48.9,qwen_icd
+nhồi máu cơ tim,I21.9,qwen_icd
+não úng thuỷ,I51.0,qwen_icd
+phình giãn động mạch vành,I25.9,qwen_icd
+phình động mạch chủ ngực – bụng,I71.9,qwen_icd
+phình động mạch chủ nhỏ,I71.9,qwen_icd
+rối loạn chức năng tâm thất phải,F32.9,qwen_icd
+rối loạn cảm xúc lưỡng cực khác,F40.9,qwen_icd
+rối loạn lo âu,F40.9,qwen_icd
+"rối loạn lo âu, không biệt định nghiêm trọng",F40.9,qwen_icd
+sp TLH,I89.9,qwen_icd
+stent mạch vành,I21.9,qwen_icd
+suy thận cấp,N17.9,qwen_icd
+suy tim,I50,qwen_icd
+suy tim - suy thận mạn giai đoạn 5,I13.9,qwen_icd
+"suy tim, không đặc hiệu",I13.9,qwen_icd
+"suy tim, không đặc hiệu hệ số tống máu 50 inch",I13.9,qwen_icd
+sỏi đoạn cuối ống mật chủ,K70.2,qwen_icd
+sốt phát ban,B00.9,qwen_icd
+thoát vị cạnh thực quản,K40.9,qwen_icd
+thoát vị hoành,K41.9,qwen_icd
+thuyên tắc phổi,I26.9,qwen_icd
+thính lực,H93.9,qwen_icd
+thần kinh thính giác,H93.9,qwen_icd
+tiền môn vị,K70.9,qwen_icd
+tiền sản giật,P23.9,qwen_icd
+tràn dịch màng phổi trái tái phát,F32.9,qwen_icd
+trầm cảm,I51.9,qwen_icd
+tách thành động mạch chủ,S35.9,qwen_icd
+tâm thần phân liệt,F20.9,qwen_icd
+tình trạng hội chứng não gan tiến triển,G93.8,qwen_icd
+tăng HA,I13.9,qwen_icd
+tăng huyết áp vô căn (nguyên phát),I13.9,qwen_icd
+tăng sản tuyến tiền liệt,N18.9,qwen_icd
+u nang tuyến vú,D25.9,qwen_icd
+u xơ tuyến vú,D23.9,qwen_icd
+viêm bao tử,K29.9,qwen_icd
+viêm bể thận,N17.9,qwen_icd
+viêm gan,K70.9,qwen_icd
+viêm lan tỏa hệ mạch máu nhỏ và vừa,I95.9,qwen_icd
+viêm nha chu,D04.9,qwen_icd
+viêm phế quản,J96.9,qwen_icd
+viêm phổi thùy dưới phải,J18.9,qwen_icd
+viêm sung huyết hang vị dạ dày,K06.9,qwen_icd
+viêm tim,I27.9,qwen_icd
+viêm túi mật cấp,K82.9,qwen_icd
+viêm túi mật cấp tính không biến chứng,K82.9,qwen_icd
+viêm túi mật thủng cấp tính,K82.9,qwen_icd
+viêm tụy,K85.9,qwen_icd
+viêm tủy xương,D59.9,qwen_icd
+viêm tủy xương mãn tính,D59.9,qwen_icd
+viêm tủy xương và bàng quang thần kinh có biến chứng liệt hai chi dưới,D59.9,qwen_icd
+ăng huyết áp,I10,qwen_icd
+đột tử,Y44.9,qwen_icd
