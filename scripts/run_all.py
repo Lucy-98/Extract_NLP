@@ -288,22 +288,34 @@ def stage_prepare(aug_multiplier: int, assertion_docs: int, train_all_labels: bo
 
 
 def sync_kaggle_dataset() -> None:
-    """Make the Kaggle dataset folder match what the notebook actually reads.
+    """Check the prepared dataset files the Kaggle bundle will pick up.
 
-    The notebook looks for files literally named `train.jsonl` and
-    `holdout.jsonl`. Locally, augmentation writes `train_augmented.jsonl`, so
-    copy it into `kaggle_upload/dataset/train.jsonl` before versioning the
-    Kaggle dataset. Without this step the kernel can silently train on a stale
-    or unaugmented dataset.
+    The notebook reads files literally named `train.jsonl` / `holdout.jsonl`,
+    and `build_kaggle_bundle.py` renames `train_augmented.jsonl` to `train.jsonl`
+    as it assembles `kaggle_bundle/`. It reads them straight out of
+    `data/ner_dataset/`, so nothing needs copying here.
+
+    This function used to also copy them into `kaggle_upload/dataset/`. Those
+    copies were never read by anything, but they made that folder *look* like a
+    complete dataset -- and it carries the same `dataset-metadata.json` slug as
+    the real bundle. Anyone running `kaggle datasets version -p
+    kaggle_upload/dataset` would then overwrite the published dataset with a
+    two-file version, stripping `input_turn2/`, `scripts/`, `data/terminology/`
+    and `output/`. The kernel's distillation cell is wrapped in try/except, so
+    it would not crash -- it would silently skip distillation and train
+    curated-only, i.e. score ~34.4 instead of ~36.3. Only the metadata file
+    belongs in that folder now.
     """
     src_train = ROOT / "data" / "ner_dataset" / "train_augmented.jsonl"
     src_holdout = ROOT / "data" / "ner_dataset" / "holdout.jsonl"
     if not src_train.exists() or not src_holdout.exists():
         raise SystemExit("Missing prepared dataset files; run the prepare stage first.")
-    KAGGLE_DATASET_DIR.mkdir(parents=True, exist_ok=True)
-    copy_file(src_train, KAGGLE_DATASET_DIR / "train.jsonl")
-    copy_file(src_holdout, KAGGLE_DATASET_DIR / "holdout.jsonl")
-    print(f"Synced augmented train/holdout -> {KAGGLE_DATASET_DIR}")
+    for stale in ("train.jsonl", "holdout.jsonl"):
+        path = KAGGLE_DATASET_DIR / stale
+        if path.exists():
+            path.unlink()
+            print(f"Removed stale unused copy {path}")
+    print(f"Prepared dataset ready for build_kaggle_bundle.py: {src_train.name}, {src_holdout.name}")
 
 
 def stage_dataset_version() -> None:
