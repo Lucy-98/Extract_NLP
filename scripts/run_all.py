@@ -43,6 +43,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "scripts"
 KERNEL_DIR = ROOT / "kaggle_upload" / "kernel"
 KAGGLE_DATASET_DIR = ROOT / "kaggle_upload" / "dataset"
+BUNDLE_DIR = ROOT / "kaggle_bundle"  # full dataset uploaded to Kaggle; see stage_dataset_version
 KERNEL_SLUG = "lucylng/viettelrace-ner-assertion-train"
 MODEL_DIR = ROOT / "models" / "ner_model"
 INPUT_DIR = ROOT / "input"
@@ -198,10 +199,29 @@ def download_kernel_output(download_dir: Path, retries: int = 3, retry_delay: in
     raise SystemExit(f"kaggle kernels output failed after {retries} attempts.")
 
 
+def snapshot_current_model() -> None:
+    """Copy models/ner_model aside before a new export overwrites it.
+
+    Kaggle's kernel-output endpoint ignores a version suffix and always returns
+    the latest run, so a model you overwrite is gone for good -- that is how the
+    40.828-scoring v12 weights were lost (worklog 2026-07-21). One local copy is
+    ~1.1GB, which is cheap next to a leaderboard regression you cannot roll back.
+    """
+    if not (MODEL_DIR / "model.pt").is_file():
+        return
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    backup = MODEL_DIR.parent / f"{MODEL_DIR.name}_backup_{stamp}"
+    if backup.exists():
+        return
+    shutil.copytree(MODEL_DIR, backup)
+    print(f"Snapshotted the model being replaced -> {backup}")
+
+
 def install_export_from_dir(export_dir: Path) -> None:
     issues = export_dir_issues(export_dir)
     if issues:
         raise SystemExit("Invalid extracted model export:\n  " + "\n  ".join(issues))
+    snapshot_current_model()
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
     for name in EXPORT_FILES:
         copy_file(export_dir / name, MODEL_DIR / name)
@@ -250,7 +270,7 @@ def install_kernel_export(download_dir: Path) -> None:
         install_export_from_dir(export)
 
 
-def stage_prepare(aug_multiplier: int, assertion_docs: int, train_all_labels: bool) -> None:
+def stage_prepare(aug_multiplier: int, assertion_docs: int, train_all_labels: bool = False) -> None:
     prepare_cmd = [sys.executable, str(SCRIPTS / "prepare_ner_dataset.py")]
     if train_all_labels:
         prepare_cmd.append("--train-all-labels")
@@ -268,27 +288,51 @@ def stage_prepare(aug_multiplier: int, assertion_docs: int, train_all_labels: bo
 
 
 def sync_kaggle_dataset() -> None:
-    """Make the Kaggle dataset folder match what the notebook actually reads.
+    """Check the prepared dataset files the Kaggle bundle will pick up.
 
-    The notebook looks for files literally named `train.jsonl` and
-    `holdout.jsonl`. Locally, augmentation writes `train_augmented.jsonl`, so
-    copy it into `kaggle_upload/dataset/train.jsonl` before versioning the
-    Kaggle dataset. Without this step the kernel can silently train on a stale
-    or unaugmented dataset.
+    The notebook reads files literally named `train.jsonl` / `holdout.jsonl`,
+    and `build_kaggle_bundle.py` renames `train_augmented.jsonl` to `train.jsonl`
+    as it assembles `kaggle_bundle/`. It reads them straight out of
+    `data/ner_dataset/`, so nothing needs copying here.
+
+    This function used to also copy them into `kaggle_upload/dataset/`. Those
+    copies were never read by anything, but they made that folder *look* like a
+    complete dataset -- and it carries the same `dataset-metadata.json` slug as
+    the real bundle. Anyone running `kaggle datasets version -p
+    kaggle_upload/dataset` would then overwrite the published dataset with a
+    two-file version, stripping `input_turn2/`, `scripts/`, `data/terminology/`
+    and `output/`. The kernel's distillation cell is wrapped in try/except, so
+    it would not crash -- it would silently skip distillation and train
+    curated-only, i.e. score ~34.4 instead of ~36.3. Only the metadata file
+    belongs in that folder now.
     """
     src_train = ROOT / "data" / "ner_dataset" / "train_augmented.jsonl"
     src_holdout = ROOT / "data" / "ner_dataset" / "holdout.jsonl"
     if not src_train.exists() or not src_holdout.exists():
         raise SystemExit("Missing prepared dataset files; run the prepare stage first.")
-    KAGGLE_DATASET_DIR.mkdir(parents=True, exist_ok=True)
-    copy_file(src_train, KAGGLE_DATASET_DIR / "train.jsonl")
-    copy_file(src_holdout, KAGGLE_DATASET_DIR / "holdout.jsonl")
-    print(f"Synced augmented train/holdout -> {KAGGLE_DATASET_DIR}")
+    for stale in ("train.jsonl", "holdout.jsonl"):
+        path = KAGGLE_DATASET_DIR / stale
+        if path.exists():
+            path.unlink()
+            print(f"Removed stale unused copy {path}")
+    print(f"Prepared dataset ready for build_kaggle_bundle.py: {src_train.name}, {src_holdout.name}")
 
 
 def stage_dataset_version() -> None:
-    if not (KAGGLE_DATASET_DIR / "dataset-metadata.json").exists():
-        raise SystemExit(f"{KAGGLE_DATASET_DIR / 'dataset-metadata.json'} not found.")
+    """Version the *full* Kaggle bundle, not just train/holdout jsonl.
+
+    Since 2026-07-25 the kernel doesn't only train -- it also runs the real
+    `run_pipeline.py` from the bundled repo to produce output.zip, so the dataset
+    has to carry `scripts/`, `data/terminology/*`, `output/` and `input_turn2/`
+    too. Versioning the old thin `kaggle_upload/dataset/` folder instead would
+    upload train.jsonl alone and the kernel's submission half would find nothing
+    -- burning a full GPU run to produce a broken (or silently degraded)
+    submission, which is exactly how the 31.89 regression happened.
+    `build_kaggle_bundle.py` assembles and verifies it.
+    """
+    run([sys.executable, str(SCRIPTS / "build_kaggle_bundle.py"), "--out", str(BUNDLE_DIR)])
+    if not (BUNDLE_DIR / "dataset-metadata.json").exists():
+        raise SystemExit(f"{BUNDLE_DIR / 'dataset-metadata.json'} not found after building the bundle.")
     run(
         [
             sys.executable,
@@ -297,9 +341,18 @@ def stage_dataset_version() -> None:
             "datasets",
             "version",
             "-p",
-            str(KAGGLE_DATASET_DIR),
+            str(BUNDLE_DIR),
             "-m",
-            "sync augmented ViettelRace NER dataset",
+            "sync ViettelRace bundle (scripts + terminology + labels + turn-2 inputs)",
+            # WITHOUT THIS the upload silently contains only the bundle's root
+            # files: `kaggle datasets version` defaults to --dir-mode skip, i.e.
+            # it *ignores every subdirectory*. That produced a 142KB dataset
+            # (train.jsonl + holdout.jsonl + metadata) instead of 43.8MB on
+            # 2026-07-28, and the kernel then failed with no scripts/, no
+            # terminology and no input_turn2/ to work with. It fails as a kernel
+            # ERROR minutes later, not at upload time, so nothing points back here.
+            "--dir-mode",
+            "zip",
         ],
         env=KAGGLE_ENV,
     )

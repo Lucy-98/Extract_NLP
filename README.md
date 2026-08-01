@@ -1,152 +1,223 @@
 # ViettelRace — Vòng 1: trích xuất thực thể y tế tiếng Việt
 
-Bài toán: với mỗi bệnh án (`input/{id}.txt`), sinh `output/{id}.json` chứa danh sách thực thể
-(`CHẨN_ĐOÁN`, `TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`), mỗi thực thể có
-span ký tự, assertion (`isNegated`/`isHistorical`/`isFamily`) và với `CHẨN_ĐOÁN`/`THUỐC` là mã
-ICD/RxNorm (`candidates`). Điểm: `0.3·text_score(WER) + 0.3·J_assertion + 0.4·J_candidates`.
-
-**BTC sẽ dựng lại source code của top ~15 đội trên private test** — bất kỳ cách làm nào không
-chạy suy luận thật tại thời điểm inference (regex/wordlist chép theo từng file cụ thể) sẽ không
-generalize và có nguy cơ bị loại. Vì vậy pipeline hiện dùng là 1 model NER+assertion fine-tune
-(`xlm-roberta-base`, train trên Kaggle/Colab) + 1 bước entity-linking (tra cứu ICD/RxNorm) tách
-riêng — không phải regex/wordlist. Chi tiết lý do và lịch sử thay đổi: xem `worklog.md`.
-
-## Cấu trúc thư mục
+Với mỗi bệnh án `input/{id}.txt`, sinh `output/{id}.json` gồm danh sách thực thể (`CHẨN_ĐOÁN`,
+`TRIỆU_CHỨNG`, `THUỐC`, `TÊN_XÉT_NGHIỆM`, `KẾT_QUẢ_XÉT_NGHIỆM`), mỗi thực thể có span ký tự,
+`assertions` (`isNegated`/`isHistorical`/`isFamily`) và với `CHẨN_ĐOÁN`/`THUỐC` là mã ICD-10/RxNorm.
 
 ```
-input/                        100 bệnh án gốc (BTC cung cấp, không sửa)
-output/                        bản nộp hiện hành (thủ công, đã chấm 41.591 — không bị pipeline mới ghi đè)
-output_model/                  (sinh ra khi chạy run_pipeline.py, gitignore, so sánh với output/ trước khi thay)
-
-data/
-  ner_dataset/                 train.jsonl / holdout.jsonl / all.jsonl / split.json (sinh bởi prepare_ner_dataset.py)
-                                 train_augmented.jsonl (sinh bởi augment_ner_dataset.py)
-  terminology/                 drugs.csv / diagnoses.csv / conflicts.txt (sinh bởi build_terminology_index.py)
-                                icd10_full.csv — 11.243 mã ICD-10 (chapter->category, tên tiếng Anh),
-                                crawl toàn bộ qua WHO ICD-API bằng scripts/fetch_icd.py --crawl-all
-
-models/                        model đã fine-tune, tải về từ Kaggle/Colab (gitignore, trống cho tới khi bạn train)
-
-notebooks/
-  train_ner_assertion_model.ipynb   fine-tune trên Kaggle/Colab (GPU) — bản dùng để push là
-                                     kaggle_upload/kernel/ (giữ đồng bộ 2 bản khi sửa)
-
-scripts/                       pipeline đang dùng
-  prepare_ner_dataset.py       input/ + output/ (đã tinh chỉnh)  -> data/ner_dataset/*.jsonl
-                                 (--folds N: thêm fold{k}_{train,holdout}.jsonl để spot-check split)
-  build_rxnorm_rrf_index.py     rrf/ + prescribe/rrf/ (RRF chính thức, local) -> data/terminology/
-                                 rxnorm_full.csv, rxnorm_drug_names.csv (chỉ cần chạy lại khi bản RRF đổi)
-  augment_ner_dataset.py        train.jsonl + terminology         -> data/ner_dataset/train_augmented.jsonl
-  build_terminology_index.py   output/ đã tinh chỉnh + bảng cũ    -> data/terminology/*.csv
-  fetch_icd.py                  WHO ICD-API: tra 1 mã, hoặc crawl toàn bộ cây ICD-10 -> icd10_full.csv
-  fetch_rxnorm.py                [superseded 2026-07-21] RxNav API — giữ lại để tra thủ công, không
-                                 còn nằm trong pipeline mặc định (xem build_rxnorm_rrf_index.py)
-  run_pipeline.py               model + terminology index (+ fallback offline RxNorm RRF) -> output_model/*.json
-  check_submission.py           validator + mô phỏng điểm cục bộ  (type-aware, dùng chung cho pipeline cũ/mới)
-  package_submission.py         validate + đóng gói output.zip đúng layout output/{id}.json
-  package_source.py             đóng gói code + data derived + model weights để BTC dựng lại
-  run_all.py                    entrypoint gộp: prepare | train | infer | package | all
-
-requirements.txt               pin torch/transformers cho run_pipeline.py (suy luận cục bộ)
-
-legacy/scripts/                 pipeline cũ (regex/wordlist), giữ lại để tham khảo/audit — KHÔNG
-                                 dùng để sinh submission nữa (overfit theo 100 file, không generalize)
-
-docs/
-  score_history.md              lịch sử điểm số qua các vòng thủ công (Run 1-8)
-  output_check_report.txt       log lần chạy validator/agent gần nhất của pipeline cũ
-
-worklog.md                      nhật ký thay đổi theo ngày (kỹ thuật, không phải điểm số)
-CLAUDE.md                       tài liệu định hướng cho Claude Code khi làm việc trong repo này
-
-.agent_runs/                    (gitignore) backup/snapshot từ các lần chạy legacy/scripts/auto_improve_agent.py
+final_score = 0.3·text_score(1 − WER) + 0.3·J_assertions + 0.4·J_candidates
 ```
 
-## Cách chạy lại từ đầu
+Đề bài gốc BTC: [docs/problem_statement.md](docs/problem_statement.md) — nguồn sự thật cho mọi luật thi.
 
-`scripts/run_all.py` gộp toàn bộ chuỗi dưới đây thành 1 lệnh, để không phải nhớ đúng thứ tự khi lặp
-lại nhiều vòng dưới áp lực thời gian thi (`python scripts/run_all.py all`, hoặc chạy riêng từng giai
-đoạn `prepare` / `train` / `infer` / `package`). Chi tiết từng bước nếu muốn chạy tay:
+---
+
+## Đọc 60 giây trước khi làm bất cứ gì
+
+**Nút thắt đã được xác định bằng đo đạc, không phải phỏng đoán.**
+
+| | text | J_assert | J_cand | final |
+|---|---:|---:|---:|---:|
+| turn-2 baseline | 35.72 | 39.56 | 29.51 | **34.388** |
+| turn-2 + distillation | 38.34 | 43.59 | **29.34** | 36.32 |
+| turn-1 nhãn tay, 8 vòng | 48.34 | 50.32 | **29.98** | 41.591 |
+
+NER cải thiện 2.6 điểm text và assertion 4.0 điểm ⇒ `J_candidates` **giảm 0.17**. Nhãn tay của con
+người, span tốt hơn hẳn ⇒ vẫn 29.98. Suy ngược `J = k/(2−k)`: cả ba cấu hình đều có
+**~45–46% mã đúng**.
+
+Nhưng bảng tra đã phủ **93.2%** mention chẩn đoán bằng khớp *chính xác*. Vậy vấn đề không phải độ
+phủ — mà là **cột `candidate` sai một nửa**, vì `diagnoses.csv` được mine từ `output/`, chính là bài
+nộp turn-1 đạt `J_candidates` 29.98. Bảng tra đang ghi nhớ lại chính các câu trả lời sai của mình.
+
+**⇒ Việc đáng làm nhất trong repo này là mã hoá lại ~350 chuỗi, không phải đổi kiến trúc model.**
+Xem [docs/linking_recode.md](docs/linking_recode.md).
+
+**Ba bài học đã trả giá bằng điểm:**
+
+1. **Không có số liệu offline nào ở đây có giá trị dự báo.** `models/ner_model/config.json` ghi
+   `train_holdout_overlap: true` và holdout WER `0.006`. Eval linking thì feed ground-truth span cho
+   linker. Lần eval dự báo `J_cand` 0.59 → 0.74 đã cho kết quả thật 29.51 → **28.68**.
+2. **Đừng đổi tập thực thể.** Mọi lần đổi đều âm: 31.89, 33.679. Hậu xử lý *thuộc tính* mới an toàn.
+3. **Mỗi lần nộp chỉ đổi một biến**, và ghi vào [docs/experiments.md](docs/experiments.md) **trước** khi nộp.
+
+---
+
+## 1. Cài đặt
 
 ```bash
-# 1. Chuẩn bị dữ liệu train (chạy local, chỉ cần Python stdlib)
+pip install -r requirements.txt      # chỉ torch + transformers
 ```
 
-For `input_turn2/` or any private input folder, do not run train. Use:
+Mọi script trong `scripts/` **trừ `run_pipeline.py`** đều stdlib-only.
+
+Trên Windows luôn ép UTF-8 trước — console mặc định (cp932/cp1252) không in được tiếng Việt và crash:
 
 ```bash
-python scripts/run_all.py submit --input input_turn2 --pred output_model_turn2 --out output_turn2.zip
+export PYTHONIOENCODING=utf-8 && export PYTHONUTF8=1
 ```
 
-`python scripts/run_all.py all --aug-multiplier 1 --assertion-docs 30` is the full public-label rebuild path:
-`prepare -> train -> infer`.
+## 2. Chạy inference (không cần train, không cần nhãn)
+
+Đường dùng cho private test. **~5 phút / 100 file trên CPU.**
+
+```bash
+python scripts/run_pipeline.py \
+    --input input_turn2 --pred experiments/v5_recoded \
+    --no-icd-fallback \
+    --drop-short-noise --add-terminology-entities --add-public-phrase-entities
+
+python scripts/check_submission.py  --pred experiments/v5_recoded --input input_turn2
+python scripts/package_submission.py --pred experiments/v5_recoded --input input_turn2 \
+    --out submissions/v5_recoded.zip
+```
+
+Ba flag cuối là **công thức đã chấm 34.388** — bỏ đi điểm tụt (đã thử: 31.89).
+`--no-icd-fallback` là bản revert sau kết quả 33.679.
+
+## 3. Sửa bảng tra — lever lớn nhất hiện có
+
+**Giai đoạn 0 (không cần GPU, đã áp dụng):**
+
+```bash
+python scripts/extract_mentions.py                                          # -> recode_worklist.csv
+python scripts/recode_terminology.py --audit                                # -> recode_autofix.csv
+python scripts/recode_terminology.py --proposed data/terminology/recode_autofix.csv --dry-run
+python scripts/recode_terminology.py --proposed data/terminology/recode_autofix.csv
+```
+
+Sửa 22 dòng / 37 mention chắc chắn bị chấm 0: mã 3 ký tự có mã con (`I48`→`I48.9`, `E14`→`E14.9`)
+và mã không có trong catalog BYT (`S06.4X9A`→`S06.4`, `N40.0`→`N40`). Ước tính **+0.6 … +1.25**.
+
+**Giai đoạn 1–4 (cần GPU):** sinh corpus diễn giải bằng Qwen → train bi-encoder → đề xuất mã mới cho
+worklist. **Bi-encoder KHÔNG nằm trong đường suy luận** — nó chỉ xây bảng. Chi tiết + prompt + tham số:
+[docs/linking_recode.md](docs/linking_recode.md). Ước tính **+3.4 … +7.4**.
+
+Sau khi đổi bảng, **bắt buộc sinh lại prediction và kiểm tra tập entity không đổi** (phải đúng
+**2898** trên turn-2 — nếu khác, cột `text` của bảng đã bị đụng và tập thực thể đã dịch chuyển):
+
+```bash
+python scripts/run_pipeline.py --input input_turn2 --pred experiments/v5_recoded \
+    --no-icd-fallback --drop-short-noise --add-terminology-entities --add-public-phrase-entities
+python scripts/check_submission.py --pred experiments/v5_recoded --input input_turn2
+```
+
+Thay `v5_recoded` bằng tên thư mục bạn muốn. `entities: 0` nghĩa là thư mục `--pred` không tồn tại
+hoặc rỗng — kiểm tra lại đường dẫn, đừng chép nguyên chỗ giữ chỗ trong tài liệu.
+
+Chạy lại `--audit` sau khi đã áp dụng sẽ báo `0 rows` — đó là **đúng**, công cụ idempotent, không
+phải lỗi. Kết quả chi tiết từng lần chạy nằm ở [docs/experiments.md](docs/experiments.md).
+
+## 4. Hậu xử lý thuộc tính
+
+`scripts/postprocess.py` chỉ sửa `assertions`/`candidates` của thực thể **đã có**, không bao giờ
+đụng span:
+
+```bash
+python scripts/postprocess.py --pred experiments/v5_recoded --input input_turn2 \
+    --out experiments/v6 --sections --negex --family-gate --consistency union
+```
+
+| Flag | Tác dụng | Chạm |
+|---|---|---:|
+| `--sections` | `isHistorical`/`isFamily` theo section header + cue trong câu | 53 |
+| `--negex` | `isNegated` theo cue phủ định VI, có scope mệnh đề, chặn `không thể loại trừ` | 6 |
+| `--family-gate` | Bỏ `isFamily` khi thiếu cue gia đình (`isFamily` chỉ 0.8% nhãn) | 18 |
+| `--consistency union\|majority` | Đồng bộ assertion giữa mention trùng trong cùng doc | 185 |
+| `--hedge-icd all\|uncurated` | Thêm mã `.9` làm candidate thứ 2 — **không khuyến nghị** | 293 / 19 |
+
+Ngưỡng sinh lời của candidate thứ 2 là `p₂ > J/(1+J)` = **0.223** ở `J_cand` hiện tại; xác suất mã
+`.9` trúng ước tính chỉ 0.11–0.20 ⇒ hedging đang là kèo âm.
+
+## 5. Train lại model (chạy tay trên Kaggle)
+
+Máy local quá yếu để train. Notebook train `xlm-roberta-large` + teacher `Qwen/Qwen2.5-7B-Instruct`
+4-bit (distillation) — đúng công thức đã cho **36.32**.
 
 ```bash
 python scripts/prepare_ner_dataset.py
-# (tuỳ chọn) --folds 5 để thêm 5 fold train/holdout khác nhau, dùng spot-check xem điểm holdout
-# mặc định (85/15, seed 13) có phải may rủi theo 1 split cụ thể không
-
-# 1b. Xây bảng tra từ nhãn public + legacy fallback
 python scripts/build_terminology_index.py
-
-# 1c. (khuyến nghị) Sinh thêm dữ liệu train tổng hợp
 python scripts/augment_ner_dataset.py
+python scripts/build_kaggle_bundle.py       # -> kaggle_bundle/ (43MB), có verify từng file
+```
 
-# 2. Đồng bộ train_augmented.jsonl thành kaggle_upload/dataset/train.jsonl và publish Kaggle Dataset.
-#    `python scripts/run_all.py prepare` làm bước sync local này; `run_all.py train` version dataset
-#    trước khi push kernel, trừ khi truyền --skip-dataset-version.
-#    Sau đó chạy notebooks/train_ner_assertion_model.ipynb trên GPU, tải
-#    ner_model_export.zip về, giải nén vào models/ner_model/
-#    Nếu push kernel bằng Kaggle CLI, luôn ép accelerator T4 (không để hệ thống tự gán P100 --
-#    xem worklog.md để biết lý do):
-#      kaggle kernels push -p kaggle_upload/kernel --accelerator NvidiaTeslaT4
-#    (`python scripts/run_all.py train` làm: version dataset + push + poll + tải + giải nén tự động.)
+```powershell
+$env:PYTHONIOENCODING="utf-8"; $env:PYTHONUTF8="1"
+python -m kaggle datasets version -p kaggle_bundle -m "retrain" --dir-mode zip
+python -m kaggle kernels push -p kaggle_upload\kernel --accelerator NvidiaTeslaT4
+python -m kaggle kernels status lucylng/viettelrace-ner-assertion-train
+python -m kaggle kernels output lucylng/viettelrace-ner-assertion-train -p .kaggle_download
+```
 
-# 3. (tuỳ chọn, chỉ cần khi bản RRF trong rrf/ đổi) rebuild RxNorm derived CSV
-python scripts/build_rxnorm_rrf_index.py
+> ⚠️ **Phải là `kaggle_bundle`, KHÔNG phải `kaggle_upload\dataset`.** Hai thư mục cùng khai báo slug
+> `lucylng/viettelrace-ner-dataset`, nhưng chỉ `kaggle_bundle/` có `input_turn2/`, `scripts/`,
+> `data/terminology/`, `output/`. Version nhầm ⇒ cell distillation nằm trong `try/except` nên
+> **không crash**, nó lặng lẽ bỏ Qwen và train curated-only: **~34.4 thay vì ~36.3**.
 
-# 4. Suy luận trên input/ bằng model đã train (cần torch + transformers, xem requirements.txt)
-python scripts/run_pipeline.py
+- `--dir-mode zip` bắt buộc — thiếu nó lệnh im lặng không upload thư mục con nào.
+- `--accelerator NvidiaTeslaT4` bắt buộc — không có, Kaggle cấp P100 (sm_60) và training crash giữa
+  epoch 1 với `CUDA error: no kernel image is available`.
+- Kernel cần **Internet: On** để tải Qwen từ HuggingFace.
 
-# 5. Validate + so điểm cục bộ với baseline hiện tại
-python scripts/check_submission.py --pred output_model --input input --truth output
+Kaggle CLI 2.x tự giải nén: copy 4 file trong `.kaggle_download/ner_model_export/` vào
+`models/ner_model/`. **Luôn kiểm tra trước khi tin** — đã có 2 lần tải hỏng mà kernel vẫn báo `COMPLETE`:
 
-# 6. Đóng gói file nộp đúng format BTC: output.zip -> output/{1..100}.json
-python scripts/package_submission.py --pred output_model
+```bash
+python -c "import torch; sd=torch.load('models/ner_model/model.pt', map_location='cpu'); print(len(sd),'keys')"
+ls -la models/ner_model/    # ~1.1GB = base, ~2.2GB = large
+```
 
-# 7. Khi BTC yêu cầu source code, đóng gói code + data + weights
+> Notebook có **hai bản** (`notebooks/` và `kaggle_upload/kernel/`); bản được push là bản thứ hai.
+> **Sửa cả hai.** Quên đồng bộ đã từng làm tụt điểm 40.828 → 40.5885.
+
+Hoặc để `run_all.py` làm hết (build bundle → version → push → poll → tải → giải nén):
+
+```bash
+python scripts/run_all.py train
+```
+
+## 6. Nộp source cho BTC
+
+```bash
+python scripts/package_source.py --dry-run
 python scripts/package_source.py
 ```
 
-`output/` (bản thủ công đã chấm 41.591) được giữ nguyên, không bị ghi đè — `run_pipeline.py` ghi
-ra `output_model/` để so sánh trước khi quyết định thay thế bản nộp. `output.zip` mặc định được đóng
-gói từ `output_model/`, không phải từ `output/`, để artifact nộp gắn với pipeline có thể dựng lại.
+BTC dựng lại source của top ~15 đội trên private test; **không cài được là bị loại**. Giải nén bundle
+vào thư mục trống và chạy lại mục 2 từ đầu trước khi nộp.
 
-## Việc còn lại
+## 7. Cấu trúc thư mục
 
-- **ICD-10 đầy đủ đã có** (`data/terminology/icd10_full.csv`, 11.243 mã, tên tiếng Anh — crawl qua
-  WHO ICD-API), **nhưng chưa dùng được trực tiếp để match chẩn đoán tiếng Việt**: API chỉ trả tiêu
-  đề tiếng Anh, và free-text search của WHO chỉ hoạt động cho ICD-11, không phải ICD-10 — cần thêm
-  một bước bắc cầu Việt→Anh (dịch, hoặc embedding đa ngôn ngữ) trước khi dùng để entity-linking;
-  bước đó **chưa được cài đặt**.
-- **RxNorm đầy đủ đã tích hợp (2026-07-21)**: bản RRF chính thức (`RxNorm_full_...zip` +
-  "Prescribable Content") đã tải về, giải nén local vào `rrf/` + `prescribe/rrf/` (gitignore, ~1.8GB,
-  tải lại tại trang RxNorm của NLM nếu cần — không commit). `scripts/build_rxnorm_rrf_index.py` build
-  `data/terminology/rxnorm_full.csv` (offline, ~512k dòng `text -> RXCUI`, gồm cả
-  `RXNATOMARCHIVE.RRF` để phủ các concept "Remapped"/đã gộp) và `rxnorm_drug_names.csv` (~11.2k tên
-  thuốc/hoạt chất sạch để tăng đa dạng dữ liệu tổng hợp). Việc này giải quyết đúng giới hạn cũ của
-  RxNav API: RxNav không tra được concept có status "Remapped" qua bất kỳ endpoint nào — ví dụ đúng
-  trong đề bài (`Chlorpheniramine 0.4 MG/ML / .../ Oral Solution` → RxNorm 360047) giờ tra được offline
-  (`build_rxnorm_rrf_index.py --verify`). `run_pipeline.py` dùng bảng này làm fallback (thay
-  `fetch_rxnorm.py`/RxNav — không còn phụ thuộc mạng khi BTC dựng lại source trên môi trường private).
-- Split train/holdout hiện tại (85/15, seed 13) là 1 lần cố định — dữ liệu quá nhỏ để tin tưởng
-  tuyệt đối, coi số liệu holdout là ước lượng sơ bộ. `prepare_ner_dataset.py --folds N` sinh thêm
-  N fold khác để spot-check khi cần, không bắt buộc chạy đủ N fold.
-- Model hiện train trên `xlm-roberta-base` với early stopping theo holdout và export checkpoint tốt nhất,
-  không lấy epoch cuối một cách mù quáng. Vẫn cần theo dõi holdout WER/J_assertion mỗi lần train lại vì dữ liệu nhỏ.
-  Một số thực thể ngắn vẫn bị bỏ sót hoàn toàn (recall gap, không phải lỗi decode) — cần thêm dữ
-  liệu train/epoch, không giải quyết được bằng hậu xử lý.
-- `data/terminology/conflicts.txt` liệt kê các text có nhiều mã ICD khác nhau tùy ngữ cảnh (ví dụ
-  "loét") — những case này về bản chất cần model hiểu ngữ cảnh, không giải được bằng bảng tra.
-- `legacy/scripts/improve_from_baseline.py` không còn chạy được (baseline `New folder/output` đã bị
-  xoá khi dọn dẹp repo) — giữ lại chỉ để tham khảo kỹ thuật map thuốc theo liều đã dùng trước đây.
+```
+input/ input_turn2/          bệnh án BTC (không sửa)
+output/                      nhãn turn-1 tự gán — dữ liệu train + lexicon, KHÔNG phải đáp án
+models/ner_model/            model fine-tune (gitignore): config.json, model.pt, tokenizer*
+data/terminology/
+   diagnoses.csv drugs.csv   bảng tra dùng lúc suy luận  ← lever chính, xem mục 3
+   icd10_vi.csv              15.144 tiêu đề BYT (chỉ dùng offline lúc mã hoá lại)
+   rxnorm_full.csv           517.991 dòng RxNorm
+   recode_worklist.csv       546 chuỗi cần mã hoá lại (sinh bởi extract_mentions.py)
+scripts/
+   run_pipeline.py           suy luận (thứ duy nhất cần torch)
+   postprocess.py            hậu xử lý thuộc tính
+   extract_mentions.py       sinh worklist mã hoá lại
+   recode_terminology.py     --audit / áp dụng mã mới, có 4 invariant chặn
+   expand_terminology.py     --report: kết quả PHỦ ĐỊNH, đừng thử lại (xem docstring)
+experiments/                 1 thư mục prediction / 1 cấu hình (gitignore)
+submissions/                 zip đã đóng gói (gitignore)
+archive/                     artifact các vòng cũ (gitignore)
+legacy/                      pipeline regex cũ — chỉ audit, KHÔNG sinh submission
+```
+
+## 8. Bài nộp đang sẵn sàng
+
+| Zip | Khác gì bản trước | Kỳ vọng |
+|---|---|---|
+| `v1_revert_icd.zip` | Revert ICD fallback đã bị falsify | ≈34.4 — chắc nhất |
+| **`v5_recoded.zip`** | v1 + 22 mã sửa tất định (37 mention) | **≈35.0–35.6** |
+| `v3_assert_union.zip` | v1 + lever assertion + lan truyền | swing assertion lớn nhất |
+| `v2_assert.zip` | v1 + section/negex/family-gate | để tách nguyên nhân |
+| `v4_hedge_all.zip` | v1 + hedging `.9` | thấp nhất, kèo âm |
+
+**Thứ tự nộp: v5 → v1 → v3 → v2.** Trần của cả nhóm là ~36 vì đều chạy `xlm-roberta-base`; muốn
+vượt 40 cần mục 3 (bảng tra) và mục 5 (train lại).

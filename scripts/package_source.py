@@ -63,6 +63,9 @@ def is_excluded(path: Path) -> bool:
     # Keep prescribable helper scripts if present, but never package raw RRF dumps.
     if len(rel.parts) >= 2 and rel.parts[0] == "prescribe" and rel.parts[1] == "rrf":
         return True
+    # Same for the raw BYT ICD-10 catalog: only the derived icd10_vi.csv ships.
+    if rel.parts[:3] == ("data", "terminology", "raw"):
+        return True
     return False
 
 
@@ -90,6 +93,7 @@ def validate_required_files() -> None:
         ROOT / "data" / "terminology" / "drugs.csv",
         ROOT / "data" / "terminology" / "diagnoses.csv",
         ROOT / "data" / "terminology" / "rxnorm_full.csv",
+        ROOT / "data" / "terminology" / "icd10_vi.csv",
         ROOT / "scripts" / "run_pipeline.py",
         ROOT / "scripts" / "package_submission.py",
     ]:

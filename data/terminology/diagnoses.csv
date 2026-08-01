@@ -22,7 +22,7 @@ bệnh gan do rượu,K70.9,output_curated
 bệnh kawasaki,M30.3,icd10_alias
 bệnh lý chất trắng,I67.8,output_curated
 bệnh lý thần kinh ngoại biên,G62.9,output_curated
-bệnh mạch máu,I73.89,output_curated
+bệnh mạch máu,I73.8,recoded_biencoder
 bệnh mạch máu ngoại biên,I73.9,output_curated
 bệnh mạch vành,I25.9,icd10_alias
 bệnh phổi tắc nghẽn mạn tính,J44.9,output_curated
@@ -41,13 +41,13 @@ bệnh túi thừa ở cả ruột non và đại tràng,K57.9,output_curated
 bệnh đa xơ cứng,G35,output_curated
 bệnh động mạch vành,I25.1,output_curated
 bệnh động mạch vành mạn tính,I25.1,output_curated
-chèn ép tim,I31.4,output_curated
+chèn ép tim,I31.9,recoded_biencoder
 cổ trướng,R18,output_curated
 dvt,I80.2,output_curated
 dại,A82.9,icd10_alias
 dị tật thiểu sản vành tai,Q17.2,icd10_alias
 giai đoạn giống hưng cảm,F30.9,output_curated
-giãn phế quản,J47.9,output_curated
+giãn phế quản,J47,recoded_biencoder
 giãn thừng tinh,I86.1,icd10_alias
 glucose-6-phosphate dehydrogenase,D55.0,icd10_alias
 gout,M10.9,output_curated
@@ -63,7 +63,7 @@ hoại tử,R02,output_curated
 huyết khối,I82.9,output_curated
 huyết khối tĩnh mạch sâu,I80.2,output_curated
 hạ huyết áp,I95.9,output_curated
-hạ kali máu,E87.6,output_curated
+hạ kali máu,E87.8,recoded_biencoder
 hẹp 60% đoạn gần động mạch,I25.1,output_curated
 hẹp gây hạn chế dòng chảy,I25.1,output_curated
 hẹp lỗ liên hợp,M99.7,output_curated
@@ -72,8 +72,8 @@ hẹp van động mạch chủ,I35.0,output_curated
 hẹp ống sống,M48.0,output_curated
 hội chứng mạch vành cấp,I24.9,output_curated
 hội chứng não gan,K72.9,output_curated
-hội chứng ruột kích thích,K58.9,output_curated
-hội chứng thận hư,N04,icd10_alias
+hội chứng ruột kích thích,K58.8,recoded_biencoder
+hội chứng thận hư,N04.9,recoded_biencoder
 hở van ba lá,I36.1,output_curated
 hở van hai lá,I34.0,output_curated
 kawasaki,M30.3,icd10_alias
@@ -82,11 +82,11 @@ khối máu tụ dưới màng cứng,I62.0,output_curated
 liệt hai chi dưới,G82.2,legacy_phrase_level
 loãng xương,M81.9,icd10_alias
 loét,K27.9,output_curated
-loét bàn chân nhiễm trùng,L97.9,output_curated
-loét mới ở ngón chân út bên phải,L97.5,output_curated
+loét bàn chân nhiễm trùng,L97,recoded_biencoder
+loét mới ở ngón chân út bên phải,L97,recoded_biencoder
 loét thực quản,K22.1,output_curated
 loét tá tràng,K26.9,output_curated
-loét tì đè giai đoạn iv,L89.94,output_curated
+loét tì đè giai đoạn iv,L89.9,recoded_biencoder
 lyssavirus,A82.9,icd10_alias
 mày đay,L50.9,icd10_alias
 mày đay vô,L50.1,icd10_alias
@@ -99,7 +99,7 @@ nang màng nhện,G93.0,output_curated
 nang tụy,K86.2,output_curated
 nghi ngờ xơ gan do rượu,K70.3,output_curated
 nghẽn tắc và hẹp động mạch cảnh,I65.2,output_curated
-ngoại tâm thu nhĩ,I49.1,output_curated
+ngoại tâm thu nhĩ,I49.9,recoded_biencoder
 ngoại tâm thu thất,I49.3,output_curated
 nguy cơ tiền sản giật cao,O14.9,icd10_alias
 ngưng thở khi ngủ do tắc nghẽn,G47.3,output_curated
@@ -138,9 +138,9 @@ phình động mạch chủ,I71.9,output_curated
 phù phổi,J81,output_curated
 phù phổi cấp,J81,icd10_alias
 rll pna,J18.1,output_curated
-rung nhĩ,I48,output_curated
-rung nhĩ kèm đáp ứng thất nhanh,I48,output_curated
-rung nhĩ điển hình,I48,output_curated
+rung nhĩ,I48.9,recoded_biencoder
+rung nhĩ kèm đáp ứng thất nhanh,I48.9,recoded_biencoder
+rung nhĩ điển hình,I48.9,recoded_biencoder
 rò động - tĩnh mạch đùi phải,I77.0,output_curated
 rò ống tuỵ mật,K86.8,output_curated
 rối loạn chuyển hóa tinh bột,E85.9,icd10_alias
@@ -153,10 +153,10 @@ rối loạn lipid máu,E78.5,output_curated
 rối loạn lo âu,F41.9,output_curated
 rối loạn lưỡng cực,F31.9,output_curated
 rối loạn đông máu,D68.9,output_curated
-suy các cơ quan,R65,icd10_alias
-suy giảm huyết động,I99.8,output_curated
+suy các cơ quan,R65.9,recoded_biencoder
+suy giảm huyết động,I99,recoded_biencoder
 suy giảm miễn dịch,D84.9,output_curated
-suy giảm nhận thức,G31.84,output_curated
+suy giảm nhận thức,G31.8,recoded_biencoder
 suy hô hấp,J96.9,output_curated
 suy kiệt,R64,output_curated
 suy thận cấp,N17.9,output_curated
@@ -187,10 +187,10 @@ thuyên tắc tĩnh mạch sâu,I80.2,output_curated
 tiền sản giật,O14.9,icd10_alias
 tiền sử lâu dài của tăng huyết áp,I10,output_curated
 tiền sử đái tháo đường,E11.9,output_curated
-tiểu đường,E14,icd10_alias
+tiểu đường,E14.9,recoded_biencoder
 tiểu đường loại 1,E10.9,output_curated
 tràn dịch màng ngoài tim,I31.3,output_curated
-tràn dịch màng phổi,J91,output_curated
+tràn dịch màng phổi,J90,recoded_biencoder
 tràn dịch màng tim,I31.3,output_curated
 trào ngược dạ dày,K21.9,output_curated
 trào ngược dạ dày thực quản,K21.9,icd10_alias
@@ -208,7 +208,7 @@ tăng kali máu,E87.5,output_curated
 tăng lipid máu,E78.5,output_curated
 tăng men gan,R74.0,icd10_alias
 tăng nhãn áp,H40.9,output_curated
-tăng sản tuyến tiền liệt,N40.0,output_curated
+tăng sản tuyến tiền liệt,N40,recoded_biencoder
 tăng áp lực tĩnh mạch cửa,K76.6,output_curated
 tăng áp lực động mạch phổi,I27.2,icd10_alias
 tăng áp động mạch phổi mức độ trung bình,I27.2,output_curated
@@ -217,8 +217,8 @@ tắc mạch,I74.9,output_curated
 tắc mạch phổi,I26.9,output_curated
 tổn thương dây thanh quản,J38.3,output_curated
 tụ dịch/tụ máu dưới màng cứng mạn tính,I62.0,output_curated
-tụ máu dưới màng cứng mạn tính,S06.5X9S,output_curated
-tụ máu ngoài màng cứng phải cấp tính,S06.4X9A,output_curated
+tụ máu dưới màng cứng mạn tính,S06.5,recoded_biencoder
+tụ máu ngoài màng cứng phải cấp tính,S06.4,recoded_biencoder
 tụt huyết áp,I95.9,output_curated
 u cơ trơn,D25.9,output_curated
 u cơ trơn tử cung,D25.9,output_curated
@@ -236,7 +236,7 @@ ung thư biểu mô tuyến,C24.0,output_curated
 ung thư biểu mô tuyến giật nhú,C73,output_curated
 ung thư biểu mô tuyến đại tràng,C18.9,output_curated
 ung thư biểu mô tế bào mật,C24.0,output_curated
-ung thư biểu mô tế bào thận,C64.9,output_curated
+ung thư biểu mô tế bào thận,C64,recoded_biencoder
 ung thư biểu mô tế bào vảy,C44.9,output_curated
 ung thư cổ tử cung,C53.9,icd10_alias
 ung thư di căn theo đường bạch huyết ở hai phổi,C79.9,output_curated
@@ -319,4 +319,4 @@ xẹp phổi thùy dưới phải,J98.1,output_curated
 động mạch vành,I25.9,icd10_alias
 đột quỵ,I63.9,output_curated
 đụng dập một vùng nhu mô phổi,S27.3,output_curated
-ổ loét trong bao tử,K25,icd10_alias
+ổ loét trong bao tử,K25.9,recoded_biencoder

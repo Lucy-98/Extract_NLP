@@ -35,6 +35,7 @@ TERM_DIR = ROOT / "data" / "terminology"
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_terminology_index import TerminologyMatcher, DIAG, DRUG  # noqa: E402
 from build_rxnorm_rrf_index import RxNormOfflineIndex  # noqa: E402
+from build_icd10_vi_index import ICD10VietnameseIndex  # noqa: E402
 
 SYM = "TRIỆU_CHỨNG"
 TEST = "TÊN_XÉT_NGHIỆM"
@@ -433,8 +434,13 @@ class RxNormOfflineFallback:
     the old network fallback had on a connectivity failure.
     """
 
-    def __init__(self, csv_path: Path = TERM_DIR / "rxnorm_full.csv", max_candidates: int = 1):
-        self.index = RxNormOfflineIndex(csv_path)
+    def __init__(
+        self,
+        csv_path: Path = TERM_DIR / "rxnorm_full.csv",
+        max_candidates: int = 1,
+        promote_dose_form: bool = True,
+    ):
+        self.index = RxNormOfflineIndex(csv_path, promote_dose_form=promote_dose_form)
         self.max_candidates = max_candidates
 
     def lookup(self, text: str) -> list[str]:
@@ -446,15 +452,44 @@ def link_candidates(
     drug_matcher: TerminologyMatcher,
     diag_matcher: TerminologyMatcher,
     rxnorm_fallback: "RxNormOfflineFallback | None" = None,
+    icd_fallback: "ICD10VietnameseIndex | None" = None,
 ) -> None:
+    """Attach `candidates` to CHẨN_ĐOÁN (ICD-10) and THUỐC (RxNorm) mentions.
+
+    Both types follow the same three-tier shape: a curated hit mined from the
+    public labels wins, then an official-vocabulary offline index, then (for
+    diagnoses) the curated table's difflib guess as a last resort. The middle
+    tier is what makes this generalize -- `diagnoses.csv`/`drugs.csv` only know
+    the ~100 public files' terms, so on unseen text the curated fuzzy match is
+    just the nearest of a few hundred mined strings, which is a worse bet than
+    the official BYT ICD-10 vocabulary (measured: leakage-free holdout
+    J_candidates 0.5909 -> 0.7424, see build_icd10_vi_index.py's docstring).
+    """
     for ent in entities:
         if ent["type"] == DRUG:
-            candidates = drug_matcher.lookup(ent["text"])
-            if not candidates and rxnorm_fallback is not None:
+            if rxnorm_fallback is None:
+                ent["candidates"] = drug_matcher.lookup(ent["text"])
+                continue
+            # Same three tiers as CHẨN_ĐOÁN below, but the curated table's
+            # substring tier is demoted past RxNorm rather than trusted: it
+            # matches on the ingredient alone, so it answers a 1.5mg mention
+            # with a 0.5mg code. RxNorm's index resolves the dose+form.
+            candidates = drug_matcher.lookup_exact(ent["text"], containment=False)
+            if not candidates:
                 candidates = rxnorm_fallback.lookup(ent["text"])
+            if not candidates:
+                candidates = drug_matcher.lookup(ent["text"])
             ent["candidates"] = candidates
         elif ent["type"] == DIAG:
-            ent["candidates"] = diag_matcher.lookup(ent["text"])
+            if icd_fallback is None:
+                ent["candidates"] = diag_matcher.lookup(ent["text"])
+                continue
+            candidates = diag_matcher.lookup_exact(ent["text"])
+            if not candidates:
+                candidates = icd_fallback.lookup(ent["text"])
+            if not candidates:
+                candidates = diag_matcher.lookup(ent["text"])
+            ent["candidates"] = candidates
 
 
 SAFE_SHORT_ENTITIES = {
@@ -810,6 +845,20 @@ def main() -> int:
         "iteration; no effect on correctness for texts already covered by drugs.csv).",
     )
     parser.add_argument(
+        "--no-dose-form-promotion",
+        action="store_true",
+        help="For THUỐC: don't resolve a dosed mention to its complete dose+form RxNorm product "
+        "(SCD/SBD), and let the curated drugs.csv substring match answer first. This restores the "
+        "pre-2026-07-28 behaviour, which scored 1/3 on the task statement's own worked examples.",
+    )
+    parser.add_argument(
+        "--no-icd-fallback",
+        action="store_true",
+        help="Skip the offline Vietnamese ICD-10 lookup (data/terminology/icd10_vi.csv) for "
+        "CHẨN_ĐOÁN mentions the curated diagnoses.csv can't resolve exactly, restoring the "
+        "curated-table-only behaviour (measurably worse on unseen diagnoses).",
+    )
+    parser.add_argument(
         "--drop-short-noise",
         action="store_true",
         help="Also drop non-whitelisted 1-2 character entities after the safer candidate/embedded "
@@ -847,7 +896,18 @@ def main() -> int:
     drug_matcher = TerminologyMatcher(TERM_DIR / "drugs.csv")
     diag_matcher = TerminologyMatcher(TERM_DIR / "diagnoses.csv")
     matchers = {DRUG: drug_matcher, DIAG: diag_matcher}
-    rxnorm_fallback = None if args.no_rxnorm_fallback else RxNormOfflineFallback()
+    rxnorm_fallback = (
+        None if args.no_rxnorm_fallback
+        else RxNormOfflineFallback(promote_dose_form=not args.no_dose_form_promotion)
+    )
+    icd_fallback = None if args.no_icd_fallback else ICD10VietnameseIndex(TERM_DIR / "icd10_vi.csv")
+    if icd_fallback is not None and not icd_fallback.entries:
+        print(
+            f"WARNING: {TERM_DIR / 'icd10_vi.csv'} is missing or empty -- diagnoses will fall back "
+            "to the curated table only. Rebuild it with scripts/build_icd10_vi_index.py.",
+            file=sys.stderr,
+        )
+        icd_fallback = None
     candidate_lexicon = build_candidate_lexicon(drug_matcher, diag_matcher) if args.add_terminology_entities else []
     public_phrase_lexicon = (
         build_public_phrase_lexicon(args.public_label_dir, {SYM, TEST})
@@ -859,7 +919,13 @@ def main() -> int:
     for path in files:
         text = path.read_text(encoding="utf-8")
         entities = run_inference(model, tokenizer, config, text, matchers=matchers)
-        link_candidates(entities, drug_matcher, diag_matcher, rxnorm_fallback=rxnorm_fallback)
+        link_candidates(
+            entities,
+            drug_matcher,
+            diag_matcher,
+            rxnorm_fallback=rxnorm_fallback,
+            icd_fallback=icd_fallback,
+        )
         entities = filter_noisy_entities(
             text,
             entities,

@@ -64,6 +64,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -91,6 +92,118 @@ TTY_TIER = {
     "IN": 2, "PIN": 2, "BN": 2, "MIN": 2, "PSN": 2,
     "SY": 3, "TMSY": 3, "DF": 3, "DFG": 3, "ET": 3,
 }
+
+
+TIER_OF_COMPLETE_PRODUCT = 0  # SCD/SBD/GPCK/BPCK -- what the schema asks for
+
+# --- dose+form resolution (added 2026-07-28) --------------------------------
+# The task statement is explicit that a drug code is dose+form specific
+# ("clonazepam 0.5 mg po qam:prn" -> 197527, "clonazepam 1.5 mg po qhs" ->
+# 197528) and its worked example resolves to an SCD. Before this, the index
+# scored 1/3 on those three published examples even though every target code is
+# present in rxnorm_full.csv: a clinical mention writes the dose form as a route
+# abbreviation ("po") or in Vietnamese ("đường uống"), which no RxNorm string
+# contains, so the mention could only ever reach the form-less component concept
+# (SCDC 315699 instead of SCD 197527). Bridging that vocabulary lifts it to 2/3;
+# the remaining miss needs dose arithmetic (1.5 mg dispensed as 1 mg tablets),
+# which is deliberately not attempted.
+#
+# NOTE this is a bet on the *rules* over the *public labels*: output/ codes most
+# dosed mentions at ingredient level (IN/BN), which this deliberately stops
+# reproducing, so agreement with output/ on dosed mentions stays low by design.
+# output/ scored J_candidates 29.98 on the real board, i.e. most of its codes
+# were wrong, so agreement with it is not evidence of correctness here.
+# Reversible via promote_dose_form=False / run_pipeline.py --no-dose-form-promotion.
+
+# Administration noise that appears in clinical drug mentions but never in an
+# RxNorm string: dosing frequency, PRN markers, counts. Stripped before matching.
+_FREQUENCY_NOISE = {
+    "bid", "tid", "qid", "qd", "qod", "qhs", "qam", "qpm", "qh", "prn", "stat",
+    "q2h", "q4h", "q6h", "q8h", "q12h", "q24h", "ac", "pc", "hs",
+    "x", "lần", "liều", "ngày", "mỗi", "sau", "trước", "khi", "cần", "và",
+    # English sig wording that shows up in the corpus' own mentions
+    # ("lasix 40mg daily", "combivent nebs x3 every 20 minutes")
+    "daily", "once", "twice", "thrice", "every", "other", "day", "days",
+    "week", "weekly", "month", "monthly", "night", "nightly", "morning",
+    "evening", "hour", "hours", "hr", "hrs", "minute", "minutes", "min",
+    "at", "in", "as", "needed", "per", "then", "now", "home", "tại", "nhà",
+    "hàng", "buổi", "sáng", "tối", "chiều", "đơn", "vị",
+}
+
+# Route/dose-form vocabulary -> the RxNorm dose-form word(s) it implies. The
+# graded answer is a complete product ("clonazepam 0.5 mg ORAL TABLET", SCD),
+# but clinicians write the form as a route abbreviation ("po") or in Vietnamese
+# ("đường uống"), so without this bridge the mention can only ever reach the
+# form-less component concept (SCDC) -- which is exactly how
+# "clonazepam 0.5 mg po qam:prn" was resolving to 315699 instead of the task
+# statement's own answer, 197527.
+_ROUTE_FORM_HINTS = {
+    "po": ("oral",), "uống": ("oral",), "đường": (), "miệng": ("oral",),
+    "viên": ("tablet",), "nén": ("tablet",), "nang": ("capsule",),
+    "iv": ("injection", "injectable"), "im": ("injection", "injectable"),
+    "sc": ("injection", "injectable"), "tiêm": ("injection", "injectable"),
+    "tĩnh": ("injection", "injectable"), "mạch": (), "truyền": ("injection", "injectable"),
+    "sl": ("sublingual",), "lưỡi": ("sublingual",), "dưới": (),
+    "hít": ("inhalation",), "xịt": ("spray", "inhalation"), "khí": ("inhalation",),
+    "bôi": ("topical",), "thoa": ("topical",), "nhỏ": ("drop", "ophthalmic"),
+    "đặt": (), "hậu": ("rectal",), "môn": (),
+    # English form words a mention may already carry verbatim
+    "oral": ("oral",), "tablet": ("tablet",), "capsule": ("capsule",),
+    "solution": ("solution",), "suspension": ("suspension",), "syrup": ("syrup",),
+    "injection": ("injection", "injectable"), "injectable": ("injection", "injectable"),
+    "sublingual": ("sublingual",), "topical": ("topical",), "inhalation": ("inhalation",),
+    "cream": ("cream",), "ointment": ("ointment",), "patch": ("patch",),
+    "tab": ("tablet",), "tabs": ("tablet",), "cap": ("capsule",), "caps": ("capsule",),
+    "neb": ("inhalation", "solution"), "nebs": ("inhalation", "solution"),
+    "puff": ("inhalation",), "puffs": ("inhalation",), "nhồi": ("inhalation",),
+}
+
+_DOSE_RE = re.compile(r"\d\s*(?:mg|mcg|ug|g|gram|gm|ml|l|iu|unit|units|%)\b|\d+\s*/\s*\d")
+
+
+def strip_administration_noise(key: str) -> tuple[str, set[str]]:
+    """Split an already-normalized mention into (core, form_hints).
+
+    `core` keeps only the ingredient/brand and dose tokens, in order, so it can
+    be prefix-matched against an RxNorm product string -- including a
+    *combination* product, where the mention names one ingredient and the
+    official string lists all of them (the task statement's 360047 example).
+    `form_hints` collects the RxNorm dose-form words implied by whatever route
+    or form vocabulary was stripped out.
+    """
+    # Parenthetical asides are prescriber commentary, never part of the product
+    # name ("prograf (dose decreased from 5mg bid to 3mg bid)"). Dropping them
+    # also keeps the dose *inside* the parentheses out of the matching prefix.
+    key = re.sub(r"\([^)]*\)?", " ", key)
+    core: list[str] = []
+    hints: set[str] = set()
+
+    def is_admin_vocab(part: str) -> bool:
+        return part in _ROUTE_FORM_HINTS or part in _FREQUENCY_NOISE
+
+    for token in key.split():
+        # Sig shorthand packs several codes into one token ("qam:prn", "po/iv"),
+        # so split before cleaning punctuation -- cleaning first would fuse
+        # "qam:prn" into the unrecognisable "qamprn".
+        parts = [re.sub(r"[^0-9a-zà-ỹ/.%]+", "", p) for p in re.split(r"[:;,]", token)]
+        expanded: list[str] = []
+        for part in (p for p in parts if p):
+            # "/" separates two routes ("po/iv") but joins a dose unit
+            # ("mg/ml") -- only split it when both sides are route vocabulary,
+            # so the unit survives into the prefix used for product matching.
+            subs = [s for s in part.split("/") if s]
+            if len(subs) > 1 and all(is_admin_vocab(s) for s in subs):
+                expanded.extend(subs)
+            else:
+                expanded.append(part)
+        if not expanded:
+            continue
+        if all(is_admin_vocab(p) for p in expanded):
+            for p in expanded:
+                hints.update(_ROUTE_FORM_HINTS.get(p, ()))
+            continue
+        core.extend(expanded)
+    return " ".join(core), hints
 
 
 def iter_rxnconso_rxnorm(path: Path) -> Iterator[tuple[str, str, str]]:
@@ -190,7 +303,13 @@ class RxNormOfflineIndex:
     rows per miss would be too slow for run_pipeline.py's per-entity calls.
     """
 
-    def __init__(self, csv_path: Path):
+    def __init__(self, csv_path: Path, promote_dose_form: bool = True):
+        # promote_dose_form=False restores the pre-2026-07-28 behaviour, where a
+        # dosed mention could only ever reach a form-less component concept.
+        # Kept switchable because this is a bet on the task statement's stated
+        # rule over the style of the curated public labels -- see the module
+        # docstring and run_pipeline.py's --no-dose-form-promotion.
+        self.promote_dose_form = promote_dose_form
         self.exact: dict[str, list[tuple[str, str]]] = defaultdict(list)
         self.by_first_token: dict[str, list[str]] = defaultdict(list)
         if not csv_path.exists():
@@ -209,10 +328,76 @@ class RxNormOfflineIndex:
     def _rank(self, entries: list[tuple[str, str]]) -> list[str]:
         return [rxcui for rxcui, _tty in sorted(entries, key=lambda e: TTY_TIER.get(e[1], 4))]
 
+    def _best_tier(self, entries: list[tuple[str, str]]) -> int:
+        return min((TTY_TIER.get(tty, 4) for _rxcui, tty in entries), default=4)
+
+    def resolve_complete_product(self, core: str, hints: set[str], max_candidates: int = 3) -> list[str]:
+        """Promote an ingredient+dose mention to the complete product (SCD/SBD).
+
+        The mention gives ingredient + dose; the graded code additionally encodes
+        the dose form. So treat the mention's `core` as a *prefix* of an official
+        product string and pick among the completions, preferring the dose form
+        the mention's route implied. Prefix (not equality) is what reaches a
+        combination product from a single named ingredient, e.g.
+        "chlorpheniramine 0.4 mg/ml" -> "chlorpheniramine 0.4 mg/ml /
+        dextromethorphan 6 mg/ml / guaifenesin 40 mg/ml ... oral solution"
+        (rxcui 360047, the task statement's worked example).
+
+        Returns [] rather than a guess when nothing completes the prefix -- for
+        Jaccard over codes an empty list and a wrong code score the same, and an
+        empty one doesn't also drag a wrong answer into the union.
+        """
+        tokens = core.split()
+        if not tokens:
+            return []
+        completions = [
+            k for k in self.by_first_token.get(tokens[0], ())
+            if k.startswith(core + " ")
+        ]
+        if not completions:
+            return []
+        if hints:
+            completions = [k for k in completions if any(h in k for h in hints)]
+            # No completion matches the stated route. Do NOT fall back to the
+            # unfiltered list: that returns a product which *contradicts* the
+            # mention -- "bumetanide 2mg iv" has no 2mg injectable (injectable
+            # bumetanide is dosed per mL), so the only completion is
+            # "bumetanide 2 mg oral tablet", an oral tablet for an IV order.
+            # An empty result lets the caller keep a route-consistent answer
+            # from another tier, and scores the same as a wrong code anyway.
+            if not completions:
+                return []
+        # Prefer a complete product, then the shortest completion -- the shortest
+        # suffix is the plainest form ("oral tablet" over "extended release oral
+        # tablet"), which is what an unqualified mention means.
+        completions.sort(key=lambda k: (self._best_tier(self.exact[k]), len(k), k))
+        out: list[str] = []
+        for key in completions:
+            for rxcui in self._rank(self.exact[key]):
+                if rxcui not in out:
+                    out.append(rxcui)
+            if len(out) >= max_candidates:
+                break
+        return out[:max_candidates]
+
     def lookup(self, text: str, max_candidates: int = 3) -> list[str]:
         key = norm(text)
-        if key in self.exact:
-            return self._rank(self.exact[key])[:max_candidates]
+        exact_entries = self.exact.get(key)
+        core, hints = strip_administration_noise(key)
+        if exact_entries is None and core and core != key:
+            exact_entries = self.exact.get(core)
+
+        # A dosed mention must resolve to a dose+form-specific code (task
+        # statement: clonazepam 0.5mg 197527 vs 1.5mg 197528). If the only exact
+        # hit is a form-less component (SCDC) or a loose synonym, a completed
+        # product beats it; an exact hit that is already a complete product wins.
+        if (self.promote_dose_form and _DOSE_RE.search(key)
+                and self._best_tier(exact_entries or []) > TIER_OF_COMPLETE_PRODUCT):
+            promoted = self.resolve_complete_product(core, hints, max_candidates)
+            if promoted:
+                return promoted
+        if exact_entries:
+            return self._rank(exact_entries)[:max_candidates]
 
         tokens = key.split()
         if not tokens:
