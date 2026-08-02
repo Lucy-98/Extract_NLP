@@ -53,9 +53,19 @@ Mọi script trong `scripts/` **trừ `run_pipeline.py`** đều stdlib-only.
 
 Trên Windows luôn ép UTF-8 trước — console mặc định (cp932/cp1252) không in được tiếng Việt và crash:
 
+```powershell
+# PowerShell (mặc định trên Windows)
+$env:PYTHONIOENCODING="utf-8"; $env:PYTHONUTF8="1"
+```
 ```bash
+# git-bash / WSL / Linux
 export PYTHONIOENCODING=utf-8 && export PYTHONUTF8=1
 ```
+
+> **Repo này chạy chính bằng PowerShell.** Mọi lệnh `python …` bên dưới chạy y nguyên ở cả hai
+> shell, nhưng các lệnh *shell thuần* thì không: `ls -la` → `Get-ChildItem`, `cp` → `Copy-Item`,
+> `rm -rf` → `Remove-Item -Recurse -Force`, `grep` → `Select-String`. Chỗ nào khác biệt, tài liệu
+> ghi rõ cả hai.
 
 ## 2. Chạy inference (không cần train, không cần nhãn)
 
@@ -159,12 +169,22 @@ python -m kaggle kernels output lucylng/viettelrace-ner-assertion-train -p .kagg
   epoch 1 với `CUDA error: no kernel image is available`.
 - Kernel cần **Internet: On** để tải Qwen từ HuggingFace.
 
-Kaggle CLI 2.x tự giải nén: copy 4 file trong `.kaggle_download/ner_model_export/` vào
-`models/ner_model/`. **Luôn kiểm tra trước khi tin** — đã có 2 lần tải hỏng mà kernel vẫn báo `COMPLETE`:
+`kaggle kernels output` tải nguyên khối ~1.75GB và **không resume được** — nó đã đứt 2 lần
+(`IncompleteRead`, `ConnectionAbortedError`). Dùng bản tải từng file có resume:
+
+```powershell
+python scripts/fetch_kernel_output.py --only ner_model_export/ --only output.zip --only llm_labels.json
+Copy-Item .kaggle_download\ner_model_export\* models\ner_model\ -Force
+```
+
+**Luôn kiểm tra trước khi tin** — đã có 2 lần tải hỏng mà kernel vẫn báo `COMPLETE`:
 
 ```bash
 python -c "import torch; sd=torch.load('models/ner_model/model.pt', map_location='cpu'); print(len(sd),'keys')"
-ls -la models/ner_model/    # ~1.1GB = base, ~2.2GB = large
+```
+```powershell
+Get-ChildItem models\ner_model | Select-Object Name, @{N='MB';E={[math]::Round($_.Length/1MB,1)}}
+# model.pt ~1100 MB = xlm-roberta-base | ~2136 MB = xlm-roberta-large
 ```
 
 > Notebook có **hai bản** (`notebooks/` và `kaggle_upload/kernel/`); bản được push là bản thứ hai.

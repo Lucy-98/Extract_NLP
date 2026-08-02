@@ -499,7 +499,16 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=ROOT / "output.zip", help="Zip path for infer/submit/package.")
     parser.add_argument("--accelerator", default="NvidiaTeslaT4", help="Kaggle GPU type for the train stage.")
     parser.add_argument("--poll-interval", type=int, default=20, help="Seconds between train-stage status checks.")
-    parser.add_argument("--timeout", type=int, default=3600, help="Max seconds to wait for training to finish.")
+    parser.add_argument(
+        "--timeout",
+        type=int,
+        default=14400,
+        help="Max seconds to wait for training to finish. Default 4h, not 1h: the run is dominated "
+        "by the Qwen2.5-7B pseudo-labelling pass (~1.5-2.5h for 200 docs, one doc per generate call) "
+        "and only ~30min is actual encoder training. A 3600s default timed out mid-run on 2026-08-01 "
+        "-- harmlessly, since the kernel keeps going server-side, but it looks like a failure. Once "
+        "llm_labels.json is cached in the bundle this drops back to well under an hour.",
+    )
     parser.add_argument(
         "--aug-multiplier",
         type=int,
