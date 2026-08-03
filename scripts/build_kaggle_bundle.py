@@ -64,10 +64,16 @@ MEMBERS: list[tuple[str, str]] = [
 # deterministic (do_sample=False) yet costs 1.5-2.5h of T4 time to recompute, and
 # every retrain was paying that again. Download it once from a kernel run's
 # output, drop it in data/ner_dataset/, and the notebook skips the whole
-# labelling pass. `qwen_icd_supplement.csv` is the same idea for the ICD pass.
+# labelling pass.
+#
+# qwen_icd_supplement.csv is deliberately NOT carried: the notebook reads it from
+# /kaggle/working/, never from /kaggle/input/, so a bundled copy is never used.
+# Its content is also poor -- of 48 texts it shares with diagnoses.csv it disagrees
+# on all 48, mapping 'trầm cảm' to I51.9 (heart disease) and 'viêm phế quản' to
+# J96.9 (respiratory failure). The kernel's merge is append-only and guarded, so
+# curated always wins and none of those 48 are ever applied.
 OPTIONAL_MEMBERS: list[tuple[str, str]] = [
     ("data/ner_dataset/llm_labels.json", "llm_labels.json"),
-    ("data/terminology/qwen_icd_supplement.csv", "qwen_icd_supplement.csv"),
 ]
 
 

@@ -18,7 +18,63 @@ Add a row **before** you submit, fill in the score **the same day** you get it.
 | 08-01 | 33.644 | 36.057 | **36.101** | 29.992 | `submissions/v7_assert_union.zip` — v5 + rule-based assertion post-processing |
 | 08-01 | **35.951** | 38.309 | 42.348 | 29.384 | `submissions/v9_kaggle_large.zip` — xlm-roberta-large + Qwen2.5-7B distillation, retrained |
 | 08-01 | **36.379** | 38.553 | 42.447 | **30.197** | `submissions/v10_large_cleantable.zip` — v9's model, repo's own table (no Qwen ICD rows) |
-| 08-02 | **36.618** | 38.889 | 43.166 | 30.004 | `submissions/v11_patience8.zip` — retrain with EARLY_STOP_PATIENCE 8, repo's table |
+| 08-02 | **36.618** | 38.889 | 43.166 | 30.004 | `submissions/v11_patience8.zip` — retrain with EARLY_STOP_PATIENCE 8, repo's table ← **BEST** |
+| 08-02 | 36.536 | 38.910 | 42.873 | 30.004 | `v13_sections.zip` — v11 + fix_drug_spans + postprocess --sections |
+| 08-02 | 36.275 | 38.910 | 42.873 | 29.350 | `sub.zip` — v13 + RxNorm ranking changes |
+
+### 08-02: both gold-validated fixes regressed, and gold_btc lost its credibility
+
+`gold_btc` predicted `--sections` **+20.84** and the RxNorm ranking rework **+2.88**. The real board:
+
+```
+v11 -> v13:  text +0.020   J_assert -0.293   J_cand  0.000   final -0.082
+v13 -> sub:  text  0.000   J_assert  0.000   J_cand -0.654   final -0.261
+```
+
+Attribution is clean because each change touches one field: `fix_drug_spans` moved only 2 turn-2
+spans (+0.020 text, noise-level positive), `--sections` moved only assertions (**−0.293**), the
+RxNorm ranking moved only codes (**−0.654**). Both regressions reverted; `v11_patience8.zip` stands.
+
+Why gold failed to transfer: it is **one document**, and 100% of its drug mentions carry a route or
+frequency token against **3%** on turn-2. It measures a mechanism that turn-2 barely exercises. It
+stays useful for *finding* error mechanisms and worthless for *predicting* score.
+
+### 08-02: `build_terminology_index.py` was silently wiping the recoded table
+
+Found while cleaning up, and the most damaging bug in the repo. `main()` calls
+`write_csv(TERM_DIR / "diagnoses.csv", ...)` with a table rebuilt from scratch out of `output/` plus
+the hardcoded legacy dicts, so **every code fixed by `recode_terminology.py` was reverted the next
+time anyone ran it** — and README section 4 tells you to run it as step 1 of retraining.
+
+It wiped all 23 rows marked `recoded_biencoder`, restoring codes that cannot score at all: `J47.9`,
+`E87.6`, `I31.4`, `K58.9` are absent from the BYT catalog; `I73.89` and `L89.94` are ICD-10-CM;
+`N04` is a bare category where the catalog has subcodes. Nothing failed loudly — same 321 rows, same
+321 texts, 25 candidates changed underneath.
+
+Fixed with `carry_over_recoded()`: a rebuild may add and remove texts freely, but a `source=recoded*`
+code wins for a text it already covers. Also made the `max(choices)` tie-break deterministic — two
+texts with conflicting labels in `output/` (`bệnh thủy đậu/zona`, `viêm gan virus c và b`) were
+flipping code between otherwise identical rebuilds.
+
+### 08-02: qwen_icd_supplement.csv audit — the suspicion was right, the impact is zero
+
+Its content is bad: of 106 rows it shares 60 texts with `diagnoses.csv` and **disagrees on 48**,
+mapping `trầm cảm` → I51.9 (heart disease), `viêm phế quản` → J96.9 (respiratory failure),
+`viêm bể thận` → N17.9 (acute renal failure). The kernel's validation only checked that a code
+*exists* in `icd10_full.csv`, never that it matches the phrase — and all 48 are structurally valid.
+
+But it is **inert on every submission we make**:
+
+- `run_pipeline.py`, `build_terminology_index.py` and `recode_terminology.py` never read it.
+- The only merge is kernel cell 15, and it is append-only behind
+  `if _nk(row["text"]) not in _existing` — curated always wins, so none of the 48 conflicts apply.
+- It writes to `/kaggle/working/repo/...`, affecting only the kernel's own `output.zip`, which has
+  not been submitted since v9.
+- Of the 46 texts it does append, **2** appear in turn-2 predictions.
+
+Already measured end to end: v9 (kernel zip, with merge) 35.951 vs v10 (local, without) 36.379.
+Removed from `build_kaggle_bundle.py`'s `OPTIONAL_MEMBERS` since the notebook never reads the
+bundled copy anyway.
 
 ### What the v11 result settled — best to date
 

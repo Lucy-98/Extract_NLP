@@ -15,7 +15,7 @@ Lịch sử điểm đầy đủ: [docs/experiments.md](docs/experiments.md).
 
 ---
 
-# ⚡ Từ số 0 đến file nộp — 4 bước
+# ⚡ Từ số 0 đến file nộp — 3 bước
 
 Máy đã có `models/ner_model/` (model đã train) thì chỉ cần chừng này. **~15 phút trên CPU.**
 
@@ -29,15 +29,12 @@ python scripts\run_pipeline.py --input input_turn2 --pred experiments\sub `
 # 2. Mở rộng span thuốc bị cắt cụt (+11.04 trên ground truth BTC)
 python scripts\fix_drug_spans.py --pred experiments\sub --input input_turn2 --out experiments\sub_fixed
 
-# 3. isHistorical từ header danh sách thuốc (+20.84 trên ground truth BTC)
-python scripts\postprocess.py --pred experiments\sub_fixed --input input_turn2 --out experiments\sub_final --sections
-
-# 4. Kiểm tra + đóng gói
-python scripts\check_submission.py --pred experiments\sub_final --input input_turn2
-python scripts\package_submission.py --pred experiments\sub_final --input input_turn2 --out submissions\sub.zip
+# 3. Kiểm tra + đóng gói
+python scripts\check_submission.py --pred experiments\sub_fixed --input input_turn2
+python scripts\package_submission.py --pred experiments\sub_fixed --input input_turn2 --out submissions\sub.zip
 ```
 
-`submissions\sub.zip` là file nộp. Bước 4 phải in **`errors: 0`** — nếu không, đừng nộp.
+`submissions\sub.zip` là file nộp. Bước 3 phải in **`errors: 0`** — nếu không, đừng nộp.
 
 Đổi `input_turn2` thành thư mục input BTC giao (private test) là chạy được ngay, không sửa code.
 
@@ -63,17 +60,21 @@ tay, span tốt hơn hẳn ⇒ vẫn 29.98. Suy ngược `k = 2J/(1+J)`: **mọi
 `J_candidates` (trọng số 0.4) là lever lớn duy nhất chưa được khai thác.
 Kế hoạch: [docs/linking_recode.md](docs/linking_recode.md).
 
-## Bốn bài học đã trả giá bằng điểm
+## Năm bài học đã trả giá bằng điểm
 
-1. **Số liệu offline duy nhất đáng tin là `data/corpus/gold_btc/`.** `models/ner_model/config.json`
-   của model cũ ghi `train_holdout_overlap: true` với holdout WER `0.006`. Eval linking thì feed
-   ground-truth span cho linker. Một eval dự báo `J_cand` 0.59 → 0.74 đã cho kết quả thật 29.51 →
-   **28.68**.
-2. **Đừng đổi tập thực thể một cách mù quáng.** Mọi lần làm thế đều âm: 31.89, 33.679.
-   `fix_drug_spans.py` là ngoại lệ **chỉ vì** nó đo được trên gold trước khi nộp.
-3. **Luật thủ công thua model.** Hậu xử lý assertion (`postprocess.py`) làm mất **0.66** — tỉ lệ
-   `isFamily` của model (0.85%) khớp gần như hoàn hảo với nhãn tay turn-1 (0.9%).
-4. **Mỗi lần nộp đổi một biến**, ghi vào [docs/experiments.md](docs/experiments.md) **trước** khi nộp.
+1. **Không có eval offline nào ở đây dự báo được leaderboard — kể cả `gold_btc`.** Holdout của model
+   cũ bị nhiễm (`train_holdout_overlap: true`, WER `0.006`). Eval linking feed ground-truth span cho
+   linker. Và `gold_btc`, dù là truth thật, chỉ có 1 document: nó dự báo `--sections` **+20.84** và
+   ranking RxNorm **+2.88**, thực tế trên leaderboard là **−0.29** và **−0.65**. Dùng nó để tìm *cơ
+   chế* lỗi, không phải để *dự báo điểm*.
+2. **Đừng đổi tập thực thể.** Mọi lần đều âm: 31.89, 33.679.
+3. **Luật thủ công thua model.** `postprocess.py --negex/--consistency/--family-gate` mất **0.66**;
+   `--sections` mất thêm **0.09**. Tỉ lệ `isFamily` của model (0.85%) khớp gần đúng nhãn tay
+   turn-1 (0.9%) — nó đã hiệu chỉnh sẵn.
+4. **`build_terminology_index.py` ghi đè toàn bộ `diagnoses.csv`.** Chạy nó từng xoá sạch 23 mã đã
+   sửa mà **không báo lỗi gì** — file vẫn 321 dòng, vẫn đủ 321 text, chỉ 25 mã đổi ngầm. Nay đã có
+   `carry_over_recoded()` giữ lại các dòng `source=recoded*`. Vẫn nên `git diff` bảng sau khi chạy.
+5. **Mỗi lần nộp đổi một biến**, ghi vào [docs/experiments.md](docs/experiments.md) **trước** khi nộp.
 
 ---
 
@@ -124,6 +125,13 @@ Chạy nó **trước mỗi thay đổi có đụng span hoặc mã**. Số hi�
 | J_assertion | 20.00 | 20.00 | **89.47** |
 | J_candidates | 4.76 | **22.22** | 22.22 |
 | **final** | 32.63 | 43.67 | **64.52** |
+
+> ⚠️ **Những con số này KHÔNG transfer sang leaderboard.** Đã kiểm chứng bằng bản nộp thật:
+> `--sections` tăng gold +20.84 nhưng **giảm** turn-2 `J_assertion` **−0.29**; chỉnh ranking RxNorm
+> tăng gold +2.88 nhưng **giảm** turn-2 `J_candidates` **−0.65**. Cả hai đã bị revert.
+> `fix_drug_spans` chỉ +0.02 text trên turn-2 (gold có 100% mention thuốc kèm sig, turn-2 chỉ 3%).
+>
+> Dùng `gold_btc` để **tìm cơ chế lỗi**, đừng dùng nó để **dự báo điểm**.
 
 Ba lỗi hệ thống nó phát hiện, theo thứ tự ưu tiên:
 

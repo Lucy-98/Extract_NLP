@@ -338,7 +338,10 @@ def build() -> tuple[list[tuple[str, str, str]], list[tuple[str, str, str]], lis
         if len(choices) > 1:
             conflicts.append(f"{DRUG} {text!r}: {dict(choices)}")
         # keep the most frequent candidate set observed
-        best = max(choices.items(), key=lambda kv: kv[1])[0]
+        # Tie-break on the candidate tuple, not on dict insertion order: with a
+        # bare `max` two texts whose labels disagree in output/ ('bệnh thủy đậu/zona',
+        # 'viêm gan virus c và b') flipped code between otherwise identical rebuilds.
+        best = max(choices.items(), key=lambda kv: (kv[1], kv[0]))[0]
         for code in best:
             drug_rows.append((text, code, "output_curated"))
     known_drug_texts = {t for t, *_ in drug_rows}
@@ -356,7 +359,10 @@ def build() -> tuple[list[tuple[str, str, str]], list[tuple[str, str, str]], lis
     for text, choices in seen[DIAG].items():
         if len(choices) > 1:
             conflicts.append(f"{DIAG} {text!r}: {dict(choices)}")
-        best = max(choices.items(), key=lambda kv: kv[1])[0]
+        # Tie-break on the candidate tuple, not on dict insertion order: with a
+        # bare `max` two texts whose labels disagree in output/ ('bệnh thủy đậu/zona',
+        # 'viêm gan virus c và b') flipped code between otherwise identical rebuilds.
+        best = max(choices.items(), key=lambda kv: (kv[1], kv[0]))[0]
         for code in best:
             diag_rows.append((text, code, "output_curated"))
     known_diag_texts = {t for t, *_ in diag_rows}
@@ -439,6 +445,55 @@ class TerminologyMatcher:
         return []
 
 
+RECODED_SOURCE_PREFIX = "recoded"
+
+
+def carry_over_recoded(
+    path: Path, rows: list[tuple[str, str, str]]
+) -> list[tuple[str, str, str]]:
+    """Keep codes that `recode_terminology.py` corrected, across a rebuild.
+
+    This function rebuilds the whole table from `output/` plus the hardcoded
+    legacy dicts and writes it out wholesale, so every code fixed afterwards was
+    silently reverted the next time anyone ran it -- and the README tells you to
+    run it as step 1 of retraining. On 2026-08-02 that wiped all 23 rows marked
+    `recoded_biencoder`, putting back codes that cannot score at all: `J47.9`,
+    `E87.6`, `I31.4` and `K58.9` are absent from the BYT catalog, `I73.89` and
+    `L89.94` are ICD-10-CM, and `N04` is a bare category where the catalog has
+    subcodes. The rebuilt table then shipped to Kaggle inside the bundle.
+
+    Nothing failed loudly: the file still had 321 rows and the same 321 texts,
+    only 25 candidates differed. So the rule is that a rebuild may add and
+    remove *texts* freely, but a code carrying a `recoded*` source wins over
+    whatever the rebuild derived for that same text.
+    """
+    if not path.exists():
+        return rows
+    keep: dict[str, tuple[str, str]] = {}
+    with path.open(encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            if str(row.get("source", "")).startswith(RECODED_SOURCE_PREFIX):
+                keep[row["text"]] = (row["candidate"], row["source"])
+    if not keep:
+        return rows
+
+    out: list[tuple[str, str, str]] = []
+    seen: set[str] = set()
+    for text, candidate, source in rows:
+        if text in keep:
+            if text not in seen:
+                out.append((text, keep[text][0], keep[text][1]))
+                seen.add(text)
+            continue
+        out.append((text, candidate, source))
+    # A recoded text the rebuild no longer produces still belongs in the table.
+    for text, (candidate, source) in keep.items():
+        if text not in seen:
+            out.append((text, candidate, source))
+    print(f"{path.name}: carried over {len(keep)} recoded code(s) across the rebuild")
+    return out
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--lookup", help="Print candidates for a given drug/diagnosis text and exit.")
@@ -452,6 +507,8 @@ def main() -> int:
         return 0
 
     drug_rows, diag_rows, conflicts, no_candidate = build()
+    drug_rows = carry_over_recoded(TERM_DIR / "drugs.csv", drug_rows)
+    diag_rows = carry_over_recoded(TERM_DIR / "diagnoses.csv", diag_rows)
     write_csv(TERM_DIR / "drugs.csv", sorted(set(drug_rows)))
     write_csv(TERM_DIR / "diagnoses.csv", sorted(set(diag_rows)))
     write_text(TERM_DIR / "conflicts.txt", "\n".join(conflicts))
