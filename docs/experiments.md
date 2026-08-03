@@ -18,6 +18,41 @@ Add a row **before** you submit, fill in the score **the same day** you get it.
 | 08-01 | 33.644 | 36.057 | **36.101** | 29.992 | `submissions/v7_assert_union.zip` — v5 + rule-based assertion post-processing |
 | 08-01 | **35.951** | 38.309 | 42.348 | 29.384 | `submissions/v9_kaggle_large.zip` — xlm-roberta-large + Qwen2.5-7B distillation, retrained |
 | 08-01 | **36.379** | 38.553 | 42.447 | **30.197** | `submissions/v10_large_cleantable.zip` — v9's model, repo's own table (no Qwen ICD rows) |
+| 08-02 | **36.618** | 38.889 | 43.166 | 30.004 | `submissions/v11_patience8.zip` — retrain with EARLY_STOP_PATIENCE 8, repo's table |
+
+### What the v11 result settled — best to date
+
+Single-variable A/B against v10: same table, same inference recipe, only the model differs.
+
+```
+v10 -> v11:  text +0.336   J_assert +0.719   J_cand -0.192   final +0.240
+```
+
+The early-stopping fix paid what it was predicted to. `J_assertion` 43.166 now essentially matches
+the lost 36.315 run's 43.590, and holdout quality confirms it independently: the new checkpoint
+reports WER 0.499 / J_assertion 0.287 against the previous model's 0.546 / 0.215. `best_epoch` is
+still 5 — with patience 8 the run explored to epoch 13 and epoch 5 still won, so the fix worked by
+letting a *better epoch-5 checkpoint* emerge, not by selecting a later one.
+
+Session trajectory: **33.679 → 34.303 → 35.951 → 36.379 → 36.618**, i.e. **+2.94** from where the
+day started and **+2.23** over the 34.388 baseline that stood before it.
+
+### The one thing that has not moved
+
+Implied code accuracy `k = 2J/(1+J)`, across every configuration ever run:
+
+| | `J_cand` | `k` |
+| --- | ---: | ---: |
+| turn-1 hand labels | 0.2998 | 46.1% |
+| v8 (base + fixes) | 0.2999 | 46.1% |
+| v9 (large, Qwen table) | 0.2938 | 45.4% |
+| v10 (large, clean table) | 0.3020 | 46.4% |
+| **v11 (best)** | 0.3000 | **46.2%** |
+
+Two backbones, distillation on and off, human labels, three tables, an early-stopping fix — and the
+0.4-weight component sits at 45–46% throughout. Every point gained today came from `text_score` and
+`J_assertion`. `J_candidates` is the only large lever still untouched, and
+[linking_recode.md](linking_recode.md) is the plan for it.
 
 ### What the v10 result settled — best score to date
 
