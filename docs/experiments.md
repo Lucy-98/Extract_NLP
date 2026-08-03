@@ -21,6 +21,51 @@ Add a row **before** you submit, fill in the score **the same day** you get it.
 | 08-02 | **36.618** | 38.889 | 43.166 | 30.004 | `submissions/v11_patience8.zip` — retrain with EARLY_STOP_PATIENCE 8, repo's table ← **BEST** |
 | 08-02 | 36.536 | 38.910 | 42.873 | 30.004 | `v13_sections.zip` — v11 + fix_drug_spans + postprocess --sections |
 | 08-02 | 36.275 | 38.910 | 42.873 | 29.350 | `sub.zip` — v13 + RxNorm ranking changes |
+| 08-02 | 36.291 | 38.205 | 42.758 | 30.004 | `v14_nophrase.zip` — v11 minus `--add-public-phrase-entities` |
+
+### 08-02: is `output/` contaminating us? Measured — mostly no
+
+`output/` is not organiser ground truth; it is a submission a teammate generated. It reaches the
+pipeline by three paths, and they behave differently.
+
+**Path 1 — phrase lexicon (`--add-public-phrase-entities`). Net POSITIVE, keep it.**
+
+Ablating it scored 36.291 against v11's 36.618:
+
+```
+v11 -> v14:  text -0.684   J_assert -0.408   J_cand 0.000   final -0.328
+```
+
+`J_candidates` is identical to the digit, which confirms the attribution: the lexicon only reshapes
+`TRIỆU_CHỨNG`/`TÊN_XÉT_NGHIỆM` spans, neither of which carries a code. It is not additive — it
+rewrites 211 spans for a net +3 entities — and some outputs are visibly bad
+(`'tổn thương vùng âm hộ phải lan rộng sang'` ends mid-clause, 9 of 104 run to 6+ words). It still
+wins by 0.33, so the model's own short spans are worse than the lexicon's awkward long ones.
+
+**Path 2 — the linking tables. This is the ceiling, not noise.**
+
+`output/` supplies 52.5% of turn-2 diagnosis codes (411/783), the hardcoded `ADDITIONAL_DIAG_PHRASES`
+dict another 39.0%. Internal consistency is high — only 2 of 335 texts (0.6%) map to different codes
+across files, which is itself evidence it was generated from a name→code table rather than curated
+case by case. All 321 table rows are now structurally valid.
+
+But `output/` scored `J_candidates` **29.98** on turn 1 and we score **30.00** on turn 2. The
+pipeline has converged exactly onto the accuracy of the source it was mined from, ~46%. Consistent
+and wrong is worse than noisy, because it never surfaces.
+
+**Path 3 — training labels. This one was genuinely broken**; see the distillation-bug entry.
+
+**Every single-variable change tested on 2026-08-02 lost points**, so v11 is a local optimum under
+every perturbation tried:
+
+| change | final |
+| --- | ---: |
+| `v11` baseline | **36.618** |
+| + fix_drug_spans + `--sections` | 36.536 |
+| + RxNorm ranking rework | 36.275 |
+| − phrase lexicon | 36.291 |
+
+The one lever not yet tested is the clean-label retrain.
 
 ### 08-02: both gold-validated fixes regressed, and gold_btc lost its credibility
 
