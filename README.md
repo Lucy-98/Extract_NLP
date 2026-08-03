@@ -98,16 +98,13 @@ sẽ crash. Mọi script trong `scripts/` **trừ `run_pipeline.py`** đều std
 offset. Đây là **eval offline duy nhất có giá trị dự báo** trong repo.
 
 ```powershell
-python scriptsuild_gold_btc.py --verify     # phải in 19/19; nếu không, chạy không có --verify
+python scripts\build_gold_btc.py --verify     # phải in 19/19; nếu không, bỏ --verify để dựng lại
 ```
 
-> Dấu phân cách trong document là `
-
-` và offset chỉ khớp khi giữ nguyên từng byte —
-> ghi file bằng cách thông thường trên Windows sẽ dịch `
-`→`
-`, làm lệch **toàn bộ** offset
-> mà không báo lỗi (bản đầu tiên: 576 ký tự, 0/19 khớp). Luôn `--verify` trước khi tin số liệu.
+> Dấu phân cách trong document là `\n\r\n` và offset chỉ khớp khi giữ nguyên từng byte.
+> Ghi file theo cách thông thường trên Windows sẽ dịch `\n` thành `\r\n`, làm lệch **toàn bộ**
+> offset mà **không báo lỗi** (bản đầu tiên: 576 ký tự, 0/19 khớp; bản đúng: 554 ký tự, 19/19).
+> `build_gold_btc.py` dựng lại từ đề bài và assert cả 19 offset trước khi ghi.
 
 ```powershell
 python scripts\run_pipeline.py --input data\corpus\gold_btc\input --pred experiments\gold `
