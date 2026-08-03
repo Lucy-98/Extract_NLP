@@ -1,15 +1,33 @@
 #!/usr/bin/env python3
 """Attribute-only post-processing for a prediction folder.
 
-FALSIFIED 2026-08-01 -- do not ship these assertion levers. `v7_assert_union`
-scored 33.644 against `v5_recoded`'s 34.303, with `text_score` and
-`J_candidates` returning *identical to the digit* (36.057 / 29.9917) and
-`J_assertion` falling 38.297 -> 36.101. The model's assertion head is better
-calibrated than these rules: its isFamily rate (0.85%) matches turn-1 truth
-(0.9%) almost exactly, and `--family-gate` cut it to 0.27%. See
-docs/experiments.md. Kept for the record and for the `--hedge-icd` flag; if you
-reach for `--sections` / `--negex` / `--consistency` again, you need new
-evidence, not new thresholds.
+PARTLY FALSIFIED -- read before enabling anything here.
+
+`--negex`, `--consistency` and `--family-gate` are **falsified**. Shipped
+together as v7_assert_union they scored 33.644 against v5_recoded's 34.303 in a
+perfectly isolated A/B: `text_score` and `J_candidates` came back identical to
+the digit (36.057 / 29.9917) while `J_assertion` fell 38.297 -> 36.101. The
+model's assertion head is better calibrated than those rules -- its isFamily
+rate (0.85%) matches turn-1 truth (0.9%) almost exactly, and `--family-gate`
+cut it to 0.27%.
+
+`--sections` was rebuilt on 2026-08-02 against real ground truth and is **not**
+the lever that failed. Three bugs were found and fixed using
+`data/corpus/gold_btc/`:
+
+  a) `HEADER_RE` required a colon, so the organisers' own header
+     "Danh sách thuốc trước nhập viện chính xác và đầy đủ." (a full stop) was
+     never seen and 0 of its 11 isHistorical marks were produced.
+  b) the phrase list had "thuốc trước khi nhập viện"; the real text says
+     "thuốc trước nhập viện".
+  c) a section marked everything inside it, but truth marks the 11 drugs
+     isHistorical and leaves all 8 symptoms empty -- they are indications.
+
+On gold that took `J_assertion` 20.00 -> 89.47 and `final` 43.67 -> 64.52.
+General "Tiền sử"/"Bệnh sử" headers are deliberately ignored: they are detected
+correctly but their scope cannot be bounded, and honouring them marked 820
+turn-2 entities isHistorical (175 -> 978) including presenting symptoms. Only
+drug-list and family headers fire, which is 28 turn-2 entities.
 
 Every transform here changes `assertions` or `candidates` on entities that are
 *already* predicted. Nothing adds, removes, or re-spans an entity.
@@ -66,23 +84,40 @@ FAMILY = "isFamily"
 # Section scope
 # --------------------------------------------------------------------------
 
-# Headers observed across input_turn2 (see worklog). Kept deliberately narrow:
-# "tình trạng ngay trước khi nhập viện" is the acute presentation, not history,
-# so it must NOT match here even though it contains "trước khi nhập viện".
-HISTORICAL_HEADERS = (
+# Kept deliberately narrow: "tình trạng ngay trước khi nhập viện" is the acute
+# presentation, not history, so it must NOT match even though it contains
+# "trước khi nhập viện".
+#
+# The two lists differ in SCOPE, and that distinction comes straight from the
+# organisers' worked example. Under the header "Danh sách thuốc trước nhập viện
+# chính xác và đầy đủ." the truth marks all 11 THUỐC isHistorical and all 8
+# TRIỆU_CHỨNG with an empty assertion list -- the symptoms are indications
+# ("... q6h:prn điều trị ho"), stated in the present. A drug-list header
+# therefore scopes to THUỐC only; a general history header scopes to everything.
+DRUG_HISTORY_HEADERS = (
+    "thuốc trước nhập viện",
+    "thuốc trước khi nhập viện",
+    "thuốc đang dùng",
+    "thuốc đang sử dụng",
+    "thuốc tại nhà",
+    "thuốc mang theo",
+    "danh sách thuốc",
+)
+GENERAL_HISTORY_HEADERS = (
     "tiền sử",
     "tiền căn",
     "bệnh sử",
-    "thuốc trước khi nhập viện",
     "bệnh lý mãn tính",
     "bệnh lý mạn tính",
     "các sự kiện trước khi nhập viện",
-    "thuốc đang dùng",
-    "thuốc đang sử dụng",
 )
 FAMILY_HEADERS = ("tiền sử gia đình",)
 
-HEADER_RE = re.compile(r"^[ \t\-*•\d.)]*([^\n:]{3,60}):", re.MULTILINE)
+# A header is a line that either ends in a colon, or is short enough to be a
+# heading on its own. Requiring the colon is what made this miss the organisers'
+# example entirely: "Danh sách thuốc trước nhập viện chính xác và đầy đủ." ends
+# in a full stop, so zero of its 11 isHistorical marks were produced.
+MAX_HEADER_CHARS = 120
 
 # Cues that make a *sentence* historical even without a section header.
 HISTORICAL_CUES = (
@@ -108,18 +143,34 @@ FAMILY_CUES = (
 )
 
 
+def classify_header(line: str) -> str:
+    """"family" | "history" | "drug_history" | "other" for one candidate header."""
+    title = line.strip().lower()
+    if not title:
+        return "other"
+    # A colon-terminated label, or a short standalone line, can be a heading.
+    if not (title.endswith(":") or len(title) <= MAX_HEADER_CHARS):
+        return "other"
+    if any(h in title for h in FAMILY_HEADERS):
+        return "family"
+    if any(h in title for h in DRUG_HISTORY_HEADERS):
+        return "drug_history"
+    if any(h in title for h in GENERAL_HISTORY_HEADERS):
+        return "history"
+    return "other"
+
+
 def find_sections(text: str) -> list[tuple[int, int, str]]:
-    """Return (start, end, kind) spans, kind in {"history", "family"}."""
+    """Return (start, end, kind), kind in {"history", "drug_history", "family"}."""
     marks: list[tuple[int, str]] = []
-    for m in HEADER_RE.finditer(text):
-        title = m.group(1).strip().lower()
-        if any(h in title for h in FAMILY_HEADERS):
-            kind = "family"
-        elif any(h in title for h in HISTORICAL_HEADERS):
-            kind = "history"
-        else:
-            kind = "other"
-        marks.append((m.start(), kind))
+    offset = 0
+    for line in text.splitlines(keepends=True):
+        kind = classify_header(line)
+        # A line that ends in ":" starts a new section even when it is not one of
+        # ours -- otherwise "Tiền sử:" would swallow every later section too.
+        if kind != "other" or line.strip().endswith(":"):
+            marks.append((offset, kind))
+        offset += len(line)
 
     spans: list[tuple[int, int, str]] = []
     for i, (start, kind) in enumerate(marks):
@@ -151,13 +202,24 @@ def apply_sections(entities: list[dict[str, Any]], text: str) -> int:
         for s_start, s_end, s_kind in spans:
             if s_start <= start < s_end:
                 kind = s_kind  # later (more specific) sections win
-        if kind is None:
-            s_start, s_end = sentence_bounds(text, start)
-            before = text[s_start:start].lower()
-            if any(cue in before for cue in FAMILY_CUES):
-                kind = "family"
-            elif any(cue in before for cue in HISTORICAL_CUES):
-                kind = "history"
+
+        # Only drug-list and family headers are honoured, and this is the whole
+        # reason the lever is shippable at all.
+        #
+        # A general "Tiền sử bệnh" / "Bệnh sử" header is detected correctly, but
+        # its SCOPE cannot be: a section runs to the next recognised header, and a
+        # heading like "3. Khám lâm sàng" is not one, so the history section
+        # swallows the rest of the document. Measured on turn-2 that marked 820
+        # entities isHistorical (175 -> 978), including presenting symptoms --
+        # 'đau đầu', 'co giật', 'đánh trống ngực'. A drug-list header does not
+        # have this problem: it is bounded by type, not by position.
+        if kind == "history":
+            kind = None
+        elif kind == "drug_history":
+            # Scoped to THUỐC. Under the organisers' header the truth marks all 11
+            # drugs isHistorical and leaves all 8 symptoms empty -- they are
+            # indications ("... q6h:prn điều trị ho"), stated in the present.
+            kind = "history" if ent.get("type") == DRUG else None
 
         if kind == "family" and FAMILY not in assertions:
             assertions.append(FAMILY)

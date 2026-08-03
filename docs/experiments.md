@@ -191,6 +191,7 @@ The task statement publishes a **complete worked example**: one document, 19 ent
 spans, types, assertions and codes. It had never been used. Reconstructing the input from the
 markdown needed the right separator (`
 
+
 `, solved by requiring all 19 published offsets to
 match) and it now lives in `data/corpus/gold_btc/`.
 
@@ -214,10 +215,20 @@ Three systematic failures, all reproducible:
    `(text, type, occurrence)`, so a truncated span forfeits that entity's assertion **and** its code
    — 1.0 of weight, not 0.3. Fixed by `scripts/fix_drug_spans.py`:
    `text_score 82.43 -> 95.95`, `J_candidates 4.76 -> 22.22`, **`final 32.63 -> 43.67`**.
-2. **`isHistorical` missing on all 11 drugs** (truth marks 11/19, we predict 0). Cause found:
-   `HEADER_RE` in `postprocess.py` requires a colon, but the real header is
-   *"Danh sách thuốc trước nhập viện chính xác và đầy đủ."* — it ends in a full stop. The section
-   idea was right; the regex was wrong. **Not yet fixed.**
+2. ~~**`isHistorical` missing on all 11 drugs**~~ — **fixed** by `postprocess.py --sections`
+   (2026-08-02). Three separate bugs, only the first of which was the obvious one:
+   `HEADER_RE` required a colon while the real header ends in a full stop; the phrase list said
+   *"thuốc trước **khi** nhập viện"* while the text says *"thuốc trước nhập viện"*; and a section
+   must **not** mark every type inside it — truth marks the 11 drugs `isHistorical` and leaves all
+   8 symptoms empty, because they are indications stated in the present.
+   Result on gold: `J_assertion` **20.00 → 89.47**, `final` **43.67 → 64.52**.
+
+   General `Tiền sử`/`Bệnh sử` headers stay **disabled**. They are detected correctly but their
+   scope cannot be bounded — a section runs to the next recognised header and a heading like
+   `3. Khám lâm sàng` is not one, so honouring them marked **820** turn-2 entities `isHistorical`
+   (175 → 978), including presenting symptoms `đau đầu`, `co giật`, `đánh trống ngực`. Restricting
+   the lever to drug-list and family headers keeps the whole gold gain and drops turn-2 to
+   **28** entities.
 3. **RxNorm wrong on 3 of the 4 drugs whose span was already correct** —
    `aspirin 81 mg po daily` truth 243670, predicted 2668107. **Not yet fixed**; this is
    [linking_recode.md](linking_recode.md) territory.

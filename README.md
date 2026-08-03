@@ -26,15 +26,18 @@ $env:PYTHONIOENCODING="utf-8"; $env:PYTHONUTF8="1"
 python scripts\run_pipeline.py --input input_turn2 --pred experiments\sub `
     --no-icd-fallback --drop-short-noise --add-terminology-entities --add-public-phrase-entities
 
-# 2. Mở rộng span thuốc bị cắt cụt (đo được +11.04 trên ground truth BTC)
+# 2. Mở rộng span thuốc bị cắt cụt (+11.04 trên ground truth BTC)
 python scripts\fix_drug_spans.py --pred experiments\sub --input input_turn2 --out experiments\sub_fixed
 
-# 3. Kiểm tra + đóng gói
-python scripts\check_submission.py --pred experiments\sub_fixed --input input_turn2
-python scripts\package_submission.py --pred experiments\sub_fixed --input input_turn2 --out submissions\sub.zip
+# 3. isHistorical từ header danh sách thuốc (+20.84 trên ground truth BTC)
+python scripts\postprocess.py --pred experiments\sub_fixed --input input_turn2 --out experiments\sub_final --sections
+
+# 4. Kiểm tra + đóng gói
+python scripts\check_submission.py --pred experiments\sub_final --input input_turn2
+python scripts\package_submission.py --pred experiments\sub_final --input input_turn2 --out submissions\sub.zip
 ```
 
-`submissions\sub.zip` là file nộp. Bước 3 phải in **`errors: 0`** — nếu không, đừng nộp.
+`submissions\sub.zip` là file nộp. Bước 4 phải in **`errors: 0`** — nếu không, đừng nộp.
 
 Đổi `input_turn2` thành thư mục input BTC giao (private test) là chạy được ngay, không sửa code.
 
@@ -127,8 +130,12 @@ Ba lỗi hệ thống nó phát hiện, theo thứ tự ưu tiên:
 1. ~~**Span thuốc cắt cụt 7/11 (64%)**~~ — đã sửa bằng `fix_drug_spans.py`. Đây là lỗi đắt nhất vì
    span sai làm mất **cả ba** metric của thực thể đó (assertion và candidate đều key theo
    `(text, type, occurrence)`), tức 1.0 trọng số chứ không phải 0.3.
-2. **`isHistorical` thiếu 11/19** — `HEADER_RE` trong `postprocess.py` đòi dấu `:`, nhưng header
-   thật là *"Danh sách thuốc trước nhập viện chính xác và đầy đủ."* kết thúc bằng dấu chấm. **Chưa sửa.**
+2. ~~**`isHistorical` thiếu 11/19**~~ — đã sửa bằng `postprocess.py --sections`. Ba lỗi riêng
+   biệt: `HEADER_RE` đòi dấu `:` (header thật kết thúc bằng dấu chấm), cụm từ trong list là
+   *"thuốc trước **khi** nhập viện"* trong khi text thật là *"thuốc trước nhập viện"*, và quan trọng
+   nhất — section không được gán cho **mọi** loại: truth đánh `isHistorical` cho 11 thuốc nhưng để
+   **rỗng** cả 8 triệu chứng (chúng là chỉ định, thì hiện tại). Kết quả: `J_assertion` 20.00 →
+   **89.47**, `final` 43.67 → **64.52**.
 3. **RxNorm sai 3/4 ngay cả khi span đúng** — `aspirin 81 mg po daily` → truth 243670, ta đoán
    2668107. **Chưa sửa**, thuộc phạm vi [docs/linking_recode.md](docs/linking_recode.md).
 
