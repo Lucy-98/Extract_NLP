@@ -15,7 +15,7 @@ Lịch sử điểm đầy đủ: [docs/experiments.md](docs/experiments.md).
 
 ---
 
-# ⚡ Từ số 0 đến file nộp — 3 lệnh
+# ⚡ Từ số 0 đến file nộp — 4 bước
 
 Máy đã có `models/ner_model/` (model đã train) thì chỉ cần chừng này. **~15 phút trên CPU.**
 
@@ -118,12 +118,12 @@ python scripts\check_submission.py --pred experiments\gold --input data\corpus\g
 
 Chạy nó **trước mỗi thay đổi có đụng span hoặc mã**. Số hiện tại:
 
-| | trước fix span | sau fix span |
-|---|---:|---:|
-| text_score | 82.43 | **95.95** |
-| J_assertion | 20.00 | 20.00 |
-| J_candidates | 4.76 | **22.22** |
-| **final** | 32.63 | **43.67** |
+| | pipeline thô | + `fix_drug_spans` | + `--sections` |
+|---|---:|---:|---:|
+| text_score | 82.43 | **95.95** | 95.95 |
+| J_assertion | 20.00 | 20.00 | **89.47** |
+| J_candidates | 4.76 | **22.22** | 22.22 |
+| **final** | 32.63 | 43.67 | **64.52** |
 
 Ba lỗi hệ thống nó phát hiện, theo thứ tự ưu tiên:
 
